@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Who's Playing",
+    "slug": "whosplaying",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "whosplaying",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "backgroundColor": "#0AA3A3",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "live.whosplaying.app"
+    },
+    "android": {
+      "package": "live.whosplaying.app",
+      "adaptiveIcon": { "backgroundColor": "#0AA3A3" }
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": ["expo-router", "expo-font"],
+    "experiments": { "typedRoutes": true }
+  }
+}

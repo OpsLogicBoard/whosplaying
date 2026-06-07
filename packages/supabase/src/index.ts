@@ -1,0 +1,10 @@
+export { createWhosPlayingClient } from './client'
+export type { WhosPlayingClient, SupabaseConfig } from './client'
+export type { Database, Json } from './types'
+
+export * as eventsQ from './queries/events'
+export * as artistsQ from './queries/artists'
+export * as venuesQ from './queries/venues'
+export * as gigsQ from './queries/gigs'
+export * as followsQ from './queries/follows'
+export * as messagesQ from './queries/messages'

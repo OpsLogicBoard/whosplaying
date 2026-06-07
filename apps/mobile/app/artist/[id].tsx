@@ -1,0 +1,15 @@
+import { View, Text } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useLocalSearchParams } from 'expo-router'
+
+export default function ArtistScreen() {
+  const { id } = useLocalSearchParams<{ id: string }>()
+  return (
+    <SafeAreaView className="flex-1 bg-paper">
+      <View className="p-4">
+        <Text className="font-display text-3xl text-ink">Artist {id}</Text>
+        <Text className="text-ink-soft mt-2">STUB — artist profile, bands, upcoming shows.</Text>
+      </View>
+    </SafeAreaView>
+  )
+}

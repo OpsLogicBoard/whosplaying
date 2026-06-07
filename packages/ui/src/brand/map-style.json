@@ -1,0 +1,52 @@
+{
+  "version": 8,
+  "name": "WhosPlaying — Poppy Live Music Map",
+  "metadata": {
+    "description": "Custom MapLibre/Mapbox style. Teal water, warm paper land, coral pins for active shows. Replace url placeholders before use."
+  },
+  "sources": {
+    "openmaptiles": {
+      "type": "vector",
+      "url": "https://tiles.example.com/data/v3.json"
+    }
+  },
+  "sprite": "https://tiles.example.com/styles/whosplaying/sprite",
+  "glyphs": "https://tiles.example.com/fonts/{fontstack}/{range}.pbf",
+  "layers": [
+    { "id": "background", "type": "background", "paint": { "background-color": "#FFFCF2" } },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "water",
+      "paint": { "fill-color": "#8FE8E8" }
+    },
+    {
+      "id": "park",
+      "type": "fill",
+      "source": "openmaptiles",
+      "source-layer": "park",
+      "paint": { "fill-color": "#E6FBFB" }
+    },
+    {
+      "id": "road-major",
+      "type": "line",
+      "source": "openmaptiles",
+      "source-layer": "transportation",
+      "filter": ["in", "class", "motorway", "trunk", "primary"],
+      "paint": { "line-color": "#FFFFFF", "line-width": 2 }
+    },
+    {
+      "id": "place-labels",
+      "type": "symbol",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "layout": {
+        "text-field": "{name}",
+        "text-font": ["Inter Medium"],
+        "text-size": 13
+      },
+      "paint": { "text-color": "#0E1A1A", "text-halo-color": "#FFFFFF", "text-halo-width": 2 }
+    }
+  ]
+}

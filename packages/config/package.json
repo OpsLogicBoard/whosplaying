@@ -1,0 +1,18 @@
+{
+  "name": "@whosplaying/config",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./eslint.config.js": "./eslint.config.js",
+    "./prettier.config.js": "./prettier.config.js"
+  },
+  "files": [
+    "tsconfig.base.json",
+    "eslint.config.js",
+    "prettier.config.js",
+    "index.js"
+  ]
+}
