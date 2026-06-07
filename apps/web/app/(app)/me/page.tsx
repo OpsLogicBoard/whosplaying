@@ -1,16 +1,33 @@
-import { Chip } from '@whosplaying/ui'
+import { redirect } from 'next/navigation'
+import { createServerSupabase } from '@/lib/supabase/server'
+import { ProfileForm } from './ProfileForm'
 
-export default function MePage() {
+export default async function MePage() {
+  const supabase = await createServerSupabase()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+
+  const [{ data: profile }, { data: roles }] = await Promise.all([
+    supabase.from('profiles').select('*').eq('id', user.id).single(),
+    supabase.from('user_roles').select('role').eq('user_id', user.id),
+  ])
+
   return (
     <section>
       <h1 className="font-display text-4xl">Me</h1>
       <p className="text-ink-soft mt-1">Your profile and the hats you wear.</p>
-      <div className="mt-6 flex gap-2 flex-wrap">
-        <Chip tone="teal">Goer</Chip>
-        <Chip tone="yellow">+ Artist</Chip>
-        <Chip tone="orange">+ Venue owner</Chip>
-        <Chip tone="ink">+ Venue staff</Chip>
-      </div>
+      <ProfileForm
+        userId={user.id}
+        email={user.email ?? ''}
+        initialProfile={{
+          display_name: profile?.display_name ?? user.email?.split('@')[0] ?? '',
+          home_city: profile?.home_city ?? '',
+          bio: profile?.bio ?? '',
+        }}
+        initialRoles={(roles ?? []).map((r) => r.role) as string[]}
+      />
     </section>
   )
 }
