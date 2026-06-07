@@ -1,5 +1,8 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { Wordmark } from '@whosplaying/ui'
+import { createServerSupabase } from '@/lib/supabase/server'
+import { SignOutButton } from './SignOutButton'
 
 const tabs = [
   { href: '/calendar', label: 'Calendar' },
@@ -9,7 +12,13 @@ const tabs = [
   { href: '/me', label: 'Me' },
 ]
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+export default async function AppLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createServerSupabase()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) redirect('/login')
+
   return (
     <div className="min-h-screen flex flex-col">
       <header className="bg-paper border-b border-ink-line sticky top-0 z-10">
@@ -27,6 +36,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 {t.label}
               </Link>
             ))}
+            <span className="ml-3 text-xs text-ink-mute hidden sm:inline">{user.email}</span>
+            <SignOutButton />
           </nav>
         </div>
       </header>

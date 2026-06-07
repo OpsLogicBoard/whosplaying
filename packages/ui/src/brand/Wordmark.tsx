@@ -17,12 +17,15 @@ type WordmarkProps = {
  * renders identically in web and mobile (via react-native-svg).
  */
 export function Wordmark({ width = 320, mono = false, className }: WordmarkProps) {
-  const aspect = 320 / 96
+  // Viewbox sized to the rendered glyph metrics: the italic Black face at 64px
+  // for "Who's Playing" needs about 410px of horizontal room including the
+  // layered offset shadows.
+  const aspect = 420 / 96
   const height = width / aspect
 
   return (
     <svg
-      viewBox="0 0 320 96"
+      viewBox="0 0 420 96"
       width={width}
       height={height}
       className={className}
