@@ -86,9 +86,7 @@ create table public.venues (
   is_verified boolean not null default false,
   created_at timestamptz not null default now()
 );
-create index on public.venues using gist (
-  ll_to_earth(lat, lng) -- requires earthdistance, harmless if missing — drop if not installed
-) where false; -- placeholder; switch to PostGIS in a later migration
+create index on public.venues (lat, lng); -- swap to PostGIS / earthdistance in a later migration
 
 create type public.venue_staff_role as enum ('manager', 'staff', 'booker');
 
