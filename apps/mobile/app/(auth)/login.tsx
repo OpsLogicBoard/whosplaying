@@ -1,70 +1,128 @@
 import { useState } from 'react'
 import { View, Text, TextInput, Pressable, Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import * as WebBrowser from 'expo-web-browser'
+import * as Linking from 'expo-linking'
 import { Wordmark } from '@whosplaying/ui'
 import { supabase } from '../../lib/supabase'
+
+WebBrowser.maybeCompleteAuthSession()
 
 const REDIRECT = 'whosplaying://auth/callback'
 
 export default function LoginScreen() {
+  const [mode, setMode] = useState<'sign-in' | 'sign-up'>('sign-in')
   const [email, setEmail] = useState('')
-  const [sending, setSending] = useState(false)
-  const [sent, setSent] = useState(false)
+  const [password, setPassword] = useState('')
+  const [busy, setBusy] = useState(false)
 
-  async function send() {
-    if (!email || sending) return
-    setSending(true)
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: { emailRedirectTo: REDIRECT, shouldCreateUser: true },
-    })
-    setSending(false)
-    if (error) {
-      Alert.alert("Couldn't send", error.message)
-      return
+  async function continueWithGoogle() {
+    setBusy(true)
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: REDIRECT, skipBrowserRedirect: true },
+      })
+      if (error) throw error
+      if (!data?.url) throw new Error('No OAuth URL returned')
+      const result = await WebBrowser.openAuthSessionAsync(data.url, REDIRECT)
+      if (result.type === 'success' && result.url) {
+        const parsed = Linking.parse(result.url)
+        const params = parsed.queryParams ?? {}
+        const access_token = (params.access_token as string) || undefined
+        const refresh_token = (params.refresh_token as string) || undefined
+        if (access_token && refresh_token) {
+          await supabase.auth.setSession({ access_token, refresh_token })
+        }
+      }
+    } catch (e) {
+      Alert.alert("Sign-in failed", (e as Error).message)
+    } finally {
+      setBusy(false)
     }
-    setSent(true)
+  }
+
+  async function submitEmail() {
+    if (!email || !password || busy) return
+    setBusy(true)
+    try {
+      if (mode === 'sign-in') {
+        const { error } = await supabase.auth.signInWithPassword({ email, password })
+        if (error) throw error
+      } else {
+        const { error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: REDIRECT },
+        })
+        if (error) throw error
+        Alert.alert('Check your email', 'Confirm your address, then sign in.')
+        setMode('sign-in')
+      }
+    } catch (e) {
+      Alert.alert("Couldn't sign in", (e as Error).message)
+    } finally {
+      setBusy(false)
+    }
   }
 
   return (
     <SafeAreaView className="flex-1 bg-teal-50">
       <View className="flex-1 items-center justify-center p-6">
         <Wordmark width={260} />
-        {!sent ? (
-          <>
-            <Text className="mt-8 text-ink-soft text-center text-lg">
-              Sign in with a magic link to your email.
-            </Text>
-            <TextInput
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoComplete="email"
-              placeholder="you@example.com"
-              className="mt-6 w-full max-w-sm bg-paper border border-ink-line rounded-lg px-4 py-3 text-ink"
-            />
-            <Pressable
-              onPress={send}
-              disabled={!email || sending}
-              className="mt-4 w-full max-w-sm bg-coral px-6 py-3 rounded-lg disabled:opacity-50"
-            >
-              <Text className="text-white text-center font-semibold text-lg">
-                {sending ? 'Sending…' : 'Send magic link'}
-              </Text>
-            </Pressable>
-          </>
-        ) : (
-          <View className="mt-8 items-center">
-            <Text className="font-display text-2xl text-ink">Check your inbox</Text>
-            <Text className="text-ink-soft text-center mt-2">
-              Tap the link in your email to sign in. Make sure you tap it on this device.
-            </Text>
-            <Pressable onPress={() => setSent(false)} className="mt-6">
-              <Text className="text-teal underline">Use a different email</Text>
-            </Pressable>
+
+        <View className="mt-8 w-full max-w-sm">
+          <Pressable
+            onPress={continueWithGoogle}
+            disabled={busy}
+            className="flex-row items-center justify-center gap-3 bg-paper border-2 border-ink-line rounded-lg py-3 disabled:opacity-50"
+          >
+            <Text className="text-2xl">G</Text>
+            <Text className="text-ink font-semibold text-lg">Continue with Google</Text>
+          </Pressable>
+
+          <View className="flex-row items-center gap-3 my-5">
+            <View className="flex-1 h-px bg-ink-line" />
+            <Text className="text-ink-mute text-xs">or</Text>
+            <View className="flex-1 h-px bg-ink-line" />
           </View>
-        )}
+
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            autoComplete="email"
+            placeholder="you@example.com"
+            className="bg-paper border border-ink-line rounded-lg px-4 py-3 text-ink"
+          />
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            autoComplete={mode === 'sign-in' ? 'current-password' : 'new-password'}
+            placeholder={mode === 'sign-up' ? 'Password (8+ characters)' : 'Password'}
+            className="mt-3 bg-paper border border-ink-line rounded-lg px-4 py-3 text-ink"
+          />
+          <Pressable
+            onPress={submitEmail}
+            disabled={!email || !password || busy}
+            className="mt-4 bg-teal rounded-lg py-3 disabled:opacity-50"
+          >
+            <Text className="text-white text-center font-semibold text-lg">
+              {busy ? '…' : mode === 'sign-in' ? 'Sign in' : 'Create account'}
+            </Text>
+          </Pressable>
+
+          <Pressable
+            onPress={() => setMode(mode === 'sign-in' ? 'sign-up' : 'sign-in')}
+            className="mt-4"
+          >
+            <Text className="text-teal text-center underline">
+              {mode === 'sign-in' ? 'Need an account? Create one' : 'Already have an account? Sign in'}
+            </Text>
+          </Pressable>
+        </View>
       </View>
     </SafeAreaView>
   )

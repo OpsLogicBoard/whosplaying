@@ -19,7 +19,7 @@ export default function HomePage() {
           </p>
           <div className="mt-10 flex items-center justify-center gap-4">
             <Link
-              href="/signup?as=goer"
+              href="/login"
               className="bg-coral text-white px-6 py-3 rounded-lg shadow-stack-yellow font-semibold text-lg"
             >
               Find shows near me
