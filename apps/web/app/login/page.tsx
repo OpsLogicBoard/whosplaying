@@ -24,7 +24,14 @@ export default function LoginPage() {
   async function continueWithGoogle() {
     setError(null)
     const supabase = createBrowserSupabase()
-    const redirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`
+    // Stash the post-auth destination in sessionStorage so the callback
+    // route knows where to send the user. The Supabase redirect-allowlist
+    // matches exact URLs (without query strings), so we can't pass `next`
+    // via the redirect URL.
+    if (next && next !== '/calendar') {
+      sessionStorage.setItem('whosplaying:next', next)
+    }
+    const redirectTo = `${window.location.origin}/auth/callback`
     const { error: err } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo },
@@ -53,7 +60,7 @@ export default function LoginPage() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       })
       setSubmitting(false)
