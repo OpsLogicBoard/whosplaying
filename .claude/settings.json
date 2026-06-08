@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm *)",
+      "Bash(pnpm --filter *)",
+      "Bash(npx tsc *)",
+      "Bash(npx supabase *)",
+      "Bash(supabase *)",
+      "Bash(corepack *)",
+      "Bash(curl -sS *http://localhost:3000*)",
+      "Bash(curl -fsS *http://localhost:3000*)",
+      "Bash(lsof -ti:3000)",
+      "Bash(lsof -i:3000*)",
+      "Bash(kill -9 *)",
+      "Bash(gh repo view OpsLogicBoard/whosplaying*)",
+      "Bash(gh api repos/OpsLogicBoard/whosplaying/*)",
+      "Bash(git push origin main)",
+      "Bash(git fetch origin)",
+      "Read(/tmp/**)",
+      "Read(/private/tmp/**)",
+      "Read(/Users/JW/Downloads/**)"
+    ],
+    "additionalDirectories": [
+      "/tmp"
+    ]
+  }
+}
