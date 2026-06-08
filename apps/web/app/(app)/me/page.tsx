@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createServerSupabase } from '@/lib/supabase/server'
 import { ProfileForm } from './ProfileForm'
@@ -18,6 +19,11 @@ export default async function MePage() {
     <section>
       <h1 className="font-display text-4xl">Me</h1>
       <p className="text-ink-soft mt-1">Your profile and the hats you wear.</p>
+      <p className="mt-3 text-sm">
+        <Link href="/me/venues" className="text-teal-700 hover:text-teal-900 font-medium">
+          Your venues →
+        </Link>
+      </p>
       <ProfileForm
         userId={user.id}
         email={user.email ?? ''}
