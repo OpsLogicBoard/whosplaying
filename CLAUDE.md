@@ -42,6 +42,7 @@ Cross-confirmation is the core invariant: an event is `confirmed` only when **bo
 - Never edit a placeholder screen without also wiring its data source — keep the screen and its query helper changing together.
 - Domain types live in `packages/core` — never duplicate them in apps. If you need a new field, change the Zod schema there first, regenerate Supabase types, then update consumers.
 - All new tables get RLS in the **same migration**. Never ship a migration that adds a table without policies.
+- All new tables also need explicit `GRANT` statements for the `anon` and `authenticated` roles in the same migration — RLS alone doesn't help if the role can't see the table. The default-privileges block in `0004_grant_table_access.sql` covers tables created *after* it ran, but if you write a fresh migration, double-check with `\dp <table>` in psql.
 
 ## Branding
 
@@ -59,6 +60,34 @@ Cross-confirmation is the core invariant: an event is `confirmed` only when **bo
 | `goer` | implicit | Every signed-in user has this by default |
 
 A user can hold multiple roles simultaneously. Don't model these as distinct accounts.
+
+## Gotchas learned the hard way
+
+These bit us during initial setup. Repeat at your peril.
+
+### Supabase
+- **Always keep "Automatically expose new tables" ENABLED** at project creation. Disabling it means new tables have no `GRANT` to `anon`/`authenticated`, and PostgREST returns 403 for every query — even when RLS policies look correct. Migration `0004_grant_table_access.sql` retroactively fixes this and sets default privileges so future tables auto-grant.
+- **Auth → Redirect URLs is exact-match, no wildcards on query string.** If your app passes `redirectTo=...?next=/foo`, the entry `http://localhost:3000/auth/callback` will NOT match. Strip query params from `redirectTo`; carry state in `sessionStorage` instead.
+- **Helper SQL functions need `set search_path = public`** or Supabase's security advisor flags them. Without it, a malicious schema can shadow public table names. See `0003_secure_function_search_path.sql`.
+- **Email templates are locked behind custom SMTP.** Out of the box you get Supabase's defaults — fine for dev. To brand `Confirm your email`, set up Resend/SendGrid first.
+- **OAuth consent screen shows the Supabase project URL** (e.g. `xyz.supabase.co`) until you set up a Supabase Custom Domain ($10/mo Pro feature). For pre-launch dev this is fine; before opening to real users, fix it.
+- **Don't use `ll_to_earth` / GIST geo indexes** without `create extension earthdistance` first. We use a plain b-tree on `(lat, lng)` for bounding-box queries; switch to PostGIS later if real distance math is needed.
+
+### Auth
+- **Magic-link OTP is high-friction** for consumer mobile apps. The mobile-first stack is Google Sign-In + Apple Sign-In (App Store rule once any other social auth exists) + email/password fallback. Don't add magic-link unless asked.
+- **Supabase's PKCE flow requires same-browser-session cookies.** A magic link clicked in a different browser will fail with "PKCE code verifier not found." Token-hash flow (`verifyOtp({token_hash, type})`) is cross-browser safe but needs a custom email template (custom SMTP).
+- **For OAuth providers, the redirect URI registered with the IdP** (Google Cloud Console, Apple, etc.) goes to **Supabase's** `/auth/v1/callback`, NOT our `/auth/callback`. The Supabase URL is what Google etc. need.
+
+### Next.js
+- **A stray `package.json` higher up in the filesystem** (e.g. `~/package.json`) makes Next.js infer the wrong workspace root. Set `outputFileTracingRoot: path.join(__dirname, '../..')` in `next.config.ts` to pin it.
+- **`themeColor` in `metadata` is deprecated** — move it to a `viewport` export. Currently noisy but not blocking.
+
+### Monorepo
+- **Every workspace package that uses the shared `tsconfig.base.json`** must list `@whosplaying/config` in its `devDependencies`. TypeScript's `extends` does node resolution, so the package must be installed locally even if it's a workspace package.
+- **`require()` shared JS modules in TypeScript files** when they don't ship types (e.g. `tailwind-preset.js`). `import` errors with implicit-any.
+
+### Dev server
+- **Port 3000 sometimes leaves zombie node processes** after Ctrl-C, especially when running through chrome MCP. If `curl localhost:3000` hangs: `lsof -ti:3000 | xargs -r kill -9` then restart.
 
 ## Things not to do
 

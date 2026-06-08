@@ -31,9 +31,37 @@ legacy-planning/   Earlier admin-pipeline planning docs (May 2026 — superseded
 ```bash
 pnpm install
 pnpm dev                 # everything in parallel
-pnpm --filter web dev    # web only — http://localhost:3000
-pnpm --filter mobile start  # mobile only — Expo dev tools
+pnpm --filter @whosplaying/web dev      # web only — http://localhost:3000
+pnpm --filter @whosplaying/mobile start # mobile only — Expo dev tools
 ```
+
+## Setup for a fresh Supabase project
+
+If you ever stand up a *new* Supabase project (e.g. a staging clone), do these
+six things in order — any one missed makes the next harder to diagnose.
+
+1. **Create the project**
+   - "Automatically expose new tables": **leave ENABLED.** (We learned this the hard way — see CLAUDE.md gotchas.)
+   - "Enable automatic RLS": **enable.**
+2. **Link the CLI**: `supabase link --project-ref <new-ref>`
+3. **Push migrations**: `supabase db push --linked --yes`
+4. **Auth → URL Configuration**
+   - Site URL: `http://localhost:3000` (dev) / `https://whosplaying.live` (prod)
+   - Redirect URLs (exact-match — no query strings):
+     - `http://localhost:3000/auth/callback`
+     - `https://whosplaying.live/auth/callback`
+     - `whosplaying://auth/callback`
+5. **Auth → Sign In / Providers → Google**
+   - Toggle Enabled
+   - Paste Client ID + Secret from Google Cloud Console
+   - Google Cloud Console redirect URI for the OAuth client must be:
+     `https://<new-ref>.supabase.co/auth/v1/callback`
+6. **Wire env files** (not committed):
+   - `apps/web/.env.local` — `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `apps/mobile/.env.local` — `EXPO_PUBLIC_SUPABASE_URL`, `EXPO_PUBLIC_SUPABASE_ANON_KEY`
+
+Run `pnpm typecheck && pnpm lint` to confirm the workspace is wired before
+booting the dev server.
 
 ## Verify
 
