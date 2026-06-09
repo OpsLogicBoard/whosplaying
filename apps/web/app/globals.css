@@ -7,9 +7,9 @@
     color-scheme: light;
   }
   body {
-    @apply bg-paper text-ink font-sans antialiased;
+    @apply bg-paper text-ink font-body antialiased;
   }
-  h1, h2, h3, h4 {
-    @apply font-display;
-  }
+  /* h1–h4 defaults intentionally minimal — pages set their own type
+     family per design context (display for the marketing splash, editorial
+     for the reference compositions). */
 }

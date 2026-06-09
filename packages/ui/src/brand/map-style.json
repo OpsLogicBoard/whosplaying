@@ -2,12 +2,26 @@
   "version": 8,
   "name": "WhosPlaying — Poppy Live Music Map",
   "metadata": {
-    "description": "Custom MapLibre/Mapbox style. Teal water, warm paper land, coral pins for active shows. Replace url placeholders before use."
+    "description": "Custom MapLibre/Mapbox style. Teal water, warm paper land, coral pins for active shows. All paint values reference the canonical brand tokens in packages/ui/src/tokens/colors.ts. Replace tile/sprite/glyph URLs before use; the placeholder URLs assume a self-hosted OpenMapTiles instance.",
+    "brand:tokens": {
+      "background": "paper.base (#FFFCF2)",
+      "water": "teal.tint-1 (#8FE8E8)",
+      "park": "teal.tint-2 (#E6FBFB)",
+      "road-major": "paper.tint-2 (#FFFFFF)",
+      "place-labels": "ink.base (#0E1A1A) with paper.tint-2 halo",
+      "pin-active": "coral.base (#FF4D63) with paper.tint-2 stroke",
+      "pin-confirmed": "teal.base (#0AA3A3) with paper.tint-2 stroke",
+      "pin-proposed": "yellow.base (#FFCB05) with ink.base stroke"
+    }
   },
   "sources": {
     "openmaptiles": {
       "type": "vector",
       "url": "https://tiles.example.com/data/v3.json"
+    },
+    "wp-events": {
+      "type": "geojson",
+      "data": { "type": "FeatureCollection", "features": [] }
     }
   },
   "sprite": "https://tiles.example.com/styles/whosplaying/sprite",
@@ -43,10 +57,46 @@
       "source-layer": "place",
       "layout": {
         "text-field": "{name}",
-        "text-font": ["Inter Medium"],
+        "text-font": ["DM Sans Medium"],
         "text-size": 13
       },
       "paint": { "text-color": "#0E1A1A", "text-halo-color": "#FFFFFF", "text-halo-width": 2 }
+    },
+    {
+      "id": "pin-active",
+      "type": "circle",
+      "source": "wp-events",
+      "filter": ["==", ["get", "status"], "active"],
+      "paint": {
+        "circle-radius": 9,
+        "circle-color": "#FF4D63",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      }
+    },
+    {
+      "id": "pin-confirmed",
+      "type": "circle",
+      "source": "wp-events",
+      "filter": ["==", ["get", "status"], "confirmed"],
+      "paint": {
+        "circle-radius": 8,
+        "circle-color": "#0AA3A3",
+        "circle-stroke-color": "#FFFFFF",
+        "circle-stroke-width": 2
+      }
+    },
+    {
+      "id": "pin-proposed",
+      "type": "circle",
+      "source": "wp-events",
+      "filter": ["==", ["get", "status"], "proposed"],
+      "paint": {
+        "circle-radius": 7,
+        "circle-color": "#FFCB05",
+        "circle-stroke-color": "#0E1A1A",
+        "circle-stroke-width": 2
+      }
     }
   ]
 }

@@ -20,7 +20,6 @@ export async function GET(request: Request) {
   if (tokenHash) {
     const { error } = await supabase.auth.verifyOtp({
       token_hash: tokenHash,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       type: type as any,
     })
     if (error) {

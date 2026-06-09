@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//WhosPlaying//Phase 0 Reference//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:sample-event@whosplaying.live
+DTSTAMP:20260609T120000Z
+DTSTART:20260610T003000Z
+DTEND:20260610T033000Z
+SUMMARY:The Driftwood Three at Sand Dollar Stage
+DESCRIPTION:Three-piece beach folk. First set covers, second set originals.
+LOCATION:Sand Dollar Stage, Jacksonville Beach, FL
+URL:https://whosplaying.live/e/sample-event
+END:VEVENT
+END:VCALENDAR

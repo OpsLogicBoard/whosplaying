@@ -1,13 +1,16 @@
 node_modules
 .pnpm-store
 dist
-build
+/build
+!/docs/build
 .next
 .expo
 .expo-shared
 .turbo
 .cache
 coverage
+tsconfig.tsbuildinfo
+**/tsconfig.tsbuildinfo
 
 .env
 .env.local

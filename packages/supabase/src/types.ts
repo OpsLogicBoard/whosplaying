@@ -3,5 +3,4 @@
 
 export type Json = string | number | boolean | null | { [k: string]: Json } | Json[]
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Database = any
