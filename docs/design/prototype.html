@@ -257,6 +257,44 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .offer p{font-size:13px;font-weight:600;color:#7a5a12;line-height:1.45}
 .offer .redeem{display:inline-flex;align-items:center;gap:7px;background:var(--deep);color:#fff;font-size:13.5px;font-weight:800;border:none;font-family:inherit;padding:12px 20px;border-radius:12px;margin-top:13px;cursor:pointer}
 .offer .src{display:block;font-size:11px;font-weight:700;color:#B08A3A;margin-top:11px}
+
+/* ===== Plan / Venue Pro paywall ===== */
+.plancard{background:var(--deep);border-radius:18px;padding:17px;color:#fff;margin-bottom:11px;box-shadow:0 12px 30px rgba(7,16,32,.22);position:relative;overflow:hidden}
+.plancard::after{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(255,90,95,.28),transparent 70%)}
+.plancard .row{display:flex;align-items:center;gap:11px;position:relative;z-index:1}
+.plancard .pi{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.10);display:flex;align-items:center;justify-content:center;font-size:21px;color:var(--gold);flex-shrink:0}
+.plancard .now{font-size:11px;font-weight:700;color:rgba(255,255,255,.62)}
+.plancard h4{font-size:16px;font-weight:800;letter-spacing:-.01em;margin-top:1px}
+.plancard .fdg{display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#071020;background:var(--gold);padding:3px 8px;border-radius:999px;margin-left:auto;flex-shrink:0}
+.plancard p{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.72);line-height:1.5;margin:11px 0 13px;position:relative;z-index:1}
+.plancard .upg{width:100%;background:var(--coralg);color:#fff;font-size:14px;font-weight:800;padding:13px;border-radius:13px;border:none;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 20px rgba(255,79,99,.34);position:relative;z-index:1}
+
+/* pricing screen */
+.plhero{text-align:center;padding:6px 4px 4px}
+.plhero .kk{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--coral);background:#FFF1F1;padding:6px 13px;border-radius:999px;margin-bottom:13px}
+.plhero h1{font-size:29px;font-weight:900;letter-spacing:-.03em;color:var(--deep);line-height:1.05}
+.plhero .tg{font-size:14px;font-weight:600;color:var(--slate);margin-top:7px;line-height:1.5}
+.pricerow{display:flex;align-items:baseline;justify-content:center;gap:9px;margin:18px 0 4px}
+.pricerow .amt{font-size:46px;font-weight:900;letter-spacing:-.04em;color:var(--deep)}
+.pricerow .per{font-size:14px;font-weight:700;color:var(--slate)}
+.pricerow .was{font-size:17px;font-weight:700;color:var(--mute);text-decoration:line-through}
+.foundnote{text-align:center;font-size:12px;font-weight:700;color:#0F6E56;background:#E1F5EE;border-radius:11px;padding:9px 12px;margin:4px 0 18px;display:flex;align-items:center;justify-content:center;gap:7px}
+.featbox{background:#fff;border:1px solid var(--line);border-radius:18px;padding:6px 16px;margin-bottom:14px;box-shadow:0 6px 18px rgba(16,24,40,.05)}
+.feat{display:flex;align-items:flex-start;gap:11px;padding:12px 0;border-bottom:1px solid var(--line)}
+.feat:last-child{border-bottom:none}
+.feat .ck{width:22px;height:22px;border-radius:50%;background:#E1F5EE;color:#0F6E56;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:1px}
+.feat .tx h5{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.feat .tx p{font-size:12px;font-weight:600;color:var(--slate);margin-top:2px;line-height:1.4}
+.feat .free{margin-left:auto;font-size:10px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.03em;flex-shrink:0;padding-top:2px}
+.plalc{display:flex;align-items:center;gap:12px;background:#FFFBF0;border:1.5px solid #F2D58A;border-radius:15px;padding:14px;margin-bottom:14px}
+.plalc .ic{width:38px;height:38px;border-radius:11px;background:#fff;color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.plalc h5{font-size:13.5px;font-weight:800;color:#7a5a12}
+.plalc p{font-size:11.5px;font-weight:600;color:#9A6A00;margin-top:1px}
+.plmission{display:flex;gap:9px;font-size:12px;font-weight:600;color:var(--slate);line-height:1.5;padding:2px 4px 16px}
+.plmission i{color:var(--coral);font-size:15px;margin-top:1px;flex-shrink:0}
+.plcta{width:100%;background:var(--coralg);color:#fff;font-size:15.5px;font-weight:800;padding:16px;border-radius:15px;border:none;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 26px rgba(255,79,99,.34)}
+.pllater{width:100%;background:none;border:none;font-family:inherit;color:var(--slate);font-size:13.5px;font-weight:700;padding:13px;cursor:pointer;margin-top:2px}
+.plsecure{text-align:center;font-size:11px;font-weight:600;color:var(--mute);margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px}
 .qr{width:138px;height:138px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px;margin:13px auto 0;box-shadow:0 4px 14px rgba(16,24,40,.08)}
 .qr svg{width:100%;height:100%;display:block}
 .pmtop{display:flex;align-items:center;gap:12px;padding:54px 16px 10px}
@@ -590,6 +628,20 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
                 <div><h4>Promote a gig</h4><p>One show or your month → Canva, Instagram</p></div>
                 <div class="go"><i class="ti ti-chevron-right"></i></div>
               </div>
+
+              <div class="pf-sec">Plan</div>
+              <div class="plancard" onclick="showScreen('m-plan')">
+                <div class="row">
+                  <div class="pi"><i class="ti ti-bolt"></i></div>
+                  <div>
+                    <div class="now">You're on Free</div>
+                    <h4>Unlock Venue Pro</h4>
+                  </div>
+                  <span class="fdg"><i class="ti ti-anchor" style="font-size:11px"></i> Founding</span>
+                </div>
+                <p>Unlimited offers, event boosts, GPS push to nearby fans, full analytics &amp; featured placement — <b style="color:#fff">$14.99/mo</b> locked for life as a founding Beaches venue.</p>
+                <button class="upg" onclick="event.stopPropagation();showScreen('m-plan')"><i class="ti ti-sparkles"></i> See Venue Pro</button>
+              </div>
             </div>
 
             <!-- ===== SETTINGS (shared) ===== -->
@@ -600,6 +652,50 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
             <div class="setrow"><span class="ic"><i class="ti ti-shield-lock"></i></span> Account &amp; privacy <span class="go"><i class="ti ti-chevron-right"></i></span></div>
             <div class="setrow"><span class="ic"><i class="ti ti-help-circle"></i></span> Help &amp; feedback <span class="go"><i class="ti ti-chevron-right"></i></span></div>
             <div class="setrow" style="border:none;color:var(--coral)"><span class="ic" style="color:var(--coral)"><i class="ti ti-logout"></i></span> Sign out</div>
+          </div>
+        </section>
+
+        <!-- ===== MANAGE: VENUE PRO (pricing) ===== -->
+        <section class="screen" data-screen="m-plan">
+          <div class="pmtop">
+            <div class="gbtn" onclick="showScreen('you')"><i class="ti ti-chevron-left"></i></div>
+            <div style="flex:1">
+              <div style="font-size:11px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em">Plan for</div>
+              <div style="font-size:16px;font-weight:800;color:var(--deep);letter-spacing:-.02em">Surfer the Bar</div>
+            </div>
+          </div>
+          <div class="pad" style="padding-top:6px">
+            <div class="plhero">
+              <span class="kk"><i class="ti ti-bolt"></i> Venue Pro</span>
+              <h1>Fill the room.</h1>
+              <div class="tg">Everything in Free, plus the tools to reach more fans on the nights it matters.</div>
+              <div class="pricerow">
+                <span class="amt">$14.99</span>
+                <span class="was">$24.99</span>
+                <span class="per">/mo</span>
+              </div>
+            </div>
+            <div class="foundnote"><i class="ti ti-anchor"></i> Founding rate — locked for life for the first Beaches venues</div>
+
+            <div class="featbox">
+              <div class="feat"><div class="ck"><i class="ti ti-check"></i></div><div class="tx"><h5>Unlimited offers</h5><p>Run as many redeemable deals as you like — Free includes 1.</p></div><span class="free">Free: 1</span></div>
+              <div class="feat"><div class="ck"><i class="ti ti-check"></i></div><div class="tx"><h5>Event boosts</h5><p>Push a show to the top of Tonight &amp; the map.</p></div><span class="free">$5 each</span></div>
+              <div class="feat"><div class="ck"><i class="ti ti-check"></i></div><div class="tx"><h5>GPS push to nearby fans</h5><p>Alert goers in range — capped so it never spams.</p></div></div>
+              <div class="feat"><div class="ck"><i class="ti ti-check"></i></div><div class="tx"><h5>Full analytics</h5><p>Views, ticket-link taps &amp; follower growth.</p></div><span class="free">Basic</span></div>
+              <div class="feat"><div class="ck"><i class="ti ti-check"></i></div><div class="tx"><h5>Featured placement &amp; staff seats</h5><p>Stand out in discovery; add your whole team.</p></div></div>
+              <div class="feat"><div class="ck"><i class="ti ti-check"></i></div><div class="tx"><h5>Publishing tools</h5><p>Flyers to Canva &amp; Instagram in a tap.</p></div></div>
+            </div>
+
+            <div class="plalc">
+              <div class="ic"><i class="ti ti-rocket"></i></div>
+              <div><h5>Just need one big night?</h5><p>Boost a single event for $5 — no subscription.</p></div>
+            </div>
+
+            <div class="plmission"><i class="ti ti-heart-handshake"></i><span>Free forever for fans and artists. <b>Get&nbsp;Tickets</b> links are always free. We only charge venues — enough to keep the lights on and support local music.</span></div>
+
+            <button class="plcta" onclick="alert('Stripe Checkout (Founding $14.99/mo) — wired in Phase B')"><i class="ti ti-sparkles"></i> Start Venue Pro · $14.99/mo</button>
+            <button class="pllater" onclick="showScreen('you')">Maybe later</button>
+            <div class="plsecure"><i class="ti ti-lock"></i> Secure checkout · cancel anytime · multi-venue +$12 each</div>
           </div>
         </section>
 
