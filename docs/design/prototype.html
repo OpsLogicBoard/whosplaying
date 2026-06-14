@@ -138,7 +138,35 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .tabbar{position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;padding:9px 6px 22px;z-index:50}
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:700;color:var(--mute);cursor:pointer}
 .tab i{font-size:23px}
+.tab svg{width:23px;height:23px;display:block}
 .tab.on{color:var(--coral)}
+.hidden{display:none!important}
+.statc{font-size:10px;font-weight:800;padding:4px 9px;border-radius:999px;white-space:nowrap}
+.st-conf{background:#E1F5EE;color:#0F6E56}
+.st-wait{background:#FAEEDA;color:#854F0B}
+.st-open{background:#E6F1FB;color:#185FA5}
+.gigrow{display:flex;align-items:center;gap:13px;padding:12px 2px;border-bottom:1px solid var(--line)}
+.finput{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 14px;font-size:14px;color:var(--slate);font-weight:600;margin-bottom:11px}
+.flabel{font-size:12px;font-weight:800;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 8px}
+.invite{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:7px 11px;border-radius:999px;margin:0 6px 6px 0}
+.bidbtn{flex:1;text-align:center;font-size:12.5px;font-weight:800;padding:9px;border-radius:10px}
+.msgrow{display:flex;align-items:center;gap:12px;padding:12px 2px;border-bottom:1px solid var(--line)}
+.cover{height:118px;border-radius:14px;background:#23272F;position:relative;display:flex;align-items:flex-end;padding:10px;margin-bottom:16px;overflow:hidden}
+.cover .tagm{font-size:11px;font-weight:700;color:#fff;background:rgba(255,255,255,.20);padding:5px 10px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+.cover .chg{position:absolute;top:9px;right:9px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;color:#071020;font-size:14px}
+.fauto{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;color:#0F6E56;background:#E1F5EE;padding:3px 8px;border-radius:999px;margin-left:7px;text-transform:uppercase;letter-spacing:.03em}
+.frow2{display:flex;gap:11px}
+.toggle{width:46px;height:28px;border-radius:999px;background:#D7DBE2;position:relative;flex-shrink:0;cursor:pointer}
+.toggle.on{background:var(--coral)}
+.toggle b{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff}
+.toggle.on b{left:21px}
+.toggrow{display:flex;align-items:center;justify-content:space-between;padding:6px 2px 12px}
+.toggrow .tt{font-size:14.5px;font-weight:600;color:var(--ink)}
+.dim{opacity:.4}
+.priv{background:#F3F4F7;border:1px solid var(--line);border-radius:16px;padding:14px 14px 4px;margin-top:20px}
+.privhead{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:800;color:var(--deep)}
+.hint{font-size:11.5px;font-weight:600;color:var(--mute);line-height:1.5;margin:4px 2px 0}
+.moretog{display:flex;align-items:center;justify-content:space-between;padding:12px 0 4px;cursor:pointer;font-size:13.5px;font-weight:700;color:var(--ink)}
 
 /* detail overlay */
 .detail{position:absolute;inset:0;background:var(--bg);z-index:70;overflow-y:auto;display:none;scrollbar-width:none}
@@ -185,7 +213,7 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
             <div style="position:relative;width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:19px;color:#071020"><i class="ti ti-bell"></i><span style="position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--coral);border:1.5px solid #fff"></span></div>
           </div>
           <div class="pad" style="padding-top:4px">
-            <div style="font-size:33px;font-weight:800;letter-spacing:-.03em;margin:10px 0 16px;color:#071020">Playing <span style="color:var(--coral)">tonight.</span></div>
+            <div style="font-size:33px;font-weight:800;letter-spacing:-.03em;margin:10px 0 16px;color:#071020">who's <span style="color:var(--coral)">playing</span></div>
             <div class="search"><i class="ti ti-search" style="font-size:16px"></i> Search events, artists, venues</div>
 
             <div class="feature" data-event onclick="openDetail()" style="background:#23272F">
@@ -325,6 +353,11 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
               <div class="av">JW</div>
               <div><h2>James W.</h2><p>Music goer · Jacksonville Beach</p></div>
             </div>
+            <div class="seg" style="margin-top:18px;margin-bottom:6px">
+              <div class="on" id="mode-play" onclick="setMode('play')"><i class="ti ti-music" style="font-size:14px;margin-right:6px"></i>Play</div>
+              <div id="mode-work" onclick="setMode('work')"><i class="ti ti-briefcase" style="font-size:14px;margin-right:6px"></i>Work</div>
+            </div>
+            <p style="font-size:12px;color:var(--mute);font-weight:600;margin:0 2px 16px">Switch to Work to manage gigs as an artist or venue.</p>
             <div class="sech">Your hats</div>
             <div class="hat">
               <div class="ic" style="background:#FFF1F1;color:var(--coral)"><i class="ti ti-headphones"></i></div>
@@ -355,6 +388,197 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
           </div>
         </section>
 
+        <!-- ===== MANAGE: CALENDAR (my gigs) ===== -->
+        <section class="screen" data-screen="m-calendar">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px 0">
+            <div>
+              <div style="font-size:11px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em">Managing</div>
+              <div style="font-size:18px;font-weight:800;color:var(--deep);letter-spacing:-.02em">Surfer the Bar</div>
+            </div>
+            <div style="width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:18px;color:#071020"><i class="ti ti-bell"></i></div>
+          </div>
+          <div class="pad" style="padding-top:8px">
+            <div style="font-size:26px;font-weight:800;letter-spacing:-.03em;margin:6px 0 14px;color:#071020">Your gigs</div>
+            <div class="svrow" data-event onclick="openDetail()">
+              <div class="datebadge"><span>Jun</span><b>13</b></div>
+              <div class="einfo"><h4>The Firewater Tent Revival</h4><p style="margin-top:3px">8:00 PM</p></div>
+              <span class="statc st-conf">Confirmed</span>
+            </div>
+            <div class="svrow">
+              <div class="datebadge" style="background:#FAEEDA"><span style="color:#854F0B">Jun</span><b style="color:#854F0B">14</b></div>
+              <div class="einfo"><h4>Chloe Kimes &amp; The Tide</h4><p style="margin-top:3px">8:30 PM</p></div>
+              <span class="statc st-wait">Awaiting artist</span>
+            </div>
+            <div class="svrow" onclick="showScreen('m-gigs')">
+              <div class="datebadge" style="background:#E6F1FB"><span style="color:#185FA5">Jun</span><b style="color:#185FA5">20</b></div>
+              <div class="einfo"><h4>Open slot</h4><p style="margin-top:3px">9:00 PM · 3 bids</p></div>
+              <span class="statc st-open">Open</span>
+            </div>
+            <div class="svrow">
+              <div class="datebadge" style="background:#FAEEDA"><span style="color:#854F0B">Jun</span><b style="color:#854F0B">27</b></div>
+              <div class="einfo"><h4>Songwriter Round</h4><p style="margin-top:3px">7:30 PM</p></div>
+              <span class="statc st-wait">Confirm</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== MANAGE: GIGS (open / bids) ===== -->
+        <section class="screen" data-screen="m-gigs">
+          <div class="pad" style="padding-top:16px">
+            <div style="font-size:26px;font-weight:800;letter-spacing:-.03em;margin:2px 0 14px;color:#071020">Open gigs</div>
+            <button class="cta-create" style="margin-top:0"><i class="ti ti-plus"></i> Post an open gig</button>
+            <div class="sech" style="margin-top:20px">Your open slots</div>
+            <div class="gigrow">
+              <div class="datebadge" style="background:#E6F1FB"><span style="color:#185FA5">Jun</span><b style="color:#185FA5">20</b></div>
+              <div class="einfo"><h4>Sat · 9:00 PM</h4><p style="margin-top:3px">Indie / rock · $200–300</p></div>
+              <span class="statc st-open">3 bids</span>
+            </div>
+            <div class="gigrow">
+              <div class="datebadge" style="background:#E6F1FB"><span style="color:#185FA5">Jul</span><b style="color:#185FA5">04</b></div>
+              <div class="einfo"><h4>Thu · 8:00 PM</h4><p style="margin-top:3px">Any · holiday set</p></div>
+              <span class="statc st-open">1 bid</span>
+            </div>
+            <div class="sech" style="margin-top:22px">Recent bids · Jun 20</div>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px;margin-bottom:12px">
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:11px">
+                <div class="favm" style="background:#FFB020;width:42px;height:42px">LT</div>
+                <div class="finfo"><h4>Low Tide Social Club</h4><p>asking $250 · funk</p></div>
+              </div>
+              <div style="display:flex;gap:9px"><div class="bidbtn" style="background:var(--coralg);color:#fff">Accept</div><div class="bidbtn" style="background:#fff;border:1px solid var(--line);color:var(--ink)">Decline</div></div>
+            </div>
+            <div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:13px">
+              <div style="display:flex;align-items:center;gap:11px;margin-bottom:11px">
+                <div class="favm" style="background:#8B5CF6;width:42px;height:42px">CO</div>
+                <div class="finfo"><h4>Coastline</h4><p>asking $300 · indie</p></div>
+              </div>
+              <div style="display:flex;gap:9px"><div class="bidbtn" style="background:var(--coralg);color:#fff">Accept</div><div class="bidbtn" style="background:#fff;border:1px solid var(--line);color:var(--ink)">Decline</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== MANAGE: CREATE (event + invites) ===== -->
+        <section class="screen" data-screen="m-create">
+          <div class="pad" style="padding-top:16px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin:2px 0 14px">
+              <div style="font-size:26px;font-weight:800;letter-spacing:-.03em;color:#071020">Create event</div>
+              <span class="invite" style="background:#F2F3F6;color:var(--slate);margin:0"><i class="ti ti-copy"></i> Duplicate past</span>
+            </div>
+
+            <!-- Cover: defaults to venue (or artist) image based on creator -->
+            <div class="cover">
+              <span class="tagm"><i class="ti ti-photo"></i> Using Surfer the Bar cover</span>
+              <div class="chg"><i class="ti ti-camera"></i></div>
+            </div>
+
+            <div class="flabel" style="margin-top:0">Visibility</div>
+            <div class="seg" style="margin-bottom:4px">
+              <div class="on" onclick="segPick(this)">Public</div>
+              <div onclick="segPick(this)">Private</div>
+            </div>
+
+            <div class="flabel">Artist <span class="fauto">auto</span></div>
+            <div class="finput">The Firewater Tent Revival</div>
+
+            <div class="flabel">Venue / location <span class="fauto">auto</span></div>
+            <div class="finput"><i class="ti ti-map-pin" style="margin-right:7px;color:var(--coral)"></i>Surfer the Bar · 200 1st St N</div>
+
+            <div class="flabel">Genre <span class="fauto">from artist</span></div>
+            <div class="finput">Rock · roots</div>
+
+            <div class="flabel">Event title <span style="color:var(--mute);font-weight:600;text-transform:none;letter-spacing:0">· optional</span></div>
+            <div class="finput" style="color:var(--mute)">Add a title (optional)</div>
+
+            <div class="flabel">Date</div>
+            <div class="finput">Saturday, June 20</div>
+            <div class="frow2">
+              <div style="flex:1"><div class="flabel" style="margin-top:0">Music start</div><div class="finput">9:00 PM</div></div>
+              <div style="flex:1"><div class="flabel" style="margin-top:0">Music end</div><div class="finput">11:30 PM</div></div>
+            </div>
+
+            <div class="flabel">Setting</div>
+            <div class="seg"><div class="on" onclick="segPick(this)">Indoor</div><div onclick="segPick(this)">Outdoor</div><div onclick="segPick(this)">Patio</div></div>
+
+            <div class="toggrow"><span class="tt">Family-friendly event</span><div class="toggle on" onclick="this.classList.toggle('on')"><b></b></div></div>
+
+            <div class="flabel">Tickets</div>
+            <div class="seg"><div class="on" id="tk-free" onclick="setTickets('free')">Free</div><div id="tk-paid" onclick="setTickets('ticketed')">Ticketed</div></div>
+            <div class="frow2" id="ticket-fields">
+              <div class="finput dim" style="flex:1">Price</div>
+              <div class="finput dim" style="flex:1.3">Ticket link</div>
+            </div>
+
+            <div class="flabel">Event details</div>
+            <div class="finput" style="height:76px;color:var(--mute)">Describe the night — vibe, openers, what to expect…</div>
+
+            <div class="flabel">Invite performers <span style="color:var(--mute);font-weight:600;text-transform:none;letter-spacing:0">· Who&rsquo;s Playing profiles</span></div>
+            <div>
+              <span class="invite st-conf">The Tide <i class="ti ti-circle-check"></i></span>
+              <span class="invite st-wait">Chloe Kimes <i class="ti ti-clock"></i></span>
+              <span class="invite" style="background:#F2F3F6;color:var(--slate)"><i class="ti ti-search"></i> Add profile</span>
+            </div>
+            <p class="hint">Age limit is set by the venue — <b>21+</b> at Surfer the Bar.</p>
+
+            <!-- ===== PRIVATE GIG DETAILS ===== -->
+            <div class="priv">
+              <div class="privhead"><i class="ti ti-lock"></i> Private gig details</div>
+              <p class="hint" style="margin-bottom:10px">Not shown publicly — visible to you, the venue, and invited performers.</p>
+
+              <div class="flabel" style="margin-top:4px">Gig rate</div>
+              <div class="finput" style="background:#fff">$350 guarantee + bar split</div>
+
+              <div class="flabel">Promoter profile</div>
+              <div class="finput" style="background:#fff;color:var(--mute)">— none —</div>
+
+              <div class="moretog" onclick="toggleMore()">
+                <span><i class="ti ti-adjustments" style="margin-right:7px;color:var(--coral)"></i>More · load-in, sound check, lineup</span>
+                <i class="ti ti-chevron-down" id="more-chev"></i>
+              </div>
+              <div id="more-fields" class="hidden">
+                <div class="frow2">
+                  <div style="flex:1"><div class="flabel" style="margin-top:6px">Load-in</div><div class="finput" style="background:#fff">6:00 PM</div></div>
+                  <div style="flex:1"><div class="flabel" style="margin-top:6px">Sound check</div><div class="finput" style="background:#fff">7:00 PM</div></div>
+                </div>
+                <div class="flabel" style="margin-top:0">Lineup order</div>
+                <div class="finput" style="background:#fff">Headliner</div>
+              </div>
+
+              <div class="flabel">Your private notes</div>
+              <div class="finput" style="background:#fff;height:56px;color:var(--mute)">Notes only you can see…</div>
+              <p class="hint" style="margin-bottom:12px">Each participant keeps their own private notes for this event.</p>
+            </div>
+
+            <div style="display:flex;align-items:flex-start;gap:8px;background:#E1F5EE;border-radius:13px;padding:12px;margin:16px 0 6px">
+              <i class="ti ti-shield-check" style="color:#0F6E56;font-size:17px;margin-top:1px"></i>
+              <div style="font-size:12.5px;font-weight:600;color:#0F6E56;line-height:1.5">Goes live as <b>Confirmed</b> only once you and every invited performer accept.</div>
+            </div>
+            <p class="hint" style="margin:0 2px 12px">Once live, you, the venue, and invited performers can update start/end, details, and the lineup.</p>
+            <button class="cta-create" style="margin-top:0"><i class="ti ti-send"></i> Send invites &amp; publish</button>
+          </div>
+        </section>
+
+        <!-- ===== MANAGE: MESSAGES ===== -->
+        <section class="screen" data-screen="m-messages">
+          <div class="pad" style="padding-top:16px">
+            <div style="font-size:26px;font-weight:800;letter-spacing:-.03em;margin:2px 0 14px;color:#071020">Messages</div>
+            <div class="search"><i class="ti ti-search" style="font-size:16px"></i> Search messages, artists, venues</div>
+            <div class="msgrow">
+              <div class="favm" style="background:#2D7FF9;width:46px;height:46px">CK</div>
+              <div class="finfo"><h4>Chloe Kimes &amp; The Tide</h4><p>Sounds good — we&rsquo;ll confirm tonight</p></div>
+              <div style="text-align:right"><div style="font-size:11px;color:var(--mute);font-weight:700">2m</div><div style="width:9px;height:9px;border-radius:50%;background:var(--coral);margin:5px 0 0 auto"></div></div>
+            </div>
+            <div class="msgrow">
+              <div class="favm" style="background:#8B5CF6;width:46px;height:46px">BJ</div>
+              <div class="finfo"><h4>Blue Jay Listening Room</h4><p>Can you do 9pm instead of 8:30?</p></div>
+              <div style="font-size:11px;color:var(--mute);font-weight:700">1h</div>
+            </div>
+            <div class="msgrow">
+              <div class="favm" style="background:#FFB020;width:46px;height:46px">LT</div>
+              <div class="finfo"><h4>Low Tide Social Club</h4><p>Thanks for the slot — see you Jun 20</p></div>
+              <div style="font-size:11px;color:var(--mute);font-weight:700">Tue</div>
+            </div>
+          </div>
+        </section>
+
         <!-- ============ EVENT DETAIL ============ -->
         <div class="detail" id="detail">
           <div class="dhero" style="background:#23272F">
@@ -381,12 +605,19 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
           </div>
         </div>
 
-        <!-- ============ TAB BAR ============ -->
-        <nav class="tabbar">
-          <div class="tab on" data-tab="tonight"><i class="ti ti-bolt"></i>Tonight</div>
+        <!-- ============ TAB BARS ============ -->
+        <nav class="tabbar" id="nav-play">
+          <div class="tab on" data-tab="tonight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4.8" y="4" width="14.4" height="3.2" rx="1.6"/><path d="M8 7.2 5.6 20"/><path d="M16 7.2 18.4 20"/><path d="M6.7 14.3 H17.3"/></svg>Tonight</div>
           <div class="tab" data-tab="explore"><i class="ti ti-calendar-month"></i>Explore</div>
           <div class="tab" data-tab="map"><i class="ti ti-map-2"></i>Map</div>
           <div class="tab" data-tab="saved"><i class="ti ti-heart"></i>Saved</div>
+          <div class="tab" data-tab="you"><i class="ti ti-user"></i>You</div>
+        </nav>
+        <nav class="tabbar hidden" id="nav-work">
+          <div class="tab" data-tab="m-calendar"><i class="ti ti-calendar-event"></i>Calendar</div>
+          <div class="tab" data-tab="m-gigs"><svg viewBox="0 0 24 24" style="width:28px;height:28px;margin:-2.5px 0" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10 14 6 V18 L3.5 14 Z"/><ellipse cx="14" cy="12" rx="1.4" ry="6"/><path d="M3.5 10 V14"/><path d="M6.2 14.7 C6.6 17.8 10 17.6 9.8 15.3"/><path d="M18 8.5 A6 6 0 0 1 18 15.5"/><path d="M20.6 6.6 A10 10 0 0 1 20.6 17.4"/></svg>Gigs</div>
+          <div class="tab" data-tab="m-create"><i class="ti ti-circle-plus"></i>Create</div>
+          <div class="tab" data-tab="m-messages"><i class="ti ti-message-2"></i>Messages</div>
           <div class="tab" data-tab="you"><i class="ti ti-user"></i>You</div>
         </nav>
       </div>
@@ -398,19 +629,36 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 <p class="note">v2 "Live Pin" brand · Apple Music Concerts-leaning: neutral white chrome, large rounded artwork, color lives in the artwork, coral reserved for primary actions &amp; active state. Artwork blocks are placeholders for real event imagery. Cross-confirmation surfaces as the "Confirmed · venue + artist" trust badge.</p>
 
 <script>
-  const tabs=document.querySelectorAll('.tab');
-  const screens=document.querySelectorAll('.screen');
-  tabs.forEach(t=>t.addEventListener('click',()=>{
+  function showScreen(name){
     closeDetail();
-    tabs.forEach(x=>x.classList.remove('on'));t.classList.add('on');
-    const name=t.dataset.tab;
-    screens.forEach(s=>s.classList.toggle('active',s.dataset.screen===name));
-  }));
+    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab===name));
+    document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.dataset.screen===name));
+  }
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>showScreen(t.dataset.tab)));
+  function setMode(m){
+    document.getElementById('nav-play').classList.toggle('hidden',m!=='play');
+    document.getElementById('nav-work').classList.toggle('hidden',m!=='work');
+    document.getElementById('mode-play').classList.toggle('on',m==='play');
+    document.getElementById('mode-work').classList.toggle('on',m==='work');
+    // stay on the You screen; just swap which tab bar is live
+    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab==='you'));
+  }
   function savedView(v){
     document.getElementById('sv-following').style.display=v==='following'?'block':'none';
     document.getElementById('sv-shows').style.display=v==='shows'?'block':'none';
     document.getElementById('sv-tab-following').classList.toggle('on',v==='following');
     document.getElementById('sv-tab-shows').classList.toggle('on',v==='shows');
+  }
+  function segPick(el){[...el.parentNode.children].forEach(c=>c.classList.remove('on'));el.classList.add('on');}
+  function setTickets(mode){
+    document.getElementById('tk-free').classList.toggle('on',mode==='free');
+    document.getElementById('tk-paid').classList.toggle('on',mode==='ticketed');
+    document.querySelectorAll('#ticket-fields .finput').forEach(f=>f.classList.toggle('dim',mode==='free'));
+  }
+  function toggleMore(){
+    const f=document.getElementById('more-fields');const c=document.getElementById('more-chev');
+    const open=f.classList.toggle('hidden');
+    c.style.transform=open?'rotate(0deg)':'rotate(180deg)';
   }
   function openDetail(){document.getElementById('detail').classList.add('open');}
   function closeDetail(){document.getElementById('detail').classList.remove('open');}
