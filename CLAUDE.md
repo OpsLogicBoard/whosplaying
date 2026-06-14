@@ -46,8 +46,13 @@ Cross-confirmation is the core invariant: an event is `confirmed` only when **bo
 
 ## Branding
 
-- Visual language: **layered/overlapping type** with offset color shadows (teal + yellow + coral + orange) on white or teal grounds. Reference imagery in `docs/BRAND.md`.
+**Canonical brand = v2 "Live Pin" system** (`docs/Whos_Playing_Corrected_Brand_Implementation_Package_v2/`). The earlier teal/yellow stacked-shadow direction is **retired** — see `docs/RE_EVALUATION.md` §4.
+
+- Visual language: **Apple clarity + Spotify energy + Airbnb friendliness.** Clean white/`#F7F8FA` grounds, coral `#FF5A5F` primary CTA, blue/lime/purple/golden accents. NOT a poppy collage.
+- Logo: the **Live Pin Lockup** (location pin + play triangle + signal waves) with stacked `who's / playing` wordmark. Three artifacts, never mixed: (1) **brand review board** = design route only; (2) **logo component** with exactly `full` / `compact` / `mark-only` variants in `packages/ui/src/brand/`; (3) **production pages** = compact header logo + real content only.
+- **NEVER render brand-spec boards** (`PRIMARY LOGO`, `COLOR PALETTE`, `TYPOGRAPHY` panels) inside any production page. This was the repeated frontend failure (`docs/.../09_Codex_Failure_Review.md`). Treat as a hard QA gate.
 - Wordmark: `packages/ui/src/brand/Wordmark.tsx`. Don't reinvent — extend.
+- "Poppy not drab" lives in the **map** (custom `map-style.json`, colorful logo-mark pins) and accent color, NOT in the logo or homepage.
 - Map style: custom JSON in `packages/ui/src/brand/map-style.json`. Not the default grey muni look.
 
 ## Roles model

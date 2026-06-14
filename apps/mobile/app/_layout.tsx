@@ -20,7 +20,7 @@ function AuthGate({ children }: { children: React.ReactNode }) {
     if (loading) return
     const inAuthGroup = segments[0] === '(auth)'
     if (!session && !inAuthGroup) router.replace('/(auth)/login')
-    else if (session && inAuthGroup) router.replace('/(tabs)/calendar')
+    else if (session && inAuthGroup) router.replace('/(tabs)/tonight')
   }, [loading, session, segments, router])
 
   // Deep-link handler — magic link arrives as whosplaying://auth/callback#access_token=...
