@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Who's Playing — v2 Design Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.31.0/dist/tabler-icons.min.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F8FA;--ink:#111318;--deep:#071020;--slate:#5C6470;--mute:#9AA1AC;--line:#ECEDF1;
+  --coral:#FF5A5F;--blue:#2D7FF9;--lime:#B7F34A;--purple:#8B5CF6;--gold:#FFB020;--pink:#FF3F73;
+  --coralg:linear-gradient(135deg,#FF4F63,#FF6B42 48%,#FF2F70);
+  --playg:linear-gradient(180deg,#FF8751,#FF5A5F 52%,#FF3F73);
+  --scrim:linear-gradient(to top,rgba(7,16,32,.80),rgba(7,16,32,.15) 52%,transparent 78%);
+  --card:0 10px 34px rgba(16,24,40,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:14px;padding:28px 16px 48px}
+.title{font-size:13px;font-weight:600;color:#6b7280;letter-spacing:.01em}
+.title b{color:#1f2430;font-weight:800}
+.stage{display:flex;gap:34px;flex-wrap:wrap;justify-content:center;align-items:flex-start}
+.framewrap{display:flex;flex-direction:column;align-items:center;gap:9px}
+.cap{font-size:11.5px;font-weight:600;color:#6b7280}
+.phone{position:relative;width:375px;height:812px;background:#000;border-radius:46px;padding:11px;box-shadow:0 30px 70px rgba(16,24,40,.30)}
+.viewport{position:relative;width:100%;height:100%;background:var(--bg);border-radius:36px;overflow:hidden}
+.dyn{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:108px;height:30px;background:#000;border-radius:18px;z-index:60}
+.statusbar{position:absolute;top:0;left:0;right:0;height:50px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 7px;font-size:13px;font-weight:700;color:var(--deep);z-index:55}
+.statusbar .ic{display:flex;gap:6px;font-size:14px}
+
+.screen{position:absolute;inset:0;top:50px;bottom:84px;overflow-y:auto;display:none;scrollbar-width:none}
+.screen::-webkit-scrollbar{display:none}
+.screen.active{display:block}
+.pad{padding:8px 20px 26px}
+
+/* compact header logo */
+.applite{display:flex;align-items:center;justify-content:space-between;padding:4px 20px 2px}
+.lock{display:flex;align-items:center;gap:7px}
+.wm{font-weight:900;font-size:16px;letter-spacing:-.045em;line-height:.82}
+.wm .p{background:var(--playg);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hicon{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--deep)}
+.locpill{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:700;color:var(--slate)}
+
+.big{font-size:32px;font-weight:800;letter-spacing:-.03em;margin:10px 0 2px}
+.sub{font-size:14px;font-weight:600;color:var(--slate);margin-bottom:16px}
+
+.seg{display:flex;background:#EEF0F4;border-radius:12px;padding:3px;margin-bottom:20px}
+.seg div{flex:1;text-align:center;font-size:13px;font-weight:700;color:var(--slate);padding:8px;border-radius:9px;cursor:pointer}
+.seg div.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(16,24,40,.12)}
+
+.feature{position:relative;height:212px;border-radius:22px;overflow:hidden;margin-bottom:22px;cursor:pointer;box-shadow:var(--card)}
+.feature .scrim{position:absolute;inset:0;background:var(--scrim)}
+.chip{position:absolute;top:13px;left:13px;font-size:11px;font-weight:800;color:#fff;background:rgba(255,255,255,.22);backdrop-filter:blur(6px);padding:5px 11px;border-radius:999px;letter-spacing:.03em}
+.fav{position:absolute;top:11px;right:11px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:17px;color:var(--coral)}
+.feature .meta{position:absolute;left:16px;right:16px;bottom:14px;color:#fff}
+.feature .live{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.04em;margin-bottom:7px;text-transform:uppercase}
+.feature .live .blip{width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.35)}
+.feature h3{font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.feature .v{font-size:13px;font-weight:600;opacity:.92;margin-top:3px}
+
+.sech{font-size:18px;font-weight:800;letter-spacing:-.02em;margin:4px 0 13px;display:flex;align-items:center;justify-content:space-between}
+.sech a{font-size:13px;font-weight:700;color:var(--coral)}
+
+.erow{display:flex;align-items:center;gap:13px;margin-bottom:17px;cursor:pointer}
+.thumb{width:64px;height:64px;border-radius:15px;flex-shrink:0;position:relative;overflow:hidden}
+.thumb .g{position:absolute;inset:0}
+.einfo{flex:1;min-width:0}
+.einfo h4{font-size:15.5px;font-weight:800;letter-spacing:-.01em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.einfo p{font-size:12.5px;font-weight:600;color:var(--slate);margin-top:3px;display:flex;align-items:center;gap:5px}
+.when{text-align:right;flex-shrink:0}
+.when b{display:block;font-size:14px;font-weight:800;color:var(--deep)}
+.when span{font-size:11px;font-weight:700;color:var(--mute);text-transform:uppercase}
+
+/* search + date strip */
+.search{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 14px;font-size:14px;color:var(--mute);font-weight:600;margin-bottom:18px;box-shadow:0 2px 8px rgba(16,24,40,.04)}
+.datestrip{display:flex;gap:9px;overflow-x:auto;margin-bottom:16px;padding-bottom:2px;scrollbar-width:none}
+.datestrip::-webkit-scrollbar{display:none}
+.dcell{flex-shrink:0;width:50px;text-align:center;padding:9px 0;border-radius:14px;cursor:pointer}
+.dcell span{font-size:11px;font-weight:700;color:var(--mute);text-transform:uppercase}
+.dcell b{display:block;font-size:18px;font-weight:800;margin-top:3px;color:var(--ink)}
+.dcell.on{background:var(--coralg)}
+.dcell.on span,.dcell.on b{color:#fff}
+.chips{display:flex;gap:8px;overflow-x:auto;margin-bottom:20px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.fchip{flex-shrink:0;font-size:12.5px;font-weight:700;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--slate);display:flex;align-items:center;gap:6px}
+.fchip.on{background:var(--deep);color:#fff;border-color:var(--deep)}
+.daylabel{font-size:13px;font-weight:800;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;margin:6px 0 14px}
+
+/* map */
+.mapwrap{position:absolute;inset:0;top:0;bottom:0}
+.mapbg{position:absolute;inset:0;background:
+  radial-gradient(circle at 30% 28%, #E8F7F2 0 14%, transparent 14.5%),
+  radial-gradient(circle at 74% 64%, #FFF3DE 0 18%, transparent 18.5%),
+  linear-gradient(135deg,#EFF4F8,#E4EEF3)}
+.road{position:absolute;background:#fff}
+.pin{position:absolute;transform:translate(-50%,-100%);cursor:pointer;filter:drop-shadow(0 6px 10px rgba(16,24,40,.28));display:flex;flex-direction:column;align-items:center}
+.pin .bub{background:var(--deep);color:#fff;font-size:10px;font-weight:800;padding:3px 7px;border-radius:7px;margin-bottom:-3px;white-space:nowrap}
+.mapsheet{position:absolute;left:14px;right:14px;bottom:14px;background:#fff;border-radius:20px;padding:13px;box-shadow:0 14px 40px rgba(16,24,40,.20);display:flex;align-items:center;gap:13px}
+.maptop{position:absolute;top:8px;left:14px;right:14px;display:flex;gap:10px}
+.maptop .s{flex:1;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-radius:13px;padding:11px 14px;font-size:13.5px;font-weight:600;color:var(--slate);display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(16,24,40,.10)}
+
+/* saved + you */
+.follows{display:flex;gap:14px;overflow-x:auto;margin-bottom:22px;scrollbar-width:none}
+.follows::-webkit-scrollbar{display:none}
+.fol{flex-shrink:0;text-align:center;width:62px}
+.fol .av{width:58px;height:58px;border-radius:50%;margin-bottom:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:17px;border:2px solid #fff;box-shadow:0 4px 12px rgba(16,24,40,.12)}
+.fol span{font-size:11px;font-weight:700;color:var(--slate);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.foladd .av{background:#fff;border:1.5px dashed var(--mute);color:var(--mute)}
+.svrow{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:17px;padding:11px;margin-bottom:12px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.datebadge{width:52px;height:56px;border-radius:13px;background:#FFF1F1;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.datebadge span{font-size:10.5px;font-weight:800;color:var(--coral);text-transform:uppercase}
+.datebadge b{font-size:21px;font-weight:800;color:var(--coral);line-height:1}
+.bell{width:34px;height:34px;border-radius:50%;background:#FFF1F1;color:var(--coral);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+.profhead{display:flex;align-items:center;gap:15px;margin:6px 0 22px}
+.profhead .av{width:68px;height:68px;border-radius:50%;background:var(--purple);display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;font-weight:800}
+.profhead h2{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.profhead p{font-size:13px;font-weight:600;color:var(--slate);margin-top:2px}
+.hat{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;margin-bottom:11px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.hat .ic{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.hat h4{font-size:15px;font-weight:800}
+.hat p{font-size:12.5px;font-weight:600;color:var(--slate);margin-top:2px}
+.hat .go{margin-left:auto;color:var(--mute);font-size:18px}
+.hat .badge{margin-left:auto;background:var(--coral);color:#fff;font-size:11px;font-weight:800;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;padding:0 6px}
+.cta-create{width:100%;background:var(--coralg);color:#fff;border:none;font-family:inherit;font-size:15px;font-weight:800;padding:15px;border-radius:15px;margin:14px 0 8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 22px rgba(255,79,99,.32)}
+.setrow{display:flex;align-items:center;gap:13px;padding:14px 2px;border-bottom:1px solid var(--line);font-size:14.5px;font-weight:600}
+.setrow .ic{font-size:19px;color:var(--slate);width:24px;text-align:center}
+.setrow .go{margin-left:auto;color:var(--mute)}
+
+/* tab bar */
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;padding:9px 6px 22px;z-index:50}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:700;color:var(--mute);cursor:pointer}
+.tab i{font-size:23px}
+.tab.on{color:var(--coral)}
+
+/* detail overlay */
+.detail{position:absolute;inset:0;background:var(--bg);z-index:70;overflow-y:auto;display:none;scrollbar-width:none}
+.detail.open{display:block}
+.detail::-webkit-scrollbar{display:none}
+.dhero{position:relative;height:320px}
+.dhero .scrim{position:absolute;inset:0;background:var(--scrim)}
+.dnav{position:absolute;top:54px;left:16px;right:16px;display:flex;justify-content:space-between;z-index:5}
+.gbtn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--deep);cursor:pointer;box-shadow:0 2px 10px rgba(16,24,40,.18)}
+.dhero .meta{position:absolute;left:20px;right:20px;bottom:18px;color:#fff}
+.dhero h1{font-size:28px;font-weight:900;letter-spacing:-.03em;line-height:1.02}
+.dhero .by{font-size:14px;font-weight:600;opacity:.94;margin-top:5px}
+.dbody{padding:18px 20px 30px}
+.conf{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:800;color:#0F6E56;background:#E1F5EE;padding:9px 14px;border-radius:999px;margin-bottom:16px}
+.irow{display:flex;align-items:center;gap:13px;padding:11px 0;border-bottom:1px solid var(--line)}
+.irow i{font-size:20px;color:var(--coral);width:24px;text-align:center}
+.irow b{font-size:14.5px;font-weight:700;display:block}
+.irow span{font-size:12.5px;font-weight:600;color:var(--slate)}
+.dcta{display:flex;gap:11px;margin:20px 0 6px}
+.btnP{flex:1.4;text-align:center;font-size:15px;font-weight:800;color:#fff;background:var(--coralg);padding:15px;border-radius:14px;cursor:pointer;box-shadow:0 8px 22px rgba(255,79,99,.30)}
+.btnS{flex:1;text-align:center;font-size:15px;font-weight:800;color:var(--ink);background:#fff;border:1px solid var(--line);padding:15px;border-radius:14px;cursor:pointer}
+.lineup{display:flex;align-items:center;margin-top:14px}
+.lineup .av{width:46px;height:46px;border-radius:50%;border:2.5px solid var(--bg);margin-left:-12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px}
+.lineup .av:first-child{margin-left:0}
+.about{font-size:14px;font-weight:500;line-height:1.6;color:var(--slate);margin-top:10px}
+.note{max-width:620px;font-size:12.5px;line-height:1.6;color:#6b7280;text-align:center}
+</style>
+</head>
+<body>
+
+<div class="title"><b>Who's Playing</b> — v2 design prototype · tap the tabs and any event card</div>
+
+<div class="stage">
+  <div class="framewrap">
+    <div class="phone">
+      <div class="viewport">
+        <div class="dyn"></div>
+        <div class="statusbar"><span>9:41</span><span class="ic"><i class="ti ti-signal-4g"></i><i class="ti ti-wifi"></i><i class="ti ti-battery-3"></i></span></div>
+
+        <!-- ============ TONIGHT ============ -->
+        <section class="screen active" data-screen="tonight">
+          <div class="applite">
+            <div class="lock">
+              <svg width="27" height="29" viewBox="0 0 250 270" style="overflow:visible"><defs><linearGradient id="g1" x1="40" y1="20" x2="215" y2="250" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff4f63"/><stop offset="48%" stop-color="#ff6b42"/><stop offset="100%" stop-color="#ff2f70"/></linearGradient></defs><path d="M31 100 C8 125 8 165 31 190" fill="none" stroke="#ff5a5f" stroke-width="9" stroke-linecap="round"/><path d="M48 118 C34 135 34 155 48 172" fill="none" stroke="#ff7a3f" stroke-width="8" stroke-linecap="round"/><path d="M126 18 C178 18 219 59 219 111 C219 173 154 233 126 258 C98 233 33 173 33 111 C33 59 74 18 126 18Z" fill="url(#g1)"/><circle cx="126" cy="111" r="67" fill="#fff"/><path d="M108 78 C108 72 115 69 120 73 L159 101 C166 106 166 116 159 121 L120 149 C115 153 108 150 108 144Z" fill="url(#g1)"/><path d="M221 166 C240 181 240 209 221 225" fill="none" stroke="#ff7a3f" stroke-width="8" stroke-linecap="round"/><path d="M204 178 C216 188 216 201 204 211" fill="none" stroke="#ff5a5f" stroke-width="8" stroke-linecap="round"/></svg>
+              <div class="wm">who's<br><span class="p">playing</span></div>
+            </div>
+            <div class="hicon"><i class="ti ti-search"></i></div>
+          </div>
+          <div class="pad">
+            <div class="big">Tonight</div>
+            <div class="sub"><i class="ti ti-map-pin" style="font-size:13px"></i> 32 shows near Austin, TX</div>
+            <div class="seg"><div class="on">Tonight</div><div>This weekend</div></div>
+
+            <div class="feature" data-event onclick="openDetail()" style="background:#8B5CF6">
+              <div class="scrim"></div>
+              <span class="chip">Indie · Rock</span><div class="fav"><i class="ti ti-heart"></i></div>
+              <div class="meta">
+                <div class="live"><span class="blip"></span> Live now</div>
+                <h3>The Black Angels</h3>
+                <div class="v">Mohawk · Red River · 0.4 mi</div>
+              </div>
+            </div>
+
+            <div class="sech">Also playing tonight <a>See all</a></div>
+
+            <div class="erow" data-event onclick="openDetail()">
+              <div class="thumb"><div class="g" style="background:#2D7FF9"></div></div>
+              <div class="einfo"><h4>Ephraim Owens Trio</h4><p><i class="ti ti-map-pin" style="font-size:12px"></i> Elephant Room · Jazz</p></div>
+              <div class="when"><b>9:30</b><span>PM</span></div>
+            </div>
+            <div class="erow" data-event onclick="openDetail()">
+              <div class="thumb"><div class="g" style="background:#FFB020"></div></div>
+              <div class="einfo"><h4>Gina Chavez</h4><p><i class="ti ti-map-pin" style="font-size:12px"></i> Continental Club · Latin</p></div>
+              <div class="when"><b>8:00</b><span>PM</span></div>
+            </div>
+            <div class="erow" data-event onclick="openDetail()">
+              <div class="thumb"><div class="g" style="background:#1D9E75"></div></div>
+              <div class="einfo"><h4>Speakeasy Sessions</h4><p><i class="ti ti-map-pin" style="font-size:12px"></i> Roosevelt Room · Soul</p></div>
+              <div class="when"><b>10:00</b><span>PM</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ EXPLORE ============ -->
+        <section class="screen" data-screen="explore">
+          <div class="pad" style="padding-top:14px">
+            <div class="big" style="margin-top:2px">Explore</div>
+            <div class="search"><i class="ti ti-search" style="font-size:16px"></i> Artists, venues, genres</div>
+            <div class="datestrip">
+              <div class="dcell on"><span>Sat</span><b>14</b></div>
+              <div class="dcell"><span>Sun</span><b>15</b></div>
+              <div class="dcell"><span>Mon</span><b>16</b></div>
+              <div class="dcell"><span>Tue</span><b>17</b></div>
+              <div class="dcell"><span>Wed</span><b>18</b></div>
+              <div class="dcell"><span>Thu</span><b>19</b></div>
+            </div>
+            <div class="chips">
+              <div class="fchip on"><i class="ti ti-adjustments-horizontal" style="font-size:14px"></i> Filters</div>
+              <div class="fchip">Jazz</div><div class="fchip">Free</div><div class="fchip">&lt; 2 mi</div><div class="fchip">21+</div>
+            </div>
+            <div class="daylabel">Saturday, June 14</div>
+            <div class="erow" data-event onclick="openDetail()">
+              <div class="thumb"><div class="g" style="background:#FFB020"></div></div>
+              <div class="einfo"><h4>Gina Chavez</h4><p>Continental Club · Latin</p></div>
+              <div class="when"><b>8:00</b><span>PM</span></div>
+            </div>
+            <div class="erow" data-event onclick="openDetail()">
+              <div class="thumb"><div class="g" style="background:#B7F34A"></div></div>
+              <div class="einfo"><h4>Quiet Company</h4><p>Stubb's · backyard · Indie</p></div>
+              <div class="when"><b>9:30</b><span>PM</span></div>
+            </div>
+            <div class="erow" data-event onclick="openDetail()">
+              <div class="thumb"><div class="g" style="background:#FF3F73"></div></div>
+              <div class="einfo"><h4>The Deer</h4><p>Cactus Cafe · Folk</p></div>
+              <div class="when"><b>9:00</b><span>PM</span></div>
+            </div>
+            <div class="erow" data-event onclick="openDetail()">
+              <div class="thumb"><div class="g" style="background:#2D7FF9"></div></div>
+              <div class="einfo"><h4>Brownout</h4><p>Antone's · Funk</p></div>
+              <div class="when"><b>10:30</b><span>PM</span></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ MAP ============ -->
+        <section class="screen" data-screen="map">
+          <div class="mapwrap">
+            <div class="mapbg">
+              <div class="road" style="top:32%;left:0;right:0;height:10px;transform:rotate(-4deg)"></div>
+              <div class="road" style="top:62%;left:0;right:0;height:14px;transform:rotate(3deg)"></div>
+              <div class="road" style="top:0;bottom:0;left:38%;width:11px"></div>
+              <div class="road" style="top:0;bottom:0;left:71%;width:8px;transform:rotate(5deg)"></div>
+            </div>
+            <div class="maptop"><div class="s"><i class="ti ti-search"></i> Search this area</div><div class="hicon" style="background:rgba(255,255,255,.94)"><i class="ti ti-adjustments-horizontal"></i></div></div>
+            <div class="pin" style="left:30%;top:36%" onclick="selectVenue()"><div class="bub">9:00</div>
+              <svg width="40" height="44" viewBox="0 0 250 270"><defs><linearGradient id="mp1" x1="40" y1="20" x2="215" y2="250" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff4f63"/><stop offset="48%" stop-color="#ff6b42"/><stop offset="100%" stop-color="#ff2f70"/></linearGradient></defs><path d="M126 18 C178 18 219 59 219 111 C219 173 154 233 126 258 C98 233 33 173 33 111 C33 59 74 18 126 18Z" fill="url(#mp1)"/><circle cx="126" cy="111" r="60" fill="#fff"/><path d="M112 80 C112 75 118 72 122 75 L156 101 C162 105 162 114 156 118 L122 144 C118 147 112 144 112 139Z" fill="url(#mp1)"/></svg>
+            </div>
+            <div class="pin" style="left:64%;top:54%" onclick="selectVenue()"><div class="bub">8:30</div>
+              <svg width="34" height="38" viewBox="0 0 250 270"><path d="M126 18 C178 18 219 59 219 111 C219 173 154 233 126 258 C98 233 33 173 33 111 C33 59 74 18 126 18Z" fill="#2D7FF9"/><circle cx="126" cy="111" r="60" fill="#fff"/><path d="M112 80 C112 75 118 72 122 75 L156 101 C162 105 162 114 156 118 L122 144 C118 147 112 144 112 139Z" fill="#2D7FF9"/></svg>
+            </div>
+            <div class="pin" style="left:48%;top:72%" onclick="selectVenue()"><div class="bub">10:00</div>
+              <svg width="32" height="36" viewBox="0 0 250 270"><path d="M126 18 C178 18 219 59 219 111 C219 173 154 233 126 258 C98 233 33 173 33 111 C33 59 74 18 126 18Z" fill="#8B5CF6"/><circle cx="126" cy="111" r="60" fill="#fff"/><path d="M112 80 C112 75 118 72 122 75 L156 101 C162 105 162 114 156 118 L122 144 C118 147 112 144 112 139Z" fill="#8B5CF6"/></svg>
+            </div>
+            <div class="mapsheet" data-event onclick="openDetail()">
+              <div class="thumb" style="width:54px;height:54px"><div class="g" style="background:#8B5CF6"></div></div>
+              <div class="einfo"><h4 style="font-size:15px">The Black Angels</h4><p style="margin-top:3px">Mohawk · tonight 9:00 PM</p></div>
+              <div class="bell" style="background:var(--coralg);color:#fff"><i class="ti ti-arrow-right"></i></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ SAVED ============ -->
+        <section class="screen" data-screen="saved">
+          <div class="pad" style="padding-top:14px">
+            <div class="big" style="margin-top:2px">Saved</div>
+            <div class="sub">Your shows and the artists you follow</div>
+            <div class="sech">Following</div>
+            <div class="follows">
+              <div class="fol"><div class="av" style="background:#8B5CF6">BA</div><span>Black Angels</span></div>
+              <div class="fol"><div class="av" style="background:#FFB020">GC</div><span>Gina Chavez</span></div>
+              <div class="fol"><div class="av" style="background:#2D7FF9">EO</div><span>E. Owens</span></div>
+              <div class="fol"><div class="av" style="background:#1D9E75">MK</div><span>Mohawk</span></div>
+              <div class="fol foladd"><div class="av"><i class="ti ti-plus"></i></div><span>Follow</span></div>
+            </div>
+            <div class="sech">Saved shows <a>Alerts on</a></div>
+            <div class="svrow" data-event onclick="openDetail()">
+              <div class="datebadge"><span>Jun</span><b>13</b></div>
+              <div class="einfo"><h4>The Black Angels</h4><p style="margin-top:3px">Mohawk · tonight 9:00 PM</p></div>
+              <div class="bell"><i class="ti ti-bell"></i></div>
+            </div>
+            <div class="svrow" data-event onclick="openDetail()">
+              <div class="datebadge"><span>Jun</span><b>14</b></div>
+              <div class="einfo"><h4>Gina Chavez</h4><p style="margin-top:3px">Continental Club · 8:00 PM</p></div>
+              <div class="bell"><i class="ti ti-bell"></i></div>
+            </div>
+            <div class="svrow" data-event onclick="openDetail()">
+              <div class="datebadge"><span>Jun</span><b>21</b></div>
+              <div class="einfo"><h4>Brownout</h4><p style="margin-top:3px">Antone's · 10:30 PM</p></div>
+              <div class="bell" style="background:#EEF0F4;color:var(--mute)"><i class="ti ti-bell-off"></i></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ YOU ============ -->
+        <section class="screen" data-screen="you">
+          <div class="pad" style="padding-top:18px">
+            <div class="profhead">
+              <div class="av">JW</div>
+              <div><h2>James W.</h2><p>Music goer · Austin, TX</p></div>
+            </div>
+            <div class="sech">Your hats</div>
+            <div class="hat">
+              <div class="ic" style="background:#FFF1F1;color:var(--coral)"><i class="ti ti-headphones"></i></div>
+              <div><h4>Music goer</h4><p>Following 12 · 8 saved shows</p></div>
+              <div class="go"><i class="ti ti-chevron-right"></i></div>
+            </div>
+            <div class="hat">
+              <div class="ic" style="background:#EEEDFE;color:var(--purple)"><i class="ti ti-microphone-2"></i></div>
+              <div><h4>Are you an artist?</h4><p>Create a profile · solo or with bands</p></div>
+              <div class="go"><i class="ti ti-chevron-right"></i></div>
+            </div>
+            <div class="hat">
+              <div class="ic" style="background:#E6F1FB;color:var(--blue)"><i class="ti ti-building-store"></i></div>
+              <div><h4>Run a venue?</h4><p>Claim it · validated via Google Maps</p></div>
+              <div class="go"><i class="ti ti-chevron-right"></i></div>
+            </div>
+            <div class="hat">
+              <div class="ic" style="background:#FAEEDA;color:#854F0B"><i class="ti ti-mail"></i></div>
+              <div><h4>Invites</h4><p>2 venues want to book you</p></div>
+              <div class="badge">2</div>
+            </div>
+            <button class="cta-create"><i class="ti ti-plus"></i> Create event</button>
+            <div class="sech" style="margin-top:18px">Connections</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-instagram"></i></span> Instagram, Spotify, Apple Music <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-calendar-share"></i></span> Calendar export (ICS) <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-bell"></i></span> Notifications & alerts <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="setrow" style="border:none"><span class="ic"><i class="ti ti-qrcode"></i></span> Share my profile (QR) <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+          </div>
+        </section>
+
+        <!-- ============ EVENT DETAIL ============ -->
+        <div class="detail" id="detail">
+          <div class="dhero" style="background:#8B5CF6">
+            <div class="scrim"></div>
+            <div class="dnav"><div class="gbtn" onclick="closeDetail()"><i class="ti ti-chevron-left"></i></div>
+              <div style="display:flex;gap:9px"><div class="gbtn"><i class="ti ti-share"></i></div><div class="gbtn" style="color:var(--coral)"><i class="ti ti-heart"></i></div></div></div>
+            <div class="meta"><span class="chip" style="position:static;display:inline-block;margin-bottom:8px">Indie · Rock</span><h1>The Black Angels</h1><div class="by">with Black Mountain · doors 8:00 PM</div></div>
+          </div>
+          <div class="dbody">
+            <div class="conf"><i class="ti ti-circle-check"></i> Confirmed · venue + artist</div>
+            <div class="irow"><i class="ti ti-map-pin"></i><div><b>Mohawk</b><span>912 Red River St · Austin, TX</span></div></div>
+            <div class="irow"><i class="ti ti-clock"></i><div><b>Tonight, June 13</b><span>Doors 8:00 PM · Show 9:00 PM</span></div></div>
+            <div class="irow"><i class="ti ti-ticket"></i><div><b>$25 advance</b><span>18+ · tickets at the door</span></div></div>
+            <div class="dcta"><div class="btnP">Save show</div><div class="btnS">Directions</div></div>
+            <div class="sech" style="margin-top:22px">Lineup</div>
+            <div class="lineup">
+              <div class="av" style="background:#8B5CF6">BA</div>
+              <div class="av" style="background:#FFB020">BM</div>
+              <div class="av" style="background:#2D7FF9">+2</div>
+              <span style="margin-left:14px;font-size:13px;font-weight:700;color:var(--coral)">Follow all</span>
+            </div>
+            <div class="sech" style="margin-top:22px">About</div>
+            <p class="about">Austin psych-rock mainstays back at Mohawk for a hometown night on the Red River strip. Heavy reverb, hypnotic grooves, and a light show worth getting there early for.</p>
+          </div>
+        </div>
+
+        <!-- ============ TAB BAR ============ -->
+        <nav class="tabbar">
+          <div class="tab on" data-tab="tonight"><i class="ti ti-bolt"></i>Tonight</div>
+          <div class="tab" data-tab="explore"><i class="ti ti-calendar-month"></i>Explore</div>
+          <div class="tab" data-tab="map"><i class="ti ti-map-2"></i>Map</div>
+          <div class="tab" data-tab="saved"><i class="ti ti-heart"></i>Saved</div>
+          <div class="tab" data-tab="you"><i class="ti ti-user"></i>You</div>
+        </nav>
+      </div>
+    </div>
+    <div class="cap">Tap tabs · tap any card to open event detail</div>
+  </div>
+</div>
+
+<p class="note">v2 "Live Pin" brand · Apple Music Concerts-leaning: neutral white chrome, large rounded artwork, color lives in the artwork, coral reserved for primary actions &amp; active state. Artwork blocks are placeholders for real event imagery. Cross-confirmation surfaces as the "Confirmed · venue + artist" trust badge.</p>
+
+<script>
+  const tabs=document.querySelectorAll('.tab');
+  const screens=document.querySelectorAll('.screen');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    closeDetail();
+    tabs.forEach(x=>x.classList.remove('on'));t.classList.add('on');
+    const name=t.dataset.tab;
+    screens.forEach(s=>s.classList.toggle('active',s.dataset.screen===name));
+  }));
+  function openDetail(){document.getElementById('detail').classList.add('open');}
+  function closeDetail(){document.getElementById('detail').classList.remove('open');}
+  function selectVenue(){/* pin tap keeps the sheet; could swap content */}
+</script>
+</body>
+</html>
