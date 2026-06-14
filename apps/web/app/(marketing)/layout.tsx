@@ -26,7 +26,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       <main className="flex-1">{children}</main>
       <footer className="border-t border-ink-line bg-surface">
         <div className="mx-auto max-w-6xl px-5 py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-caption text-ink-mute">
-          <span>© {new Date().getFullYear()} Who&rsquo;s Playing · Made for the Beaches</span>
+          <span>© {new Date().getFullYear()} Who&rsquo;s Playing · whosplaying.live</span>
           <span className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-coral" />
             Free forever for fans &amp; artists

@@ -5,7 +5,7 @@ import { Feature, FEATURE_MATRIX, type FeatureKey } from '@whosplaying/core'
 export const metadata: Metadata = {
   title: "Pricing — Who's Playing",
   description:
-    'Free forever for fans and artists. Venues list shows, message performers, and link out for tickets at no cost. Venue Pro unlocks boosts, GPS push, and full analytics — $14.99/mo founding rate for the first Beaches venues.',
+    'Free forever for fans and artists. Venues list shows, message performers, and link out for tickets at no cost. Venue Pro unlocks boosts, GPS push, and full analytics — $14.99/mo founding rate for early venues.',
 }
 
 // Display order + copy for the comparison. The Free/Pro cells are derived from
@@ -52,7 +52,7 @@ export default function PricingPage() {
       {/* Hero */}
       <div className="text-center max-w-2xl mx-auto">
         <span className="inline-flex items-center gap-2 rounded-pill bg-coral-soft px-3.5 py-1.5 text-caption font-bold uppercase tracking-wide text-coral">
-          Made for the Beaches
+          Support local live music
         </span>
         <h1 className="mt-4 font-display text-[44px] leading-[1.04] tracking-tight text-ink-deep">
           Free for fans and artists.
@@ -105,7 +105,7 @@ export default function PricingPage() {
             <span className="text-body-sm font-semibold text-ink-soft">/venue/mo</span>
           </div>
           <p className="mt-1.5 text-caption font-bold text-teal">
-            Locked for life for the first ~10–15 Beaches venues
+            Locked for life for our founding venues
           </p>
           <Link
             href="/login"
@@ -179,9 +179,8 @@ export default function PricingPage() {
       {/* Mission strip */}
       <div className="mt-12 rounded-xl bg-ink-deep px-7 py-9 text-center text-white">
         <p className="mx-auto max-w-2xl text-lg font-medium leading-relaxed">
-          Who&rsquo;s Playing started as a Jax Beach live-music account. The mission is supporting
-          local artists and staying sustainable — break-even is about six venues. Surplus funds the
-          music, not shareholders.
+          Who&rsquo;s Playing started as a community for local live music. The mission is supporting
+          local artists and staying sustainable — surplus funds the music, not shareholders.
         </p>
         <Link
           href="/for-venues"
