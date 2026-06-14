@@ -1,79 +1,45 @@
 import * as React from 'react'
 
 type WordmarkProps = {
-  /** Width in px. Height scales proportionally (aspect 320 × 96). */
+  /** Width in px. Height scales proportionally (aspect 430 × 84). */
   width?: number
-  /** When true, the layered color blocks are removed (white-on-color usage). */
+  /** When true, both words render white for use on a coral/ink background. */
   mono?: boolean
   className?: string
 }
 
 /**
- * "Who's Playing" — the layered lockup. Three stacked passes of the wordmark:
- *   1. Teal block, offset down-right (the "shadow")
- *   2. Yellow block, offset slightly less
- *   3. White face on top
- * This mirrors the layered/overlapping reference imagery. Vector so it
- * renders identically in web and mobile (via react-native-svg).
+ * "who's playing" — the v2 "Live Pin" wordmark. Lowercase Inter Black with
+ * tight tracking: "who's" in ink-deep, "playing" in coral. Mirrors the
+ * canonical treatment in the design prototype and docs/RE_EVALUATION.md §4
+ * (the earlier teal/yellow layered lockup is retired). Vector so it renders
+ * identically on web and mobile (via react-native-svg).
  */
-export function Wordmark({ width = 320, mono = false, className }: WordmarkProps) {
-  // Viewbox sized to the rendered glyph metrics: the italic Black face at 64px
-  // for "Who's Playing" needs about 410px of horizontal room including the
-  // layered offset shadows.
-  const aspect = 420 / 96
+export function Wordmark({ width = 240, mono = false, className }: WordmarkProps) {
+  const aspect = 430 / 84
   const height = width / aspect
+  const whos = mono ? '#FFFFFF' : '#071020'
+  const playing = mono ? '#FFFFFF' : '#FF5A5F'
 
   return (
     <svg
-      viewBox="0 0 420 96"
+      viewBox="0 0 430 84"
       width={width}
       height={height}
       className={className}
       role="img"
       aria-label="Who's Playing"
     >
-      {!mono && (
-        <>
-          {/* Layer 1 — teal block */}
-          <text
-            x="10"
-            y="72"
-            fontFamily='"Barlow Condensed", Impact, sans-serif'
-            fontWeight={900}
-            fontSize="64"
-            fontStyle="italic"
-            fill="#0AA3A3"
-          >
-            Who&rsquo;s Playing
-          </text>
-          {/* Layer 2 — yellow block */}
-          <text
-            x="6"
-            y="68"
-            fontFamily='"Barlow Condensed", Impact, sans-serif'
-            fontWeight={900}
-            fontSize="64"
-            fontStyle="italic"
-            fill="#FFCB05"
-          >
-            Who&rsquo;s Playing
-          </text>
-        </>
-      )}
-      {/* Layer 3 — white face with ink outline */}
       <text
         x="2"
-        y="64"
-        fontFamily='"Barlow Condensed", Impact, sans-serif'
-        fontWeight={900}
+        y="62"
+        fontFamily='Inter, -apple-system, "SF Pro Display", system-ui, sans-serif'
+        fontWeight={800}
         fontSize="64"
-        fontStyle="italic"
-        fill="#FFFFFF"
-        stroke="#0E1A1A"
-        strokeWidth={2}
-        paintOrder="stroke"
+        letterSpacing="-2"
       >
-        Who&rsquo;s Playing
+        <tspan fill={whos}>who&rsquo;s </tspan>
+        <tspan fill={playing}>playing</tspan>
       </text>
     </svg>
   )
