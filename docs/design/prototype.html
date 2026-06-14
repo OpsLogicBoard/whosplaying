@@ -67,7 +67,7 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .thumb{width:64px;height:64px;border-radius:15px;flex-shrink:0;position:relative;overflow:hidden}
 .thumb .g{position:absolute;inset:0}
 .einfo{flex:1;min-width:0}
-.einfo h4{font-size:15.5px;font-weight:800;letter-spacing:-.01em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.einfo h4{font-size:15.5px;font-weight:600;letter-spacing:-.01em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .einfo p{font-size:12.5px;font-weight:600;color:var(--slate);margin-top:3px;display:flex;align-items:center;gap:5px}
 .when{text-align:right;flex-shrink:0}
 .when b{display:block;font-size:14px;font-weight:800;color:var(--deep)}
@@ -109,6 +109,11 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .fol span{font-size:11px;font-weight:700;color:var(--slate);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .foladd .av{background:#fff;border:1.5px dashed var(--mute);color:var(--mute)}
 .svrow{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:17px;padding:11px;margin-bottom:12px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.frow{display:flex;align-items:center;gap:13px;padding:12px 2px;border-bottom:1px solid var(--line)}
+.favm{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px}
+.finfo{flex:1;min-width:0}
+.finfo h4{font-size:15px;font-weight:600;letter-spacing:-.01em}
+.finfo p{font-size:12.5px;font-weight:600;color:var(--slate);margin-top:2px}
 .datebadge{width:52px;height:56px;border-radius:13px;background:#FFF1F1;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
 .datebadge span{font-size:10.5px;font-weight:800;color:var(--coral);text-transform:uppercase}
 .datebadge b{font-size:21px;font-weight:800;color:var(--coral);line-height:1}
@@ -175,43 +180,39 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 
         <!-- ============ TONIGHT ============ -->
         <section class="screen active" data-screen="tonight">
-          <div class="applite">
-            <div class="lock">
-              <svg width="27" height="29" viewBox="0 0 250 270" style="overflow:visible"><defs><linearGradient id="g1" x1="40" y1="20" x2="215" y2="250" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#ff4f63"/><stop offset="48%" stop-color="#ff6b42"/><stop offset="100%" stop-color="#ff2f70"/></linearGradient></defs><path d="M31 100 C8 125 8 165 31 190" fill="none" stroke="#ff5a5f" stroke-width="9" stroke-linecap="round"/><path d="M48 118 C34 135 34 155 48 172" fill="none" stroke="#ff7a3f" stroke-width="8" stroke-linecap="round"/><path d="M126 18 C178 18 219 59 219 111 C219 173 154 233 126 258 C98 233 33 173 33 111 C33 59 74 18 126 18Z" fill="url(#g1)"/><circle cx="126" cy="111" r="67" fill="#fff"/><path d="M108 78 C108 72 115 69 120 73 L159 101 C166 106 166 116 159 121 L120 149 C115 153 108 150 108 144Z" fill="url(#g1)"/><path d="M221 166 C240 181 240 209 221 225" fill="none" stroke="#ff7a3f" stroke-width="8" stroke-linecap="round"/><path d="M204 178 C216 188 216 201 204 211" fill="none" stroke="#ff5a5f" stroke-width="8" stroke-linecap="round"/></svg>
-              <div class="wm">who's<br><span class="p">playing</span></div>
-            </div>
-            <div class="hicon"><i class="ti ti-search"></i></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 20px 0">
+            <button style="display:flex;align-items:center;gap:5px;background:none;border:none;font-family:inherit;font-size:17px;font-weight:800;letter-spacing:-.02em;color:#071020;cursor:pointer">Jacksonville Beach <i class="ti ti-chevron-down" style="font-size:17px;color:#5C6470"></i></button>
+            <div style="position:relative;width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:19px;color:#071020"><i class="ti ti-bell"></i><span style="position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--coral);border:1.5px solid #fff"></span></div>
           </div>
-          <div class="pad">
-            <div class="big">Tonight</div>
-            <div class="sub"><i class="ti ti-map-pin" style="font-size:13px"></i> 32 shows near Austin, TX</div>
-            <div class="seg"><div class="on">Tonight</div><div>This weekend</div></div>
+          <div class="pad" style="padding-top:4px">
+            <div style="font-size:33px;font-weight:800;letter-spacing:-.03em;margin:10px 0 16px;color:#071020">Playing <span style="color:var(--coral)">tonight.</span></div>
+            <div class="search"><i class="ti ti-search" style="font-size:16px"></i> Search events, artists, venues</div>
 
-            <div class="feature" data-event onclick="openDetail()" style="background:#8B5CF6">
+            <div class="feature" data-event onclick="openDetail()" style="background:#23272F">
               <div class="scrim"></div>
-              <span class="chip">Indie · Rock</span><div class="fav"><i class="ti ti-heart"></i></div>
+              <span class="chip">Rock</span><div class="fav"><i class="ti ti-heart"></i></div>
               <div class="meta">
                 <div class="live"><span class="blip"></span> Live now</div>
-                <h3>The Black Angels</h3>
-                <div class="v">Mohawk · Red River · 0.4 mi</div>
+                <h3>The Firewater Tent Revival</h3>
+                <div class="v">Surfer the Bar · 0.4 mi</div>
               </div>
             </div>
 
-            <div class="sech">Also playing tonight <a>See all</a></div>
+            <div class="sech">Also tonight <a>See all</a></div>
 
             <div class="erow" data-event onclick="openDetail()">
               <div class="thumb"><div class="g" style="background:#2D7FF9"></div></div>
-              <div class="einfo"><h4>Ephraim Owens Trio</h4><p><i class="ti ti-map-pin" style="font-size:12px"></i> Elephant Room · Jazz</p></div>
-              <div class="when"><b>9:30</b><span>PM</span></div>
+              <div class="einfo"><h4>Chloe Kimes &amp; The Tide</h4><p><i class="ti ti-map-pin" style="font-size:12px"></i> Blue Jay Listening Room</p></div>
+              <div class="when"><b>8:30</b><span>PM</span></div>
             </div>
             <div class="erow" data-event onclick="openDetail()">
               <div class="thumb"><div class="g" style="background:#FFB020"></div></div>
-              <div class="einfo"><h4>Gina Chavez</h4><p><i class="ti ti-map-pin" style="font-size:12px"></i> Continental Club · Latin</p></div>
-              <div class="when"><b>8:00</b><span>PM</span></div>
+              <div class="einfo"><h4>Low Tide Social Club</h4><p><i class="ti ti-map-pin" style="font-size:12px"></i> Ocean Street Taproom</p></div>
+              <div class="when"><b>9:15</b><span>PM</span></div>
             </div>
             <div class="erow" data-event onclick="openDetail()">
               <div class="thumb"><div class="g" style="background:#1D9E75"></div></div>
-              <div class="einfo"><h4>Speakeasy Sessions</h4><p><i class="ti ti-map-pin" style="font-size:12px"></i> Roosevelt Room · Soul</p></div>
+              <div class="einfo"><h4>The Saltwater Revival</h4><p><i class="ti ti-map-pin" style="font-size:12px"></i> Lonnie's Western Room</p></div>
               <div class="when"><b>10:00</b><span>PM</span></div>
             </div>
           </div>
@@ -220,9 +221,7 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
         <!-- ============ EXPLORE ============ -->
         <section class="screen" data-screen="explore">
           <div class="pad" style="padding-top:14px">
-            <div class="big" style="margin-top:2px">Explore</div>
-            <div class="search"><i class="ti ti-search" style="font-size:16px"></i> Artists, venues, genres</div>
-            <div class="datestrip">
+            <div class="datestrip" style="margin-top:4px">
               <div class="dcell on"><span>Sat</span><b>14</b></div>
               <div class="dcell"><span>Sun</span><b>15</b></div>
               <div class="dcell"><span>Mon</span><b>16</b></div>
@@ -230,29 +229,26 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
               <div class="dcell"><span>Wed</span><b>18</b></div>
               <div class="dcell"><span>Thu</span><b>19</b></div>
             </div>
-            <div class="chips">
-              <div class="fchip on"><i class="ti ti-adjustments-horizontal" style="font-size:14px"></i> Filters</div>
-              <div class="fchip">Jazz</div><div class="fchip">Free</div><div class="fchip">&lt; 2 mi</div><div class="fchip">21+</div>
-            </div>
+            <div class="search"><i class="ti ti-search" style="font-size:16px"></i> Search events, artists, venues</div>
             <div class="daylabel">Saturday, June 14</div>
             <div class="erow" data-event onclick="openDetail()">
               <div class="thumb"><div class="g" style="background:#FFB020"></div></div>
-              <div class="einfo"><h4>Gina Chavez</h4><p>Continental Club · Latin</p></div>
-              <div class="when"><b>8:00</b><span>PM</span></div>
+              <div class="einfo"><h4>Sunset Sessions</h4><p>Surfer the Bar · Acoustic</p></div>
+              <div class="when"><b>7:00</b><span>PM</span></div>
             </div>
             <div class="erow" data-event onclick="openDetail()">
               <div class="thumb"><div class="g" style="background:#B7F34A"></div></div>
-              <div class="einfo"><h4>Quiet Company</h4><p>Stubb's · backyard · Indie</p></div>
-              <div class="when"><b>9:30</b><span>PM</span></div>
+              <div class="einfo"><h4>The Saltwater Revival</h4><p>Lonnie's Western Room · Country</p></div>
+              <div class="when"><b>8:30</b><span>PM</span></div>
             </div>
             <div class="erow" data-event onclick="openDetail()">
               <div class="thumb"><div class="g" style="background:#FF3F73"></div></div>
-              <div class="einfo"><h4>The Deer</h4><p>Cactus Cafe · Folk</p></div>
-              <div class="when"><b>9:00</b><span>PM</span></div>
+              <div class="einfo"><h4>Beaches Brass Band</h4><p>Blue Jay Listening Room · Funk</p></div>
+              <div class="when"><b>9:30</b><span>PM</span></div>
             </div>
             <div class="erow" data-event onclick="openDetail()">
               <div class="thumb"><div class="g" style="background:#2D7FF9"></div></div>
-              <div class="einfo"><h4>Brownout</h4><p>Antone's · Funk</p></div>
+              <div class="einfo"><h4>Coastline</h4><p>Ocean Street Taproom · Indie</p></div>
               <div class="when"><b>10:30</b><span>PM</span></div>
             </div>
           </div>
@@ -288,31 +284,36 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
         <!-- ============ SAVED ============ -->
         <section class="screen" data-screen="saved">
           <div class="pad" style="padding-top:14px">
-            <div class="big" style="margin-top:2px">Saved</div>
-            <div class="sub">Your shows and the artists you follow</div>
-            <div class="sech">Following</div>
-            <div class="follows">
-              <div class="fol"><div class="av" style="background:#8B5CF6">BA</div><span>Black Angels</span></div>
-              <div class="fol"><div class="av" style="background:#FFB020">GC</div><span>Gina Chavez</span></div>
-              <div class="fol"><div class="av" style="background:#2D7FF9">EO</div><span>E. Owens</span></div>
-              <div class="fol"><div class="av" style="background:#1D9E75">MK</div><span>Mohawk</span></div>
-              <div class="fol foladd"><div class="av"><i class="ti ti-plus"></i></div><span>Follow</span></div>
+            <div class="seg" style="margin-top:4px">
+              <div class="on" id="sv-tab-following" onclick="savedView('following')">Following</div>
+              <div id="sv-tab-shows" onclick="savedView('shows')">Shows</div>
             </div>
-            <div class="sech">Saved shows <a>Alerts on</a></div>
-            <div class="svrow" data-event onclick="openDetail()">
-              <div class="datebadge"><span>Jun</span><b>13</b></div>
-              <div class="einfo"><h4>The Black Angels</h4><p style="margin-top:3px">Mohawk · tonight 9:00 PM</p></div>
-              <div class="bell"><i class="ti ti-bell"></i></div>
+
+            <div id="sv-following">
+              <div class="frow"><div class="favm" style="background:#23272F">FT</div><div class="finfo"><h4>The Firewater Tent Revival</h4><p>Artist · roots rock</p></div><i class="ti ti-heart" style="color:var(--coral);font-size:20px"></i></div>
+              <div class="frow"><div class="favm" style="background:#2D7FF9">CK</div><div class="finfo"><h4>Chloe Kimes &amp; The Tide</h4><p>Artist · indie</p></div><i class="ti ti-heart" style="color:var(--coral);font-size:20px"></i></div>
+              <div class="frow"><div class="favm" style="background:#FFB020">LT</div><div class="finfo"><h4>Low Tide Social Club</h4><p>Artist · funk</p></div><i class="ti ti-heart" style="color:var(--coral);font-size:20px"></i></div>
+              <div class="frow"><div class="favm" style="background:#1D9E75">SB</div><div class="finfo"><h4>Surfer the Bar</h4><p>Venue · Jacksonville Beach</p></div><i class="ti ti-heart" style="color:var(--coral);font-size:20px"></i></div>
+              <div class="frow"><div class="favm" style="background:#8B5CF6">BJ</div><div class="finfo"><h4>Blue Jay Listening Room</h4><p>Venue · Jacksonville Beach</p></div><i class="ti ti-heart" style="color:var(--coral);font-size:20px"></i></div>
             </div>
-            <div class="svrow" data-event onclick="openDetail()">
-              <div class="datebadge"><span>Jun</span><b>14</b></div>
-              <div class="einfo"><h4>Gina Chavez</h4><p style="margin-top:3px">Continental Club · 8:00 PM</p></div>
-              <div class="bell"><i class="ti ti-bell"></i></div>
-            </div>
-            <div class="svrow" data-event onclick="openDetail()">
-              <div class="datebadge"><span>Jun</span><b>21</b></div>
-              <div class="einfo"><h4>Brownout</h4><p style="margin-top:3px">Antone's · 10:30 PM</p></div>
-              <div class="bell" style="background:#EEF0F4;color:var(--mute)"><i class="ti ti-bell-off"></i></div>
+
+            <div id="sv-shows" style="display:none">
+              <div class="sech" style="margin-top:2px">Upcoming <a>Alerts on</a></div>
+              <div class="svrow" data-event onclick="openDetail()">
+                <div class="datebadge"><span>Jun</span><b>13</b></div>
+                <div class="einfo"><h4>The Firewater Tent Revival</h4><p style="margin-top:3px">Surfer the Bar · tonight 8:00 PM</p></div>
+                <div class="bell"><i class="ti ti-bell"></i></div>
+              </div>
+              <div class="svrow" data-event onclick="openDetail()">
+                <div class="datebadge"><span>Jun</span><b>14</b></div>
+                <div class="einfo"><h4>Chloe Kimes &amp; The Tide</h4><p style="margin-top:3px">Blue Jay Listening Room · 8:30 PM</p></div>
+                <div class="bell"><i class="ti ti-bell"></i></div>
+              </div>
+              <div class="svrow" data-event onclick="openDetail()">
+                <div class="datebadge"><span>Jun</span><b>21</b></div>
+                <div class="einfo"><h4>The Saltwater Revival</h4><p style="margin-top:3px">Lonnie's Western Room · 10:00 PM</p></div>
+                <div class="bell" style="background:#EEF0F4;color:var(--mute)"><i class="ti ti-bell-off"></i></div>
+              </div>
             </div>
           </div>
         </section>
@@ -322,7 +323,7 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
           <div class="pad" style="padding-top:18px">
             <div class="profhead">
               <div class="av">JW</div>
-              <div><h2>James W.</h2><p>Music goer · Austin, TX</p></div>
+              <div><h2>James W.</h2><p>Music goer · Jacksonville Beach</p></div>
             </div>
             <div class="sech">Your hats</div>
             <div class="hat">
@@ -356,27 +357,27 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 
         <!-- ============ EVENT DETAIL ============ -->
         <div class="detail" id="detail">
-          <div class="dhero" style="background:#8B5CF6">
+          <div class="dhero" style="background:#23272F">
             <div class="scrim"></div>
             <div class="dnav"><div class="gbtn" onclick="closeDetail()"><i class="ti ti-chevron-left"></i></div>
               <div style="display:flex;gap:9px"><div class="gbtn"><i class="ti ti-share"></i></div><div class="gbtn" style="color:var(--coral)"><i class="ti ti-heart"></i></div></div></div>
-            <div class="meta"><span class="chip" style="position:static;display:inline-block;margin-bottom:8px">Indie · Rock</span><h1>The Black Angels</h1><div class="by">with Black Mountain · doors 8:00 PM</div></div>
+            <div class="meta"><span class="chip" style="position:static;display:inline-block;margin-bottom:8px">Rock</span><h1>The Firewater Tent Revival</h1><div class="by">with The Tide · doors 7:30 PM</div></div>
           </div>
           <div class="dbody">
             <div class="conf"><i class="ti ti-circle-check"></i> Confirmed · venue + artist</div>
-            <div class="irow"><i class="ti ti-map-pin"></i><div><b>Mohawk</b><span>912 Red River St · Austin, TX</span></div></div>
-            <div class="irow"><i class="ti ti-clock"></i><div><b>Tonight, June 13</b><span>Doors 8:00 PM · Show 9:00 PM</span></div></div>
-            <div class="irow"><i class="ti ti-ticket"></i><div><b>$25 advance</b><span>18+ · tickets at the door</span></div></div>
+            <div class="irow"><i class="ti ti-map-pin"></i><div><b>Surfer the Bar</b><span>200 1st St N · Jacksonville Beach, FL</span></div></div>
+            <div class="irow"><i class="ti ti-clock"></i><div><b>Tonight, June 13</b><span>Doors 7:30 PM · Show 8:00 PM</span></div></div>
+            <div class="irow"><i class="ti ti-ticket"></i><div><b>$15 advance</b><span>21+ · tickets at the door</span></div></div>
             <div class="dcta"><div class="btnP">Save show</div><div class="btnS">Directions</div></div>
             <div class="sech" style="margin-top:22px">Lineup</div>
             <div class="lineup">
-              <div class="av" style="background:#8B5CF6">BA</div>
-              <div class="av" style="background:#FFB020">BM</div>
-              <div class="av" style="background:#2D7FF9">+2</div>
+              <div class="av" style="background:#23272F">FT</div>
+              <div class="av" style="background:#2D7FF9">TT</div>
+              <div class="av" style="background:#FFB020">+1</div>
               <span style="margin-left:14px;font-size:13px;font-weight:700;color:var(--coral)">Follow all</span>
             </div>
             <div class="sech" style="margin-top:22px">About</div>
-            <p class="about">Austin psych-rock mainstays back at Mohawk for a hometown night on the Red River strip. Heavy reverb, hypnotic grooves, and a light show worth getting there early for.</p>
+            <p class="about">Jax Beach roots-rock favorites bringing their tent-revival energy to Surfer the Bar — horns, harmonies, and a dance floor that fills before the first chorus.</p>
           </div>
         </div>
 
@@ -405,6 +406,12 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
     const name=t.dataset.tab;
     screens.forEach(s=>s.classList.toggle('active',s.dataset.screen===name));
   }));
+  function savedView(v){
+    document.getElementById('sv-following').style.display=v==='following'?'block':'none';
+    document.getElementById('sv-shows').style.display=v==='shows'?'block':'none';
+    document.getElementById('sv-tab-following').classList.toggle('on',v==='following');
+    document.getElementById('sv-tab-shows').classList.toggle('on',v==='shows');
+  }
   function openDetail(){document.getElementById('detail').classList.add('open');}
   function closeDetail(){document.getElementById('detail').classList.remove('open');}
   function selectVenue(){/* pin tap keeps the sheet; could swap content */}
