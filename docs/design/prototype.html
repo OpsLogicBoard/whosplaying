@@ -69,6 +69,8 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .einfo{flex:1;min-width:0}
 .einfo h4{font-size:15.5px;font-weight:600;letter-spacing:-.01em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .einfo p{font-size:12.5px;font-weight:600;color:var(--slate);margin-top:3px;display:flex;align-items:center;gap:5px}
+.einfo .ven{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.einfo .dt{display:block;color:var(--slate);font-weight:600;font-size:12px;margin-top:2px}
 .when{text-align:right;flex-shrink:0}
 .when b{display:block;font-size:14px;font-weight:800;color:var(--deep)}
 .when span{font-size:11px;font-weight:700;color:var(--mute);text-transform:uppercase}
@@ -130,9 +132,60 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .hat .go{margin-left:auto;color:var(--mute);font-size:18px}
 .hat .badge{margin-left:auto;background:var(--coral);color:#fff;font-size:11px;font-weight:800;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;padding:0 6px}
 .cta-create{width:100%;background:var(--coralg);color:#fff;border:none;font-family:inherit;font-size:15px;font-weight:800;padding:15px;border-radius:15px;margin:14px 0 8px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 22px rgba(255,79,99,.32)}
+.cta-ghost{width:100%;background:#fff;color:var(--ink);border:1px solid var(--line);font-family:inherit;font-size:15px;font-weight:800;padding:14px;border-radius:15px;margin-top:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 .setrow{display:flex;align-items:center;gap:13px;padding:14px 2px;border-bottom:1px solid var(--line);font-size:14.5px;font-weight:600}
 .setrow .ic{font-size:19px;color:var(--slate);width:24px;text-align:center}
 .setrow .go{margin-left:auto;color:var(--mute)}
+.setrow .ok{margin-left:auto;font-size:11.5px;font-weight:800;color:#0F6E56;display:flex;align-items:center;gap:4px}
+.setrow .cn{margin-left:auto;font-size:12px;font-weight:800;color:var(--coral)}
+
+/* ===== Profile (You) v2 ===== */
+.pf-proto{display:flex;align-items:center;gap:9px;border:1px dashed #C3C8D2;border-radius:12px;padding:7px 8px 7px 12px;margin-bottom:18px}
+.pf-proto > span{font-size:10px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.pf-pseg{margin-left:auto;display:flex;background:#EEF0F4;border-radius:9px;padding:3px}
+.pf-pseg div{font-size:11.5px;font-weight:700;color:var(--slate);padding:5px 12px;border-radius:7px;cursor:pointer;white-space:nowrap}
+.pf-pseg div.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(16,24,40,.14)}
+.pf-id{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.pf-av{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:800;flex-shrink:0;box-shadow:0 6px 16px rgba(255,79,99,.28)}
+.pf-idm{flex:1;min-width:0}
+.pf-idm h2{font-size:21px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.pf-handle{font-size:13px;font-weight:700;color:var(--slate);margin-top:1px}
+.pf-role{font-size:12.5px;font-weight:700;color:var(--mute);margin-top:3px;display:flex;align-items:center;gap:5px}
+.pf-edit{width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--slate);font-size:17px;flex-shrink:0;cursor:pointer}
+.pf-src{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;color:var(--slate);background:#F2F3F6;padding:4px 10px;border-radius:999px;margin:2px 0 18px}
+.pf-stats{display:flex;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 6px;margin-bottom:20px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.pf-stat{flex:1;text-align:center;border-right:1px solid var(--line);cursor:pointer}
+.pf-stat:last-child{border-right:none}
+.pf-stat b{display:block;font-size:19px;font-weight:800;color:var(--ink)}
+.pf-stat span{font-size:11.5px;font-weight:700;color:var(--slate)}
+.pf-sec{font-size:13px;font-weight:800;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;margin:18px 2px 12px;display:flex;align-items:center;justify-content:space-between}
+.pf-sec a{font-size:12px;font-weight:700;color:var(--coral);text-transform:none;letter-spacing:0;cursor:pointer}
+.pf-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.pf-tag{font-size:12.5px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);padding:7px 13px;border-radius:999px}
+.pf-acting{background:#fff;border:1px solid var(--line);border-radius:18px;padding:6px 6px 4px;margin-bottom:16px;box-shadow:0 6px 18px rgba(16,24,40,.06)}
+.pf-actcur{display:flex;align-items:center;gap:12px;padding:10px}
+.pf-actcur .lg{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px;flex-shrink:0}
+.pf-actcur .m{flex:1;min-width:0}
+.pf-actcur .lab{font-size:10px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.pf-actcur h4{font-size:16px;font-weight:800;letter-spacing:-.01em}
+.pf-actcur p{font-size:12px;font-weight:600;color:var(--slate);margin-top:1px}
+.pf-ents{display:flex;gap:9px;overflow-x:auto;padding:2px 4px 8px;scrollbar-width:none}
+.pf-ents::-webkit-scrollbar{display:none}
+.pf-ent{flex-shrink:0;display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer;background:#fff}
+.pf-ent.on{border-color:var(--ink)}
+.pf-ent .d{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800}
+.pf-ent .t{font-size:12.5px;font-weight:700;white-space:nowrap}
+.pf-ent.add{border-style:dashed;color:var(--slate);font-weight:700}
+.pf-mini{display:flex;gap:9px;margin-bottom:18px}
+.pf-mini .c{flex:1;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 10px;text-align:center;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.pf-mini b{display:block;font-size:18px;font-weight:800;color:var(--ink)}
+.pf-mini span{font-size:10.5px;font-weight:700;color:var(--slate)}
+.pf-hint{font-size:11.5px;font-weight:600;color:var(--mute);line-height:1.5;margin:0 2px 16px;display:flex;align-items:flex-start;gap:6px}
+.pf-upg{background:var(--deep);border-radius:18px;padding:18px;color:#fff;margin-bottom:8px;box-shadow:0 12px 30px rgba(7,16,32,.22)}
+.pf-upg .k{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.pf-upg h4{font-size:17px;font-weight:800;letter-spacing:-.01em}
+.pf-upg p{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.70);margin:6px 0 14px;line-height:1.5}
+.pf-upgbtn{display:inline-flex;align-items:center;gap:7px;background:var(--coralg);color:#fff;font-size:13.5px;font-weight:800;padding:12px 18px;border-radius:12px;border:none;font-family:inherit;cursor:pointer;box-shadow:0 8px 20px rgba(255,79,99,.34)}
 
 /* tab bar */
 .tabbar{position:absolute;left:0;right:0;bottom:0;height:84px;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line);display:flex;padding:9px 6px 22px;z-index:50}
@@ -145,6 +198,10 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .st-conf{background:#E1F5EE;color:#0F6E56}
 .st-wait{background:#FAEEDA;color:#854F0B}
 .st-open{background:#E6F1FB;color:#185FA5}
+.st-mut{background:#EEF0F4;color:#5C6470}
+.del{width:30px;height:30px;border-radius:50%;background:#FFF1F1;color:var(--coral);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;flex-shrink:0;margin-left:8px}
+.datebadge .rep{font-size:17px;color:var(--coral)}
+.datebadge .rep+span{margin-top:3px}
 .gigrow{display:flex;align-items:center;gap:13px;padding:12px 2px;border-bottom:1px solid var(--line)}
 .finput{background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 14px;font-size:14px;color:var(--slate);font-weight:600;margin-bottom:11px}
 .flabel{font-size:12px;font-weight:800;color:var(--slate);text-transform:uppercase;letter-spacing:.04em;margin:10px 0 8px}
@@ -192,6 +249,59 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .lineup .av{width:46px;height:46px;border-radius:50%;border:2.5px solid var(--bg);margin-left:-12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px}
 .lineup .av:first-child{margin-left:0}
 .about{font-size:14px;font-weight:500;line-height:1.6;color:var(--slate);margin-top:10px}
+
+/* ===== Offers & promos ===== */
+.offer{border:1.5px solid #F2D58A;background:linear-gradient(180deg,#FFFBF0,#FFF5DC);border-radius:16px;padding:16px;margin:4px 0 18px;text-align:center}
+.offer .tag{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#9A6A00}
+.offer h4{font-size:20px;font-weight:900;letter-spacing:-.02em;margin:8px 0 3px;color:var(--deep)}
+.offer p{font-size:13px;font-weight:600;color:#7a5a12;line-height:1.45}
+.offer .redeem{display:inline-flex;align-items:center;gap:7px;background:var(--deep);color:#fff;font-size:13.5px;font-weight:800;border:none;font-family:inherit;padding:12px 20px;border-radius:12px;margin-top:13px;cursor:pointer}
+.offer .src{display:block;font-size:11px;font-weight:700;color:#B08A3A;margin-top:11px}
+.qr{width:138px;height:138px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px;margin:13px auto 0;box-shadow:0 4px 14px rgba(16,24,40,.08)}
+.qr svg{width:100%;height:100%;display:block}
+.pmtop{display:flex;align-items:center;gap:12px;padding:54px 16px 10px}
+.pmtop h1{font-size:21px;font-weight:800;letter-spacing:-.02em}
+.pmscope{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-bottom:18px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.pmscope .d{width:36px;height:36px;border-radius:10px;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+.pmscope .m{flex:1;min-width:0}
+.pmscope .lab{font-size:10px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.05em}
+.pmscope h4{font-size:14.5px;font-weight:800}
+.pmscope a{font-size:12px;font-weight:700;color:var(--coral);cursor:pointer}
+.pushprev{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:flex;gap:11px;align-items:flex-start;box-shadow:0 10px 26px rgba(16,24,40,.12);margin-bottom:4px}
+.pushprev .ic{width:40px;height:40px;border-radius:11px;background:var(--coralg);color:#fff;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.pushprev h5{font-size:13px;font-weight:800}
+.pushprev p{font-size:12px;font-weight:600;color:var(--slate);margin-top:2px;line-height:1.4}
+.pushprev .tm{font-size:10.5px;font-weight:700;color:var(--mute);margin-top:3px;display:block}
+.dayrow{display:flex;gap:6px;margin-bottom:16px}
+.dchip{flex:1;text-align:center;font-size:12px;font-weight:700;padding:9px 0;border-radius:10px;background:#fff;border:1px solid var(--line);color:var(--slate);cursor:pointer}
+.dchip.on{background:var(--deep);color:#fff;border-color:var(--deep)}
+.pp-cnt{font-size:11px;font-weight:800;opacity:.55;margin-left:5px}
+.ppact{width:34px;height:34px;border-radius:50%;background:#EEF0F4;color:var(--slate);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;cursor:pointer}
+.ppadd{display:flex;align-items:center;gap:13px;padding:13px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+.ppadd .av{width:46px;height:46px;border-radius:50%;border:1.5px dashed var(--mute);color:var(--mute);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ppadd b{font-size:14.5px;font-weight:700;color:var(--ink)}
+.pptag{font-size:10px;font-weight:800;color:#0F6E56;background:#E1F5EE;padding:3px 8px;border-radius:999px;text-transform:uppercase;letter-spacing:.03em;flex-shrink:0}
+.soon{margin-left:auto;font-size:10px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.04em}
+.pp-links{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 4px}
+.pp-link{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;padding:9px 13px;border-radius:11px;background:#fff;border:1px solid var(--line);color:var(--ink);cursor:pointer}
+.pp-link i{font-size:16px}
+.pp-link.off{color:var(--mute);border-style:dashed}
+.pp-gal{display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;margin:2px 0 4px}
+.pp-gal::-webkit-scrollbar{display:none}
+.pp-gal .g{width:104px;height:128px;border-radius:13px;flex-shrink:0}
+.pp-gal .add{width:104px;height:128px;border-radius:13px;flex-shrink:0;border:1.5px dashed var(--mute);color:var(--mute);display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer}
+.pubfollow{display:flex;gap:10px;margin:14px 0 4px}
+.pfbtn{flex:1;text-align:center;font-size:14px;font-weight:700;padding:11px;border-radius:11px;cursor:pointer}
+.pfbtn.primary{background:#FFE9EA;color:var(--coral)}
+.pfbtn.ghost{background:#F2F3F6;color:var(--ink)}
+.pfbtn.on{background:#EEF0F4;color:var(--slate)}
+.pubbar{position:sticky;bottom:0;display:flex;gap:10px;margin:24px -20px 0;padding:12px 20px 22px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+.pf-banner{display:flex;align-items:center;gap:8px;background:var(--deep);color:#fff;border-radius:12px;padding:11px 14px;font-size:13px;font-weight:800;letter-spacing:.02em;margin-bottom:16px}
+.pf-banner i{font-size:16px;color:var(--gold)}
+.mapmini{height:124px;border-radius:14px;position:relative;overflow:hidden;margin-top:4px;background:radial-gradient(circle at 32% 36%,#E8F7F2 0 16%,transparent 16.5%),radial-gradient(circle at 72% 66%,#FFF3DE 0 20%,transparent 20.5%),linear-gradient(135deg,#EFF4F8,#E4EEF3)}
+.followbtn{font-size:12.5px;font-weight:800;padding:8px 17px;border-radius:999px;background:var(--coralg);color:#fff;border:none;font-family:inherit;cursor:pointer;flex-shrink:0}
+.followbtn.on{background:#EEF0F4;color:var(--slate)}
+.publogo{position:absolute;right:20px;bottom:-28px;width:74px;height:74px;border-radius:50%;border:3px solid var(--bg);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:25px;box-shadow:0 8px 18px rgba(16,24,40,.22);z-index:6}
 .note{max-width:620px;font-size:12.5px;line-height:1.6;color:#6b7280;text-align:center}
 </style>
 </head>
@@ -329,17 +439,17 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
               <div class="sech" style="margin-top:2px">Upcoming <a>Alerts on</a></div>
               <div class="svrow" data-event onclick="openDetail()">
                 <div class="datebadge"><span>Jun</span><b>13</b></div>
-                <div class="einfo"><h4>The Firewater Tent Revival</h4><p style="margin-top:3px">Surfer the Bar · tonight 8:00 PM</p></div>
+                <div class="einfo"><h4>The Firewater Tent Revival</h4><p class="ven">Surfer the Bar</p><p class="dt">Fri · 8:00 PM</p></div>
                 <div class="bell"><i class="ti ti-bell"></i></div>
               </div>
               <div class="svrow" data-event onclick="openDetail()">
                 <div class="datebadge"><span>Jun</span><b>14</b></div>
-                <div class="einfo"><h4>Chloe Kimes &amp; The Tide</h4><p style="margin-top:3px">Blue Jay Listening Room · 8:30 PM</p></div>
+                <div class="einfo"><h4>Chloe Kimes &amp; The Tide</h4><p class="ven">Blue Jay Listening Room</p><p class="dt">Sat · 8:30 PM</p></div>
                 <div class="bell"><i class="ti ti-bell"></i></div>
               </div>
               <div class="svrow" data-event onclick="openDetail()">
                 <div class="datebadge"><span>Jun</span><b>21</b></div>
-                <div class="einfo"><h4>The Saltwater Revival</h4><p style="margin-top:3px">Lonnie's Western Room · 10:00 PM</p></div>
+                <div class="einfo"><h4>The Saltwater Revival</h4><p class="ven">Lonnie's Western Room</p><p class="dt">Sat · 10:00 PM</p></div>
                 <div class="bell" style="background:#EEF0F4;color:var(--mute)"><i class="ti ti-bell-off"></i></div>
               </div>
             </div>
@@ -348,43 +458,148 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 
         <!-- ============ YOU ============ -->
         <section class="screen" data-screen="you">
-          <div class="pad" style="padding-top:18px">
-            <div class="profhead">
-              <div class="av">JW</div>
-              <div><h2>James W.</h2><p>Music goer · Jacksonville Beach</p></div>
+          <div class="pad" style="padding-top:14px">
+
+            <!-- prototype-only persona preview switch -->
+            <div class="pf-proto">
+              <span>Preview as</span>
+              <div class="pf-pseg">
+                <div class="on" id="pf-as-pro" onclick="setPersona('pro')">Professional</div>
+                <div id="pf-as-goer" onclick="setPersona('goer')">Music goer</div>
+              </div>
             </div>
-            <div class="seg" style="margin-top:18px;margin-bottom:6px">
-              <div class="on" id="mode-play" onclick="setMode('play')"><i class="ti ti-music" style="font-size:14px;margin-right:6px"></i>Play</div>
-              <div id="mode-work" onclick="setMode('work')"><i class="ti ti-briefcase" style="font-size:14px;margin-right:6px"></i>Work</div>
+
+            <!-- professional banner (pros only) -->
+            <div id="pf-banner" class="pf-banner"><i class="ti ti-briefcase"></i> Professional Profile</div>
+
+            <!-- identity -->
+            <div class="pf-id">
+              <div class="pf-av" style="background:var(--coralg)">JW</div>
+              <div class="pf-idm">
+                <h2>James Warner</h2>
+                <div class="pf-handle">@jamesw</div>
+                <div class="pf-role"><i class="ti ti-map-pin" style="font-size:13px"></i><span id="pf-role">Jacksonville Beach, FL</span></div>
+              </div>
+              <div class="pf-edit" onclick="editProfile()"><i class="ti ti-pencil"></i></div>
             </div>
-            <p style="font-size:12px;color:var(--mute);font-weight:600;margin:0 2px 16px">Switch to Work to manage gigs as an artist or venue.</p>
-            <div class="sech">Your hats</div>
-            <div class="hat">
-              <div class="ic" style="background:#FFF1F1;color:var(--coral)"><i class="ti ti-headphones"></i></div>
-              <div><h4>Music goer</h4><p>Following 12 · 8 saved shows</p></div>
-              <div class="go"><i class="ti ti-chevron-right"></i></div>
+            <div class="pf-src"><i class="ti ti-brand-instagram" style="font-size:13px"></i> Profile imported from Instagram</div>
+
+            <!-- professionals only: Work/Play master switch -->
+            <div id="pf-toggle">
+              <div class="seg" style="margin-bottom:6px">
+                <div class="on" id="mode-play" onclick="pfSetMode('play')"><i class="ti ti-music" style="font-size:14px;margin-right:6px"></i>Play</div>
+                <div id="mode-work" onclick="pfSetMode('work')"><i class="ti ti-briefcase" style="font-size:14px;margin-right:6px"></i>Work</div>
+              </div>
+              <p class="pf-hint" id="pf-modehint"><i class="ti ti-eye" style="font-size:13px;margin-top:1px"></i><span>You're browsing as a fan. Switch to Work to manage your gigs, calendar, and venues.</span></p>
             </div>
-            <div class="hat">
-              <div class="ic" style="background:#EEEDFE;color:var(--purple)"><i class="ti ti-microphone-2"></i></div>
-              <div><h4>Are you an artist?</h4><p>Create a profile · solo or with bands</p></div>
-              <div class="go"><i class="ti ti-chevron-right"></i></div>
+
+            <!-- ===== FAN VIEW (goer, or professional in Play mode) ===== -->
+            <div id="pf-fan">
+              <div class="hat" onclick="openSuggest()" style="margin-bottom:16px">
+                <div class="ic" style="background:#FFF1F1;color:var(--coral)"><i class="ti ti-user-plus"></i></div>
+                <div><h4>12 people you follow are here</h4><p>From Instagram &amp; Facebook — follow them in the app</p></div>
+                <div class="go"><i class="ti ti-chevron-right"></i></div>
+              </div>
+              <div class="pf-stats">
+                <div class="pf-stat" onclick="showScreen('saved')"><b>8</b><span>Saved shows</span></div>
+                <div class="pf-stat" onclick="showScreen('saved')"><b>3</b><span>Going</span></div>
+              </div>
+              <p class="pf-hint"><i class="ti ti-heart" style="font-size:13px;margin-top:1px"></i><span>Who you follow lives in the <b>Saved</b> tab.</span></p>
+
+              <div class="pf-sec">Your taste <a>Edit</a></div>
+              <div class="pf-tags">
+                <span class="pf-tag">Roots rock</span><span class="pf-tag">Indie</span>
+                <span class="pf-tag">Funk</span><span class="pf-tag">Country</span>
+                <span class="pf-tag">Singer-songwriter</span>
+              </div>
             </div>
-            <div class="hat">
-              <div class="ic" style="background:#E6F1FB;color:var(--blue)"><i class="ti ti-building-store"></i></div>
-              <div><h4>Run a venue?</h4><p>Claim it · validated via Google Maps</p></div>
-              <div class="go"><i class="ti ti-chevron-right"></i></div>
+
+            <!-- ===== UPGRADE (goer only) ===== -->
+            <div id="pf-upgrade" class="hidden">
+              <div class="pf-upg">
+                <div class="k"><i class="ti ti-sparkles"></i> For artists &amp; venues</div>
+                <h4>Perform or host shows?</h4>
+                <p>Turn on a professional profile to post gigs, accept invites, and manage your calendar — same account, you keep your follows and saves.</p>
+                <button class="pf-upgbtn" onclick="setPersona('pro')"><i class="ti ti-briefcase"></i> Set up a pro profile</button>
+              </div>
             </div>
-            <div class="hat">
-              <div class="ic" style="background:#FAEEDA;color:#854F0B"><i class="ti ti-mail"></i></div>
-              <div><h4>Invites</h4><p>2 venues want to book you</p></div>
-              <div class="badge">2</div>
+
+            <!-- ===== WORK DASHBOARD (professional, Work mode) ===== -->
+            <div id="pf-work" class="hidden">
+              <div class="pf-sec" style="margin-top:0">Acting as</div>
+              <div class="pf-acting">
+                <div class="pf-actcur" onclick="openProfMgr()" style="cursor:pointer">
+                  <div class="lg" id="pf-aclg" style="background:#2D7FF9">SB</div>
+                  <div class="m">
+                    <div class="lab" id="pf-aclab">Venue</div>
+                    <h4 id="pf-acname">Surfer the Bar</h4>
+                    <p id="pf-acsub">Jacksonville Beach · you + 3 staff</p>
+                  </div>
+                  <div class="go" style="color:var(--mute);font-size:18px"><i class="ti ti-selector"></i></div>
+                </div>
+              </div>
+
+              <div class="pf-mini">
+                <div class="c"><b>4</b><span>Upcoming</span></div>
+                <div class="c"><b>2</b><span>Open slots</span></div>
+                <div class="c"><b>3</b><span>Bids</span></div>
+              </div>
+
+              <button class="cta-create" style="margin-top:4px" onclick="showScreen('m-create')"><i class="ti ti-plus"></i> Create event</button>
+
+              <div class="hat" onclick="showScreen('m-calendar')">
+                <div class="ic" style="background:#FFF1F1;color:var(--coral)"><i class="ti ti-calendar-event"></i></div>
+                <div><h4>Calendar &amp; gigs</h4><p>4 upcoming · 1 awaiting confirm</p></div>
+                <div class="go"><i class="ti ti-chevron-right"></i></div>
+              </div>
+              <div class="hat" onclick="showScreen('m-gigs')">
+                <div class="ic" style="background:#E6F1FB;color:var(--blue)"><i class="ti ti-microphone-2"></i></div>
+                <div><h4>Open gigs &amp; bids</h4><p>2 slots posted · 3 new bids</p></div>
+                <div class="badge">3</div>
+              </div>
+
+              <div class="hat" onclick="showScreen('m-messages')">
+                <div class="ic" style="background:#EEEDFE;color:var(--purple)"><i class="ti ti-message-2"></i></div>
+                <div><h4>Messages</h4><p>Chloe Kimes, Blue Jay…</p></div>
+                <div class="badge">2</div>
+              </div>
+              <div class="hat">
+                <div class="ic" style="background:#FAEEDA;color:#854F0B"><i class="ti ti-mail-opened"></i></div>
+                <div><h4>Invites to play</h4><p>2 venues want to book The Tide</p></div>
+                <div class="badge">2</div>
+              </div>
+
+              <div class="hat" onclick="openPubProf()">
+                <div class="ic" style="background:#EEF3FF;color:var(--blue)"><i class="ti ti-id-badge-2"></i></div>
+                <div><h4>Public profile</h4><p>What fans see on events, map &amp; search</p></div>
+                <div class="go"><i class="ti ti-chevron-right"></i></div>
+              </div>
+              <div class="hat" onclick="openPeople()">
+                <div class="ic" style="background:#EDFBF4;color:#0F6E56"><i class="ti ti-users-group"></i></div>
+                <div><h4>My people</h4><p>Followers &amp; collaborators</p></div>
+                <div class="go"><i class="ti ti-chevron-right"></i></div>
+              </div>
+
+              <div class="hat" onclick="openPromos()">
+                <div class="ic" style="background:#FFF1F1;color:var(--coral)"><i class="ti ti-discount-2"></i></div>
+                <div><h4>Offers &amp; promos</h4><p>Deals on event pages &amp; nearby (GPS)</p></div>
+                <div class="go"><i class="ti ti-chevron-right"></i></div>
+              </div>
+              <div class="hat" onclick="openPromo()">
+                <div class="ic" style="background:#FFF7E6;color:var(--gold)"><i class="ti ti-template"></i></div>
+                <div><h4>Promote a gig</h4><p>One show or your month → Canva, Instagram</p></div>
+                <div class="go"><i class="ti ti-chevron-right"></i></div>
+              </div>
             </div>
-            <button class="cta-create"><i class="ti ti-plus"></i> Create event</button>
-            <div class="sech" style="margin-top:18px">Connections</div>
-            <div class="setrow"><span class="ic"><i class="ti ti-brand-instagram"></i></span> Instagram, Spotify, Apple Music <span class="go"><i class="ti ti-chevron-right"></i></span></div>
-            <div class="setrow"><span class="ic"><i class="ti ti-calendar-share"></i></span> Calendar export (ICS) <span class="go"><i class="ti ti-chevron-right"></i></span></div>
-            <div class="setrow"><span class="ic"><i class="ti ti-bell"></i></span> Notifications & alerts <span class="go"><i class="ti ti-chevron-right"></i></span></div>
-            <div class="setrow" style="border:none"><span class="ic"><i class="ti ti-qrcode"></i></span> Share my profile (QR) <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+
+            <!-- ===== SETTINGS (shared) ===== -->
+            <div class="pf-sec">Preferences</div>
+            <div class="setrow" onclick="openConn()"><span class="ic"><i class="ti ti-plug-connected"></i></span> Connections <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-bell"></i></span> Notifications &amp; alerts <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="setrow" id="pf-set-qr"><span class="ic"><i class="ti ti-qrcode"></i></span> Share my profile (QR) <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-shield-lock"></i></span> Account &amp; privacy <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-help-circle"></i></span> Help &amp; feedback <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="setrow" style="border:none;color:var(--coral)"><span class="ic" style="color:var(--coral)"><i class="ti ti-logout"></i></span> Sign out</div>
           </div>
         </section>
 
@@ -401,22 +616,22 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
             <div style="font-size:26px;font-weight:800;letter-spacing:-.03em;margin:6px 0 14px;color:#071020">Your gigs</div>
             <div class="svrow" data-event onclick="openDetail()">
               <div class="datebadge"><span>Jun</span><b>13</b></div>
-              <div class="einfo"><h4>The Firewater Tent Revival</h4><p style="margin-top:3px">8:00 PM</p></div>
+              <div class="einfo"><h4>The Firewater Tent Revival</h4><p style="margin-top:3px">Fri · 8:00 PM</p></div>
               <span class="statc st-conf">Confirmed</span>
             </div>
             <div class="svrow">
               <div class="datebadge" style="background:#FAEEDA"><span style="color:#854F0B">Jun</span><b style="color:#854F0B">14</b></div>
-              <div class="einfo"><h4>Chloe Kimes &amp; The Tide</h4><p style="margin-top:3px">8:30 PM</p></div>
+              <div class="einfo"><h4>Chloe Kimes &amp; The Tide</h4><p style="margin-top:3px">Sat · 8:30 PM</p></div>
               <span class="statc st-wait">Awaiting artist</span>
             </div>
             <div class="svrow" onclick="showScreen('m-gigs')">
               <div class="datebadge" style="background:#E6F1FB"><span style="color:#185FA5">Jun</span><b style="color:#185FA5">20</b></div>
-              <div class="einfo"><h4>Open slot</h4><p style="margin-top:3px">9:00 PM · 3 bids</p></div>
+              <div class="einfo"><h4>Open slot</h4><p style="margin-top:3px">Fri · 9:00 PM · 3 bids</p></div>
               <span class="statc st-open">Open</span>
             </div>
             <div class="svrow">
               <div class="datebadge" style="background:#FAEEDA"><span style="color:#854F0B">Jun</span><b style="color:#854F0B">27</b></div>
-              <div class="einfo"><h4>Songwriter Round</h4><p style="margin-top:3px">7:30 PM</p></div>
+              <div class="einfo"><h4>Songwriter Round</h4><p style="margin-top:3px">Fri · 7:30 PM</p></div>
               <span class="statc st-wait">Confirm</span>
             </div>
           </div>
@@ -430,12 +645,12 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
             <div class="sech" style="margin-top:20px">Your open slots</div>
             <div class="gigrow">
               <div class="datebadge" style="background:#E6F1FB"><span style="color:#185FA5">Jun</span><b style="color:#185FA5">20</b></div>
-              <div class="einfo"><h4>Sat · 9:00 PM</h4><p style="margin-top:3px">Indie / rock · $200–300</p></div>
+              <div class="einfo"><h4>Fri · 9:00 PM</h4><p style="margin-top:3px">Indie / rock · $200–300</p></div>
               <span class="statc st-open">3 bids</span>
             </div>
             <div class="gigrow">
               <div class="datebadge" style="background:#E6F1FB"><span style="color:#185FA5">Jul</span><b style="color:#185FA5">04</b></div>
-              <div class="einfo"><h4>Thu · 8:00 PM</h4><p style="margin-top:3px">Any · holiday set</p></div>
+              <div class="einfo"><h4>Fri · 8:00 PM</h4><p style="margin-top:3px">Any · holiday set</p></div>
               <span class="statc st-open">1 bid</span>
             </div>
             <div class="sech" style="margin-top:22px">Recent bids · Jun 20</div>
@@ -593,15 +808,462 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
             <div class="irow"><i class="ti ti-clock"></i><div><b>Tonight, June 13</b><span>Doors 7:30 PM · Show 8:00 PM</span></div></div>
             <div class="irow"><i class="ti ti-ticket"></i><div><b>$15 advance</b><span>21+ · tickets at the door</span></div></div>
             <div class="dcta"><div class="btnP">Save show</div><div class="btnS">Directions</div></div>
+            <div class="offer">
+              <span class="tag"><i class="ti ti-discount-2"></i> Venue offer</span>
+              <h4>$4 SunCruisers</h4>
+              <p>Show this QR to your bartender or wait staff!</p>
+              <button class="redeem" onclick="revealQR(this)"><i class="ti ti-qrcode"></i> Reveal QR to redeem</button>
+              <div class="qr hidden" data-qr></div>
+              <span class="src">From Surfer the Bar · valid tonight</span>
+            </div>
             <div class="sech" style="margin-top:22px">Lineup</div>
             <div class="lineup">
-              <div class="av" style="background:#23272F">FT</div>
-              <div class="av" style="background:#2D7FF9">TT</div>
+              <div class="av" style="background:#23272F;cursor:pointer" onclick="closeDetail();openPubView()">FT</div>
+              <div class="av" style="background:#2D7FF9;cursor:pointer" onclick="closeDetail();openPubView()">TT</div>
               <div class="av" style="background:#FFB020">+1</div>
-              <span style="margin-left:14px;font-size:13px;font-weight:700;color:var(--coral)">Follow all</span>
+              <span style="margin-left:14px;font-size:13px;font-weight:700;color:var(--coral);cursor:pointer" onclick="closeDetail();openPubView()">View artists</span>
             </div>
             <div class="sech" style="margin-top:22px">About</div>
             <p class="about">Jax Beach roots-rock favorites bringing their tent-revival energy to Surfer the Bar — horns, harmonies, and a dance floor that fills before the first chorus.</p>
+          </div>
+        </div>
+
+        <!-- ============ PROMO MANAGER (pro) ============ -->
+        <div class="detail" id="promomgr">
+          <div class="pmtop">
+            <div class="gbtn" onclick="promoBack()"><i class="ti ti-chevron-left"></i></div>
+            <h1 id="pm-title">Offers &amp; promos</h1>
+          </div>
+          <div class="dbody" style="padding-top:2px">
+            <div class="pmscope">
+              <div class="d" id="pm-vlg" style="background:#2D7FF9">SB</div>
+              <div class="m"><div class="lab">Offers for</div><h4 id="pm-vname">Surfer the Bar</h4></div>
+              <a onclick="closePromos()">Change venue</a>
+            </div>
+
+            <!-- ===== LIST VIEW ===== -->
+            <div id="pm-list">
+              <button class="cta-create" style="margin-top:0" onclick="showPromoEdit()"><i class="ti ti-plus"></i> New offer</button>
+
+              <div class="pf-sec">Active &amp; scheduled</div>
+              <div class="svrow" onclick="showPromoEdit()">
+                <div class="datebadge"><i class="ti ti-repeat rep"></i><span>Fri</span></div>
+                <div class="einfo"><h4>$4 SunCruisers</h4><p class="ven">Every Fri · 6 PM–Close</p><p class="dt">June · expires Jun 30</p></div>
+                <span class="statc st-conf">Active</span>
+              </div>
+              <div class="svrow" onclick="showPromoEdit()">
+                <div class="datebadge" style="background:#FAEEDA"><i class="ti ti-clock-hour-4 rep" style="color:#854F0B"></i><span style="color:#854F0B">Daily</span></div>
+                <div class="einfo"><h4>Happy Hour 2-for-1</h4><p class="ven">Daily · 4–7 PM</p><p class="dt">Expires Jun 16 · in 2 days</p></div>
+                <span class="statc st-wait">Expiring</span>
+              </div>
+              <div class="svrow" onclick="showPromoEdit()">
+                <div class="datebadge" style="background:#E6F1FB"><i class="ti ti-repeat rep" style="color:#185FA5"></i><span style="color:#185FA5">Fri</span></div>
+                <div class="einfo"><h4>$5 Margaritas</h4><p class="ven">Every Fri · 6 PM–Close</p><p class="dt">July 1–31 · starts Jul 1</p></div>
+                <span class="statc st-open">Scheduled</span>
+              </div>
+              <div class="svrow" onclick="showPromoEdit()">
+                <div class="datebadge"><i class="ti ti-repeat rep" style="color:var(--mute)"></i><span style="color:var(--mute)">Mon</span></div>
+                <div class="einfo"><h4>Industry Monday</h4><p class="ven">Every Mon · 9 PM–Close</p><p class="dt">Paused — not running</p></div>
+                <span class="statc st-mut">Paused</span>
+              </div>
+
+              <div class="pf-sec">Expired</div>
+              <div class="svrow">
+                <div class="datebadge" style="background:#EEF0F4"><span style="color:var(--mute)">May</span><b style="color:var(--mute)">05</b></div>
+                <div class="einfo"><h4>Cinco $5 Margs</h4><p class="ven">Mon · 4 PM–Close</p><p class="dt">Ended May 5</p></div>
+                <span class="statc st-mut">Expired</span>
+                <div class="del" onclick="event.stopPropagation();delOffer(this)"><i class="ti ti-trash"></i></div>
+              </div>
+              <div class="svrow">
+                <div class="datebadge" style="background:#EEF0F4"><span style="color:var(--mute)">Mar</span><b style="color:var(--mute)">17</b></div>
+                <div class="einfo"><h4>St. Paddy's Pints</h4><p class="ven">Mon · all day</p><p class="dt">Ended Mar 17</p></div>
+                <span class="statc st-mut">Expired</span>
+                <div class="del" onclick="event.stopPropagation();delOffer(this)"><i class="ti ti-trash"></i></div>
+              </div>
+              <p class="hint" style="margin:10px 2px 0">Expired offers can be deleted. Managing several venues? Switch the active venue from your profile — each keeps its own offers.</p>
+            </div>
+
+            <!-- ===== EDITOR VIEW ===== -->
+            <div id="pm-edit" style="display:none">
+              <div class="flabel" style="margin-top:0">Offer message</div>
+              <div class="finput" style="height:62px;color:var(--ink);background:#fff">$4 SunCruisers — show this QR to your bartender or wait staff!</div>
+
+              <div class="flabel">Schedule</div>
+              <div class="seg" style="margin-bottom:14px"><div class="on" onclick="segPick(this)">Recurring</div><div onclick="segPick(this)">One-time</div></div>
+
+              <div class="flabel" style="margin-top:0">Repeat on</div>
+              <div class="dayrow">
+                <div class="dchip" onclick="this.classList.toggle('on')">Su</div><div class="dchip" onclick="this.classList.toggle('on')">Mo</div><div class="dchip" onclick="this.classList.toggle('on')">Tu</div><div class="dchip" onclick="this.classList.toggle('on')">We</div><div class="dchip" onclick="this.classList.toggle('on')">Th</div><div class="dchip on" onclick="this.classList.toggle('on')">Fr</div><div class="dchip" onclick="this.classList.toggle('on')">Sa</div>
+              </div>
+
+              <div class="frow2">
+                <div style="flex:1"><div class="flabel" style="margin-top:0">Starts</div><div class="finput">6:00 PM</div></div>
+                <div style="flex:1"><div class="flabel" style="margin-top:0">Ends</div><div class="finput">Close</div></div>
+              </div>
+              <div class="frow2">
+                <div style="flex:1"><div class="flabel">From</div><div class="finput">Jul 1, 2026</div></div>
+                <div style="flex:1"><div class="flabel">Until · expires</div><div class="finput">Jul 31, 2026</div></div>
+              </div>
+              <p class="hint" style="margin:2px 2px 14px"><i class="ti ti-calendar-repeat" style="margin-right:5px;color:var(--coral)"></i>Runs every Fri, 6:00 PM–Close, through Jul 31 — then auto-expires.</p>
+
+              <div class="flabel">Redemption code</div>
+              <div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;text-align:center;margin-bottom:6px;box-shadow:0 4px 14px rgba(16,24,40,.04)">
+                <div class="qr" id="pm-editqr"></div>
+                <p class="hint" style="margin:11px 2px 0">Goers reveal this QR in the app and show it to your bar or wait staff to redeem.</p>
+              </div>
+
+              <div class="flabel">Where it appears</div>
+              <div class="toggrow"><span class="tt"><i class="ti ti-calendar-event" style="margin-right:8px;color:var(--coral)"></i>On this venue's event pages</span><div class="toggle on" onclick="this.classList.toggle('on')"><b></b></div></div>
+              <div class="toggrow"><span class="tt"><i class="ti ti-map-pin" style="margin-right:8px;color:var(--coral)"></i>Notify goers nearby (GPS)</span><div class="toggle on" onclick="this.classList.toggle('on')"><b></b></div></div>
+              <p class="hint" style="margin:0 2px 14px">Sends a push when a goer is browsing events near you or comes within range of the venue.</p>
+
+              <div class="flabel" style="margin-top:0">Notify within</div>
+              <div class="seg"><div onclick="segPick(this)">0.5 mi</div><div class="on" onclick="segPick(this)">1 mi</div><div onclick="segPick(this)">3 mi</div></div>
+
+              <div class="toggrow" style="margin-top:8px"><span class="tt">Offer active</span><div class="toggle on" onclick="this.classList.toggle('on')"><b></b></div></div>
+
+              <div class="flabel">How goers see it on the event page</div>
+              <div class="offer">
+                <span class="tag"><i class="ti ti-discount-2"></i> Venue offer</span>
+                <h4>$4 SunCruisers</h4>
+                <p>Show this QR to your bartender or wait staff!</p>
+                <button class="redeem"><i class="ti ti-qrcode"></i> Reveal QR to redeem</button>
+                <span class="src">From Surfer the Bar · Fridays in July</span>
+              </div>
+
+              <button class="cta-create" style="margin-top:8px" onclick="showPromoList()"><i class="ti ti-check"></i> Save offer</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ MY PEOPLE (pro) ============ -->
+        <div class="detail" id="peoplemgr">
+          <div class="pmtop">
+            <div class="gbtn" onclick="closePeople()"><i class="ti ti-chevron-left"></i></div>
+            <h1>My people</h1>
+          </div>
+          <div class="dbody" style="padding-top:2px">
+            <div class="seg" style="margin-bottom:14px">
+              <div class="on" id="pp-tab-fol" onclick="peopleView('fol')">Followers <span class="pp-cnt">1.2k</span></div>
+              <div id="pp-tab-col" onclick="peopleView('col')">Collaborators <span class="pp-cnt">14</span></div>
+            </div>
+            <div class="search"><i class="ti ti-search" style="font-size:16px"></i> Search <span id="pp-searchq">followers</span></div>
+
+            <!-- FOLLOWERS -->
+            <div id="pp-fol">
+              <div class="frow"><div class="favm" style="background:#FF3F73">MR</div><div class="finfo"><h4>Maya Rivera</h4><p>Jacksonville Beach · roots rock</p></div><span class="pptag">Fan</span></div>
+              <div class="frow"><div class="favm" style="background:#2D7FF9">DS</div><div class="finfo"><h4>Diego Santos</h4><p>Atlantic Beach · 6 shows attended</p></div><span class="pptag">Fan</span></div>
+              <div class="frow"><div class="favm" style="background:#8B5CF6">CK</div><div class="finfo"><h4>Chloe Kimes</h4><p>Artist · also follows you</p></div><span class="pptag" style="color:#185FA5;background:#E6F1FB">Mutual</span></div>
+              <div class="frow"><div class="favm" style="background:#FFB020">AT</div><div class="finfo"><h4>Aisha Thomas</h4><p>Neptune Beach · indie</p></div><span class="pptag">Fan</span></div>
+              <div class="frow"><div class="favm" style="background:#1D9E75">JP</div><div class="finfo"><h4>Jordan Pierce</h4><p>Jacksonville · 12 shows attended</p></div><span class="pptag">Fan</span></div>
+              <div class="frow"><div class="favm" style="background:#23272F">LN</div><div class="finfo"><h4>Liam Nguyen</h4><p>Jacksonville Beach · funk</p></div><span class="pptag">Fan</span></div>
+              <div class="frow" style="border:none"><div class="favm" style="background:#FF5A5F">SO</div><div class="finfo"><h4>Sofia Ortiz</h4><p>Ponte Vedra · 3 shows attended</p></div><span class="pptag">Fan</span></div>
+            </div>
+
+            <!-- COLLABORATORS -->
+            <div id="pp-col" style="display:none">
+              <div class="ppadd"><div class="av"><i class="ti ti-plus"></i></div><b>Add a collaborator</b></div>
+              <div class="frow"><div class="favm" style="background:#2D7FF9">TT</div><div class="finfo"><h4>The Tide</h4><p>Band · 8 shows together</p></div><div class="ppact"><i class="ti ti-message-2"></i></div></div>
+              <div class="frow"><div class="favm" style="background:#8B5CF6">CK</div><div class="finfo"><h4>Chloe Kimes</h4><p>Vocalist · 5 shows together</p></div><div class="ppact"><i class="ti ti-message-2"></i></div></div>
+              <div class="frow"><div class="favm" style="background:#FFB020">MW</div><div class="finfo"><h4>Marcus Webb</h4><p>Drummer · 12 shows together</p></div><div class="ppact"><i class="ti ti-message-2"></i></div></div>
+              <div class="frow"><div class="favm" style="background:#1D9E75">LT</div><div class="finfo"><h4>Low Tide Social Club</h4><p>Band · 4 shows together</p></div><div class="ppact"><i class="ti ti-message-2"></i></div></div>
+              <div class="frow"><div class="favm" style="background:#FF3F73">RB</div><div class="finfo"><h4>Rosa Bel</h4><p>Fiddle · 7 shows together</p></div><div class="ppact"><i class="ti ti-message-2"></i></div></div>
+              <div class="frow" style="border:none"><div class="favm" style="background:#23272F">EH</div><div class="finfo"><h4>Eli Hart</h4><p>Bassist · 9 shows together</p></div><div class="ppact"><i class="ti ti-message-2"></i></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ CONNECTIONS (secondary) ============ -->
+        <div class="detail" id="connmgr">
+          <div class="pmtop">
+            <div class="gbtn" onclick="closeConn()"><i class="ti ti-chevron-left"></i></div>
+            <h1>Connections</h1>
+          </div>
+          <div class="dbody" style="padding-top:2px">
+            <div class="pf-sec" style="margin-top:0">Connected profiles</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-instagram"></i></span> Instagram <span class="ok"><i class="ti ti-circle-check-filled"></i> Connected</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-facebook"></i></span> Facebook <span class="ok"><i class="ti ti-circle-check-filled"></i> Connected</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-tiktok"></i></span> TikTok <span class="cn">Connect</span></div>
+
+            <div class="pf-sec">Calendar sync</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-google"></i></span> Google Calendar <span class="ok"><i class="ti ti-circle-check-filled"></i> Synced</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-apple"></i></span> Apple Calendar <span class="cn">Connect</span></div>
+            <p class="pf-hint" id="pf-calhint"><i class="ti ti-refresh" style="font-size:13px;margin-top:1px"></i><span>Saved shows sync live to your calendar — no manual export.</span></p>
+
+            <!-- music: artists only -->
+            <div id="pf-music">
+              <div class="pf-sec">Music</div>
+              <div class="setrow"><span class="ic"><i class="ti ti-brand-spotify" style="color:#1DB954"></i></span> Spotify <span class="ok"><i class="ti ti-circle-check-filled"></i> Connected</span></div>
+              <div class="setrow"><span class="ic"><i class="ti ti-brand-apple"></i></span> Apple Music <span class="cn">Connect</span></div>
+              <div class="setrow"><span class="ic"><i class="ti ti-brand-bandcamp"></i></span> Bandcamp <span class="cn">Connect</span></div>
+              <div class="setrow"><span class="ic"><i class="ti ti-brand-youtube" style="color:#FF0000"></i></span> YouTube <span class="cn">Connect</span></div>
+              <p class="pf-hint"><i class="ti ti-music" style="font-size:13px;margin-top:1px"></i><span>Shown as <b>Listen</b> links on your artist profile so fans can hear you.</span></p>
+            </div>
+
+            <!-- publishing: professionals only -->
+            <div id="pf-publish">
+              <div class="pf-sec">Publishing</div>
+              <div class="setrow"><span class="ic"><i class="ti ti-template"></i></span> Canva <span class="cn">Connect</span></div>
+              <div class="setrow"><span class="ic"><i class="ti ti-brand-instagram"></i></span> Instagram posting <span class="ok"><i class="ti ti-circle-check-filled"></i> Connected</span></div>
+              <p class="pf-hint"><i class="ti ti-sparkles" style="font-size:13px;margin-top:1px"></i><span>Push a single gig or your whole month out as flyers — <b>“Sat Jun 20 · The Tide @ Surfer the Bar · 9 PM”.</b></span></p>
+            </div>
+
+            <!-- extensible: full integrations directory -->
+            <div id="pf-intdir-row" class="setrow" onclick="openIntDir()" style="margin-top:6px"><span class="ic" style="color:var(--coral)"><i class="ti ti-plug-connected"></i></span> Browse all integrations <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+          </div>
+        </div>
+
+        <!-- ============ INTEGRATIONS DIRECTORY ============ -->
+        <div class="detail" id="intdir">
+          <div class="pmtop">
+            <div class="gbtn" onclick="closeIntDir()"><i class="ti ti-chevron-left"></i></div>
+            <h1>Integrations</h1>
+          </div>
+          <div class="dbody" style="padding-top:2px">
+            <p class="pf-hint" style="margin-top:0"><i class="ti ti-plug-connected" style="font-size:13px;margin-top:1px;color:var(--coral)"></i><span>Connect the tools you already use. New integrations are added all the time — request one any time.</span></p>
+
+            <div class="pf-sec">Identity &amp; social</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-instagram"></i></span> Instagram <span class="ok"><i class="ti ti-circle-check-filled"></i> Connected</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-facebook"></i></span> Facebook <span class="ok"><i class="ti ti-circle-check-filled"></i> Connected</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-tiktok"></i></span> TikTok <span class="cn">Connect</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-x"></i></span> X (Twitter) <span class="cn">Connect</span></div>
+
+            <div class="pf-sec">Calendar</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-google"></i></span> Google Calendar <span class="ok"><i class="ti ti-circle-check-filled"></i> Synced</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-apple"></i></span> Apple Calendar <span class="cn">Connect</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-windows"></i></span> Outlook <span class="cn">Connect</span></div>
+
+            <div class="pf-sec">Music</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-spotify" style="color:#1DB954"></i></span> Spotify <span class="ok"><i class="ti ti-circle-check-filled"></i> Connected</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-apple"></i></span> Apple Music <span class="cn">Connect</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-bandcamp"></i></span> Bandcamp <span class="cn">Connect</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-soundcloud"></i></span> SoundCloud <span class="cn">Connect</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-youtube" style="color:#FF0000"></i></span> YouTube <span class="cn">Connect</span></div>
+
+            <div class="pf-sec">Publishing</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-template"></i></span> Canva <span class="cn">Connect</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-link"></i></span> Linktree <span class="cn">Connect</span></div>
+
+            <div class="pf-sec">Payments &amp; ticketing</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-brand-stripe"></i></span> Stripe <span class="soon">Coming soon</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-ticket"></i></span> Eventbrite <span class="soon">Coming soon</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-ticket"></i></span> DICE <span class="soon">Coming soon</span></div>
+
+            <div class="pf-sec">Marketing &amp; CRM</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-mail-fast"></i></span> Mailchimp <span class="soon">Coming soon</span></div>
+
+            <div class="pf-sec">Developers</div>
+            <div class="setrow"><span class="ic"><i class="ti ti-webhook"></i></span> Webhooks &amp; API <span class="cn">Set up</span></div>
+            <div class="setrow"><span class="ic"><i class="ti ti-bolt"></i></span> Zapier <span class="soon">Coming soon</span></div>
+            <p class="pf-hint" style="margin-bottom:0"><i class="ti ti-bulb" style="font-size:13px;margin-top:1px;color:var(--coral)"></i><span>Don't see your tool? The Webhooks &amp; API connection lets you wire up almost anything.</span></p>
+          </div>
+        </div>
+
+        <!-- ============ PUBLIC PROFILE EDITOR (pro) ============ -->
+        <div class="detail" id="pubprof">
+          <div class="pmtop">
+            <div class="gbtn" onclick="closePubProf()"><i class="ti ti-chevron-left"></i></div>
+            <h1 id="pe-title">Public profile</h1>
+          </div>
+          <div class="dbody" style="padding-top:2px">
+            <div class="pmscope">
+              <div class="d" id="pub-vlg" style="background:#8B5CF6">TT</div>
+              <div class="m"><div class="lab">Public page for</div><h4 id="pub-vname">The Tide</h4></div>
+              <a onclick="openProfMgr()">Change</a>
+            </div>
+
+            <div class="flabel" style="margin-top:0">Profile type</div>
+            <div class="seg" id="pe-roleseg"><div id="pe-rb" class="on" onclick="setProfRole('band')">Band</div><div id="pe-rv" onclick="setProfRole('venue')">Venue</div><div id="pe-rp" onclick="setProfRole('promoter')">Promoter</div></div>
+
+            <div class="flabel">Profile photo / logo</div>
+            <div style="display:flex;align-items:center;gap:13px;margin-bottom:6px">
+              <div style="width:60px;height:60px;border-radius:50%;background:#8B5CF6;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:20px;flex-shrink:0">TT</div>
+              <div style="flex:1"><div style="font-size:13.5px;font-weight:700">Avatar &amp; logo</div><div style="font-size:12px;font-weight:600;color:var(--mute);margin-top:2px">Shown across the app and on event listings</div></div>
+              <button class="cta-ghost" style="margin:0;width:auto;padding:9px 15px;font-size:13px">Change</button>
+            </div>
+
+            <div class="flabel">Cover photo</div>
+            <div class="cover" style="background:#2D7FF9"><span class="tagm"><i class="ti ti-photo"></i> Wallpaper for your events</span><div class="chg"><i class="ti ti-camera"></i></div></div>
+            <p class="hint" style="margin:3px 2px 0">Used as the background on your event listings and the top of this profile.</p>
+
+            <div class="flabel">Display name</div>
+            <div class="finput" id="pe-name" style="color:var(--ink);background:#fff">The Tide</div>
+            <div class="flabel">Tagline</div>
+            <div class="finput" id="pe-tagline" style="color:var(--ink);background:#fff">Indie surf-rock from Jax Beach</div>
+            <div class="flabel">Bio</div>
+            <div class="finput" id="pe-bio" style="min-height:92px;color:var(--ink);background:#fff;line-height:1.5">Four-piece indie surf-rock band born on the First Coast — reverb-soaked guitars, big harmonies, and a live show that fills the floor.</div>
+
+            <div class="flabel">Genres / tags</div>
+            <div class="pf-tags" style="margin-bottom:6px"><span class="pf-tag">Indie</span><span class="pf-tag">Surf rock</span><span class="pf-tag">Dream pop</span><span class="pf-tag" style="border-style:dashed;color:var(--mute)">+ Add</span></div>
+
+            <div class="flabel">Based in</div>
+            <div class="finput" style="color:var(--ink);background:#fff"><i class="ti ti-map-pin" style="margin-right:7px;color:var(--coral)"></i>Jacksonville Beach, FL</div>
+
+            <!-- venue-only fields -->
+            <div id="pe-venue" class="hidden">
+              <div class="flabel">Address</div>
+              <div class="finput" style="color:var(--ink);background:#fff">200 1st St N · Jacksonville Beach, FL</div>
+              <div class="frow2">
+                <div style="flex:1"><div class="flabel">Capacity</div><div class="finput" style="background:#fff">250</div></div>
+                <div style="flex:1"><div class="flabel">Venue type</div><div class="finput" style="background:#fff">Bar · live music</div></div>
+              </div>
+              <div class="flabel">Amenities</div>
+              <div class="pf-tags" style="margin-bottom:6px"><span class="pf-tag">Full bar</span><span class="pf-tag">Stage + PA</span><span class="pf-tag">Patio</span><span class="pf-tag" style="border-style:dashed;color:var(--mute)">+ Add</span></div>
+            </div>
+
+            <!-- promoter-only fields -->
+            <div id="pe-promoter" class="hidden">
+              <div class="flabel">What you present</div>
+              <div class="finput" style="color:var(--ink);background:#fff">Indie &amp; roots showcases across the Beaches</div>
+            </div>
+
+            <!-- band / artist only: Listen -->
+            <div id="pe-listen">
+              <div class="flabel">Listen links <span class="fauto">from Music connections</span></div>
+              <div class="pp-links">
+                <div class="pp-link"><i class="ti ti-brand-spotify" style="color:#1DB954"></i> Spotify</div>
+                <div class="pp-link off"><i class="ti ti-brand-apple"></i> Apple Music</div>
+                <div class="pp-link off"><i class="ti ti-plus"></i> Add</div>
+              </div>
+              <p class="hint" style="margin:4px 2px 0">Add more under Settings → Music.</p>
+            </div>
+
+            <div class="flabel">Social links</div>
+            <div class="toggrow" style="padding-top:0"><span class="tt"><i class="ti ti-share" style="margin-right:8px;color:var(--coral)"></i>Show my social links on this profile</span><div class="toggle on" onclick="this.classList.toggle('on')"><b></b></div></div>
+            <p class="hint" style="margin:0 2px 0">Fans can tap through to your Instagram, Facebook &amp; TikTok.</p>
+
+            <div class="flabel">Photos</div>
+            <div class="pp-gal">
+              <div class="g" style="background:#2D7FF9"></div><div class="g" style="background:#8B5CF6"></div><div class="g" style="background:#FFB020"></div>
+              <div class="add"><i class="ti ti-plus"></i></div>
+            </div>
+
+            <!-- band only: Members -->
+            <div id="pe-members">
+              <div class="flabel">Members</div>
+              <p class="hint" style="margin:0 2px 10px">Link each member's Who's Playing profile so they appear on the band page and can manage shows.</p>
+              <div class="frow"><div class="favm" style="background:#FF5A5F">JW</div><div class="finfo"><h4>James Warner</h4><p>Guitar &amp; vocals</p></div><span class="pptag">Linked</span></div>
+              <div class="frow"><div class="favm" style="background:#FFB020">RB</div><div class="finfo"><h4>Rosa Bel</h4><p>Fiddle</p></div><span class="pptag">Linked</span></div>
+              <div class="frow" style="border:none"><div class="favm" style="background:#EEF0F4;color:var(--slate)">EH</div><div class="finfo"><h4>Eli Hart</h4><p>Bass</p></div><span class="pptag" style="background:#FAEEDA;color:#854F0B">Pending</span></div>
+              <div class="ppadd"><div class="av"><i class="ti ti-plus"></i></div><b>Add member &amp; link profile</b></div>
+            </div>
+
+            <div class="flabel">Tell your followers</div>
+            <p class="hint" style="margin:0 2px 8px">Let your social followers know they can catch your shows on Who's Playing.</p>
+            <div class="pp-links">
+              <div class="pp-link"><i class="ti ti-brand-instagram"></i> Announce on Instagram</div>
+              <div class="pp-link"><i class="ti ti-brand-facebook" style="color:#1877F2"></i> Share to Facebook</div>
+            </div>
+
+            <div style="display:flex;align-items:flex-start;gap:8px;background:#E6F1FB;border-radius:13px;padding:12px;margin:16px 0 6px">
+              <i class="ti ti-eye" style="color:#185FA5;font-size:17px;margin-top:1px"></i>
+              <div style="font-size:12.5px;font-weight:600;color:#185FA5;line-height:1.5" id="pe-info">This profile is how fans find you — it appears on your <b>event pages</b>, <b>map pin</b>, and <b>search results</b>.</div>
+            </div>
+
+            <button class="cta-create" id="pe-savebtn" style="margin-top:8px" onclick="saveProfile()"><i class="ti ti-check"></i> Save</button>
+            <button class="cta-ghost" onclick="openPubView()"><i class="ti ti-eye"></i> Preview public page</button>
+          </div>
+        </div>
+
+        <!-- ============ PUBLIC PROFILE — GOER VIEW ============ -->
+        <div class="detail" id="pubview">
+          <div class="dhero" style="background:#2D7FF9">
+            <div class="scrim"></div>
+            <div class="dnav"><div class="gbtn" onclick="closePubView()"><i class="ti ti-chevron-left"></i></div>
+              <div style="display:flex;gap:9px"><div class="gbtn"><i class="ti ti-share"></i></div><div class="gbtn"><i class="ti ti-message-2"></i></div><div class="gbtn" style="color:var(--coral)" onclick="pubToggleFollow()"><i class="ti ti-heart" id="pub-heart"></i></div></div></div>
+            <div class="meta" style="padding-right:88px"><span class="chip" style="position:static;display:inline-block;margin-bottom:8px">Artist</span><h1>The Tide</h1><div class="by">Indie surf-rock · Jacksonville Beach</div></div>
+            <div class="publogo" style="background:#8B5CF6">TT</div>
+          </div>
+          <div class="dbody" style="padding-top:50px">
+            <div class="sech" style="margin-top:2px">Genres</div>
+            <div class="pf-tags"><span class="pf-tag">Indie</span><span class="pf-tag">Surf rock</span><span class="pf-tag">Dream pop</span></div>
+
+            <div class="sech" style="margin-top:20px">About</div>
+            <p class="about">Four-piece indie surf-rock band born on the First Coast — reverb-soaked guitars, big harmonies, and a live show that fills the floor before the first chorus.</p>
+
+            <div class="sech" style="margin-top:20px">Upcoming shows</div>
+            <div class="svrow" onclick="closePubView();openDetail()">
+              <div class="datebadge"><span>Jun</span><b>20</b></div>
+              <div class="einfo"><h4>Surfer the Bar</h4><p class="ven">Jacksonville Beach</p><p class="dt">Fri · 9:00 PM</p></div>
+              <div class="bell" style="background:var(--coralg);color:#fff"><i class="ti ti-arrow-right"></i></div>
+            </div>
+            <div class="svrow" onclick="closePubView();openDetail()">
+              <div class="datebadge"><span>Jun</span><b>28</b></div>
+              <div class="einfo"><h4>Blue Jay Listening Room</h4><p class="ven">Jacksonville Beach</p><p class="dt">Sat · 8:30 PM</p></div>
+              <div class="bell" style="background:var(--coralg);color:#fff"><i class="ti ti-arrow-right"></i></div>
+            </div>
+
+            <div class="sech" style="margin-top:20px">Find us live</div>
+            <div class="mapmini">
+              <div class="pin" style="left:34%;top:44%"><svg width="30" height="34" viewBox="0 0 250 270"><path d="M126 18 C178 18 219 59 219 111 C219 173 154 233 126 258 C98 233 33 173 33 111 C33 59 74 18 126 18Z" fill="#2D7FF9"/><circle cx="126" cy="111" r="60" fill="#fff"/><path d="M112 80 C112 75 118 72 122 75 L156 101 C162 105 162 114 156 118 L122 144 C118 147 112 144 112 139Z" fill="#2D7FF9"/></svg></div>
+              <div class="pin" style="left:64%;top:62%"><svg width="26" height="30" viewBox="0 0 250 270"><path d="M126 18 C178 18 219 59 219 111 C219 173 154 233 126 258 C98 233 33 173 33 111 C33 59 74 18 126 18Z" fill="#8B5CF6"/><circle cx="126" cy="111" r="60" fill="#fff"/><path d="M112 80 C112 75 118 72 122 75 L156 101 C162 105 162 114 156 118 L122 144 C118 147 112 144 112 139Z" fill="#8B5CF6"/></svg></div>
+            </div>
+            <p class="hint" style="margin-top:8px">Regulars at Surfer the Bar, Blue Jay Listening Room &amp; Ocean Street Taproom.</p>
+
+            <div class="sech" style="margin-top:20px">Photos</div>
+            <div class="pp-gal">
+              <div class="g" style="background:#2D7FF9"></div><div class="g" style="background:#8B5CF6"></div><div class="g" style="background:#FFB020"></div><div class="g" style="background:#1D9E75"></div>
+            </div>
+
+            <div class="sech" style="margin-top:20px">Members</div>
+            <div class="frow"><div class="favm" style="background:#FF5A5F">JW</div><div class="finfo"><h4>James Warner</h4><p>Guitar &amp; vocals</p></div><i class="ti ti-chevron-right" style="color:var(--mute);font-size:18px"></i></div>
+            <div class="frow"><div class="favm" style="background:#FFB020">RB</div><div class="finfo"><h4>Rosa Bel</h4><p>Fiddle</p></div><i class="ti ti-chevron-right" style="color:var(--mute);font-size:18px"></i></div>
+            <div class="frow"><div class="favm" style="background:#1D9E75">EH</div><div class="finfo"><h4>Eli Hart</h4><p>Bass</p></div><i class="ti ti-chevron-right" style="color:var(--mute);font-size:18px"></i></div>
+            <div class="frow" style="border:none"><div class="favm" style="background:#23272F">MW</div><div class="finfo"><h4>Marcus Webb</h4><p>Drums</p></div><i class="ti ti-chevron-right" style="color:var(--mute);font-size:18px"></i></div>
+            <p class="hint" style="margin-top:8px">Each member has their own Who's Playing profile — tap to follow them too.</p>
+
+            <div class="sech" style="margin-top:20px">Listen</div>
+            <div class="pp-links">
+              <div class="pp-link"><i class="ti ti-brand-spotify" style="color:#1DB954"></i> Spotify</div>
+              <div class="pp-link"><i class="ti ti-brand-bandcamp"></i> Bandcamp</div>
+              <div class="pp-link"><i class="ti ti-brand-youtube" style="color:#FF0000"></i> YouTube</div>
+            </div>
+
+            <div class="sech" style="margin-top:20px">Find us on social</div>
+            <div class="pp-links">
+              <div class="pp-link"><i class="ti ti-brand-instagram"></i> @thetideband</div>
+              <div class="pp-link"><i class="ti ti-brand-facebook" style="color:#1877F2"></i> The Tide</div>
+              <div class="pp-link"><i class="ti ti-brand-tiktok"></i> @thetide</div>
+            </div>
+
+            <div class="pubbar">
+              <div class="pfbtn primary" id="pub-followbtn" onclick="pubToggleFollow()">＋ Follow</div>
+              <div class="pfbtn ghost">Message</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ MANAGE PROFILES (Act As) ============ -->
+        <div class="detail" id="profmgr">
+          <div class="pmtop">
+            <div class="gbtn" onclick="closeProfMgr()"><i class="ti ti-chevron-left"></i></div>
+            <h1>Your profiles</h1>
+          </div>
+          <div class="dbody" style="padding-top:2px">
+            <p class="pf-hint" style="margin-top:0"><i class="ti ti-users" style="font-size:13px;margin-top:1px;color:var(--coral)"></i><span>Switch who you're acting as, or add a profile. Each has its own public page, calendar, and offers.</span></p>
+            <div class="pf-sec" id="pm-prohead">Acting as</div>
+            <div id="pm-prolist"></div>
+            <button class="cta-create" style="margin-top:8px" onclick="openProfEditorNew()"><i class="ti ti-plus"></i> Add a profile</button>
+          </div>
+        </div>
+
+        <!-- ============ SUGGESTED FOLLOWS (from social) ============ -->
+        <div class="detail" id="suggest">
+          <div class="pmtop">
+            <div class="gbtn" onclick="closeSuggest()"><i class="ti ti-chevron-left"></i></div>
+            <h1>People you follow</h1>
+          </div>
+          <div class="dbody" style="padding-top:2px">
+            <p class="pf-hint" style="margin-top:0"><i class="ti ti-brand-instagram" style="font-size:13px;margin-top:1px"></i><span>Matched from your Instagram &amp; Facebook. Follow them to get alerts when they play.</span></p>
+            <div class="toggrow" style="border-bottom:1px solid var(--line)"><span class="tt"><i class="ti ti-bell" style="margin-right:8px;color:var(--coral)"></i>Tell me when people I follow join</span><div class="toggle on" onclick="this.classList.toggle('on')"><b></b></div></div>
+            <div class="pf-sec">Suggested for you</div>
+            <div class="frow"><div class="favm" style="background:#23272F">FT</div><div class="finfo"><h4>The Firewater Tent Revival</h4><p>Artist · you follow on Instagram</p></div><button class="followbtn" onclick="toggleFollow(this)">Follow</button></div>
+            <div class="frow"><div class="favm" style="background:#1D9E75">SB</div><div class="finfo"><h4>Surfer the Bar</h4><p>Venue · you follow on Instagram</p></div><button class="followbtn" onclick="toggleFollow(this)">Follow</button></div>
+            <div class="frow"><div class="favm" style="background:#8B5CF6">CK</div><div class="finfo"><h4>Chloe Kimes</h4><p>Artist · 3 friends follow</p></div><button class="followbtn" onclick="toggleFollow(this)">Follow</button></div>
+            <div class="frow"><div class="favm" style="background:#2D7FF9">BJ</div><div class="finfo"><h4>Blue Jay Listening Room</h4><p>Venue · you follow on Facebook</p></div><button class="followbtn" onclick="toggleFollow(this)">Follow</button></div>
+            <div class="frow"><div class="favm" style="background:#FFB020">LT</div><div class="finfo"><h4>Low Tide Social Club</h4><p>Artist · you follow on Instagram</p></div><button class="followbtn" onclick="toggleFollow(this)">Follow</button></div>
+            <div class="frow" style="border:none"><div class="favm" style="background:#FF3F73">BB</div><div class="finfo"><h4>Beaches Brass Band</h4><p>Artist · 5 friends follow</p></div><button class="followbtn" onclick="toggleFollow(this)">Follow</button></div>
+            <button class="cta-ghost" onclick="document.querySelectorAll('#suggest .followbtn').forEach(b=>{b.classList.add('on');b.textContent='Following';})">Follow all</button>
           </div>
         </div>
 
@@ -635,14 +1297,143 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
     document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.dataset.screen===name));
   }
   document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>showScreen(t.dataset.tab)));
-  function setMode(m){
-    document.getElementById('nav-play').classList.toggle('hidden',m!=='play');
-    document.getElementById('nav-work').classList.toggle('hidden',m!=='work');
-    document.getElementById('mode-play').classList.toggle('on',m==='play');
-    document.getElementById('mode-work').classList.toggle('on',m==='work');
-    // stay on the You screen; just swap which tab bar is live
+  // ===== Profile (You) state =====
+  let pfPersona='pro', pfMode='play';
+  function show(id,v){document.getElementById(id).classList.toggle('hidden',!v);}
+  function setPersona(p){pfPersona=p; if(p==='goer') pfMode='play'; renderYou();}
+  function pfSetMode(m){pfMode=m; renderYou();}
+  function renderYou(){
+    const pro = pfPersona==='pro';
+    const work = pro && pfMode==='work';
+    // prototype preview seg
+    document.getElementById('pf-as-pro').classList.toggle('on',pro);
+    document.getElementById('pf-as-goer').classList.toggle('on',!pro);
+    // role line under name — location only (banner carries the role label for pros)
+    document.getElementById('pf-role').textContent = 'Jacksonville Beach, FL';
+    show('pf-banner', pro);
+    // professionals-only master switch
+    show('pf-toggle', pro);
+    document.getElementById('mode-play').classList.toggle('on',pfMode==='play');
+    document.getElementById('mode-work').classList.toggle('on',pfMode==='work');
+    const hint=document.querySelector('#pf-modehint span'), hi=document.querySelector('#pf-modehint i');
+    if(work){hint.textContent='Managing your gigs and venues. Switch to Play to browse shows as a fan.';hi.className='ti ti-briefcase';}
+    else{hint.textContent="You're browsing as a fan. Switch to Work to manage your gigs, calendar, and venues.";hi.className='ti ti-eye';}
+    // content blocks
+    show('pf-fan', !work);          // fan view for goers + pros in Play
+    show('pf-upgrade', !pro);       // upgrade card only for goers
+    show('pf-work', work);          // work dashboard only for pros in Work
+    // settings that only apply to professionals (they get followed; they publish)
+    show('pf-set-qr', pro);         // QR share — goers follow, aren't followed
+    show('pf-publish', pro);        // publishing tools — pros only
+    show('pf-music', pro);          // music links — artists (pros)
+    show('pf-intdir-row', pro);     // full integrations directory — pros
+    document.querySelector('#pf-calhint span').textContent = pro
+      ? 'Saved shows and confirmed gigs sync live to your calendar.'
+      : 'Saved shows sync live to your calendar — no manual export.';
+    // bottom tab bar follows the mode (goers never see Work tabs)
+    document.getElementById('nav-play').classList.toggle('hidden',work);
+    document.getElementById('nav-work').classList.toggle('hidden',!work);
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x.dataset.tab==='you'));
   }
+  // "Acting as" entity picker — cycles managed entities (stand-in for a picker sheet)
+  const PF_ENTS=[
+    {lg:'SB',c:'#2D7FF9',lab:'Venue',name:'Surfer the Bar',sub:'Jacksonville Beach · you + 3 staff'},
+    {lg:'JW',c:'#FF5A5F',lab:'Solo artist',name:'James Warner',sub:'Singer-songwriter · your solo act'},
+    {lg:'TT',c:'#8B5CF6',lab:'Band',name:'The Tide',sub:'Indie · you perform'},
+    {lg:'TT',c:'#1D9E75',lab:'Band manager',name:'The Tide',sub:'Bookings & business for the band'}
+  ];
+  let pfEntIdx=0;
+  function applyEnt(i){
+    pfEntIdx=i; const e=PF_ENTS[i];
+    const cur=document.getElementById('pf-aclg');
+    cur.textContent=e.lg; cur.style.background=e.c;
+    document.getElementById('pf-aclab').textContent=e.lab;
+    document.getElementById('pf-acname').textContent=e.name;
+    document.getElementById('pf-acsub').textContent=e.sub;
+  }
+  function renderProfList(){
+    const wrap=document.getElementById('pm-prolist'), head=document.getElementById('pm-prohead');
+    if(PF_ENTS.length===0){
+      head.style.display='none';
+      wrap.innerHTML='<div style="text-align:center;padding:8px 14px 4px">'
+        +'<div style="width:58px;height:58px;border-radius:16px;background:#FFF1F1;color:var(--coral);display:flex;align-items:center;justify-content:center;font-size:27px;margin:0 auto 13px"><i class="ti ti-briefcase"></i></div>'
+        +'<h4 style="font-size:16px;font-weight:800;letter-spacing:-.01em">No pro profiles yet</h4>'
+        +'<p style="font-size:13px;font-weight:600;color:var(--slate);line-height:1.5;margin:6px auto 0;max-width:280px">Add a band, venue, or promoter profile to post shows, manage a calendar, and build a public page fans can find.</p>'
+        +'</div>';
+      return;
+    }
+    head.style.display='';
+    let h='';
+    PF_ENTS.forEach((e,i)=>{
+      const right=i===pfEntIdx ? '<span class="pptag">Active</span>'
+        : '<span style="font-size:12px;font-weight:800;color:var(--coral)">Act as</span>';
+      h+='<div class="frow" onclick="actAs('+i+')"><div class="favm" style="background:'+e.c+'">'+e.lg+'</div><div class="finfo"><h4>'+e.name+'</h4><p>'+e.lab+'</p></div>'+right+'</div>';
+    });
+    wrap.innerHTML=h;
+  }
+  function openProfMgr(){renderProfList();document.getElementById('profmgr').classList.add('open');document.getElementById('profmgr').scrollTop=0;}
+  function closeProfMgr(){document.getElementById('profmgr').classList.remove('open');}
+  function actAs(i){
+    applyEnt(i); renderProfList();
+    // if the editor is open (reached via its "Change" link), retarget + respecialize it
+    if(document.getElementById('pubprof').classList.contains('open')){
+      const e=PF_ENTS[i];
+      setScope(e.lg,e.c,e.name);
+      setProfRole(roleOf(e.lab));
+    }
+    closeProfMgr();
+  }
+  // ===== Unified profile editor (add + edit) =====
+  let pubMode='edit';
+  function setScope(lg,c,name){
+    const v=document.getElementById('pub-vlg');
+    v.textContent=lg; v.style.background=c;
+    document.getElementById('pub-vname').textContent=name;
+  }
+  function setField(id,text,muted){
+    const el=document.getElementById(id);
+    el.textContent=text; el.style.color = muted?'var(--mute)':'var(--ink)';
+  }
+  function roleOf(lab){return lab==='Venue'?'venue':lab==='Promoter'?'promoter':lab==='Solo artist'?'artist':'band';}
+  function setProfRole(r){
+    document.getElementById('pe-rb').classList.toggle('on',r==='band');
+    document.getElementById('pe-rv').classList.toggle('on',r==='venue');
+    document.getElementById('pe-rp').classList.toggle('on',r==='promoter');
+    show('pe-listen', r==='band'||r==='artist');
+    show('pe-members', r==='band');
+    show('pe-venue', r==='venue');
+    show('pe-promoter', r==='promoter');
+  }
+  function openProfEditorNew(){
+    pubMode='new';
+    closeProfMgr();
+    document.getElementById('pe-title').textContent='Add a profile';
+    setScope('＋','#9AA1AC','New profile');
+    setField('pe-name','Add a name',true);
+    setField('pe-tagline','Add a tagline',true);
+    setField('pe-bio','Tell fans about this profile…',true);
+    setProfRole('band');
+    document.getElementById('pe-savebtn').innerHTML='<i class="ti ti-plus"></i> Create profile';
+    document.getElementById('pubprof').classList.add('open');
+    document.getElementById('pubprof').scrollTop=0;
+  }
+  function saveProfile(){ if(pubMode==='new') createProfile(); else closePubProf(); }
+  function createProfile(){
+    const seg=document.querySelector('#pe-roleseg .on');
+    const role=seg?seg.textContent:'Band';
+    const colors={Band:'#8B5CF6',Venue:'#2D7FF9',Promoter:'#FFB020'};
+    PF_ENTS.push({lg:role.slice(0,2).toUpperCase(),c:colors[role]||'#FFB020',lab:role,name:'New '+role.toLowerCase()+' profile',sub:'Edit to add details'});
+    applyEnt(PF_ENTS.length-1);
+    closePubProf(); openProfMgr();
+  }
+  function openConn(){document.getElementById('connmgr').classList.add('open');document.getElementById('connmgr').scrollTop=0;}
+  function closeConn(){document.getElementById('connmgr').classList.remove('open');}
+  // edit icon in profile header → public profile editor (pros)
+  function editProfile(){ if(pfPersona==='pro') openPubProf(); }
+  // ===== Suggested follows (social match) =====
+  function openSuggest(){document.getElementById('suggest').classList.add('open');document.getElementById('suggest').scrollTop=0;}
+  function closeSuggest(){document.getElementById('suggest').classList.remove('open');}
+  function toggleFollow(b){const on=b.classList.toggle('on');b.textContent=on?'Following':'Follow';}
   function savedView(v){
     document.getElementById('sv-following').style.display=v==='following'?'block':'none';
     document.getElementById('sv-shows').style.display=v==='shows'?'block':'none';
@@ -660,6 +1451,93 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
     const open=f.classList.toggle('hidden');
     c.style.transform=open?'rotate(0deg)':'rotate(180deg)';
   }
+  function openPromo(){/* prototype: opens flyer/template builder for a gig or month */}
+  // ===== Offers & promos =====
+  const QRM=["1111101011111","1000100010001","1010111010101","1000100010001","1111101011111","0000011100000","1010101010101","0000010100000","1111101101010","1000110010110","1010101101001","1000101011010","1111100101101"];
+  function paintQR(el){
+    if(!el||el.dataset.done) return;
+    const n=QRM.length, s=100/n; let r='';
+    for(let y=0;y<n;y++) for(let x=0;x<n;x++) if(QRM[y][x]==='1')
+      r+=`<rect x="${(x*s).toFixed(2)}" y="${(y*s).toFixed(2)}" width="${s.toFixed(2)}" height="${s.toFixed(2)}"/>`;
+    el.innerHTML=`<svg viewBox="0 0 100 100" fill="#071020" shape-rendering="crispEdges">${r}</svg>`;
+    el.dataset.done='1';
+  }
+  function revealQR(btn){
+    const card=btn.closest('.offer'), q=card.querySelector('.qr');
+    paintQR(q); q.classList.remove('hidden'); btn.style.display='none';
+  }
+  let promoView='list';
+  function openPromos(){
+    // scope offers to the venue currently selected in the "Acting as" switcher
+    const lg=document.getElementById('pf-aclg'), name=document.getElementById('pf-acname');
+    if(lg&&name){
+      const v=document.getElementById('pm-vlg'), vn=document.getElementById('pm-vname');
+      v.textContent=lg.textContent; v.style.background=lg.style.background; vn.textContent=name.textContent;
+    }
+    showPromoList();
+    document.getElementById('promomgr').classList.add('open');
+  }
+  function showPromoList(){
+    promoView='list';
+    document.getElementById('pm-list').style.display='block';
+    document.getElementById('pm-edit').style.display='none';
+    document.getElementById('pm-title').textContent='Offers & promos';
+    document.getElementById('promomgr').scrollTop=0;
+  }
+  function showPromoEdit(){
+    promoView='edit';
+    document.getElementById('pm-list').style.display='none';
+    document.getElementById('pm-edit').style.display='block';
+    document.getElementById('pm-title').textContent='Edit offer';
+    document.getElementById('promomgr').scrollTop=0;
+    paintQR(document.getElementById('pm-editqr'));
+  }
+  function promoBack(){ promoView==='edit' ? showPromoList() : closePromos(); }
+  function delOffer(el){ el.closest('.svrow').remove(); }
+  function closePromos(){document.getElementById('promomgr').classList.remove('open');}
+  // ===== My people =====
+  function openPeople(){document.getElementById('peoplemgr').classList.add('open'); peopleView('fol');}
+  function closePeople(){document.getElementById('peoplemgr').classList.remove('open');}
+  function peopleView(v){
+    document.getElementById('pp-fol').style.display=v==='fol'?'block':'none';
+    document.getElementById('pp-col').style.display=v==='col'?'block':'none';
+    document.getElementById('pp-tab-fol').classList.toggle('on',v==='fol');
+    document.getElementById('pp-tab-col').classList.toggle('on',v==='col');
+    document.getElementById('pp-searchq').textContent=v==='fol'?'followers':'collaborators';
+    document.getElementById('peoplemgr').scrollTop=0;
+  }
+  // ===== Integrations directory =====
+  function openIntDir(){document.getElementById('intdir').classList.add('open');document.getElementById('intdir').scrollTop=0;}
+  function closeIntDir(){document.getElementById('intdir').classList.remove('open');}
+  // ===== Public profile — edit mode (same editor as Add) =====
+  function openPubProf(){
+    pubMode='edit';
+    document.getElementById('pe-title').textContent='Public profile';
+    // Demo edits the artist entity (The Tide); fields specialize to its role.
+    setScope('TT','#8B5CF6','The Tide');
+    setField('pe-name','The Tide',false);
+    setField('pe-tagline','Indie surf-rock from Jax Beach',false);
+    setField('pe-bio','Four-piece indie surf-rock band born on the First Coast — reverb-soaked guitars, big harmonies, and a live show that fills the floor.',false);
+    setProfRole('band');
+    document.getElementById('pe-savebtn').innerHTML='<i class="ti ti-check"></i> Save';
+    document.getElementById('pubprof').classList.add('open');document.getElementById('pubprof').scrollTop=0;
+  }
+  function closePubProf(){document.getElementById('pubprof').classList.remove('open');}
+  let pubFollowed=false;
+  function pubToggleFollow(){
+    pubFollowed=!pubFollowed;
+    document.getElementById('pub-heart').className = pubFollowed?'ti ti-heart-filled':'ti ti-heart';
+    const b=document.getElementById('pub-followbtn');
+    b.innerHTML = pubFollowed?'✓ Following':'＋ Follow';
+    b.classList.toggle('on',pubFollowed);
+  }
+  function openPubView(){
+    pubFollowed=false;
+    document.getElementById('pub-heart').className='ti ti-heart';
+    const b=document.getElementById('pub-followbtn'); b.innerHTML='＋ Follow'; b.classList.remove('on');
+    document.getElementById('pubview').classList.add('open');document.getElementById('pubview').scrollTop=0;
+  }
+  function closePubView(){document.getElementById('pubview').classList.remove('open');}
   function openDetail(){document.getElementById('detail').classList.add('open');}
   function closeDetail(){document.getElementById('detail').classList.remove('open');}
   function selectVenue(){/* pin tap keeps the sheet; could swap content */}
