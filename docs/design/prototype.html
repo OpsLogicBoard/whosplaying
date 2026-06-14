@@ -295,6 +295,35 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .plcta{width:100%;background:var(--coralg);color:#fff;font-size:15.5px;font-weight:800;padding:16px;border-radius:15px;border:none;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 26px rgba(255,79,99,.34)}
 .pllater{width:100%;background:none;border:none;font-family:inherit;color:var(--slate);font-size:13.5px;font-weight:700;padding:13px;cursor:pointer;margin-top:2px}
 .plsecure{text-align:center;font-size:11px;font-weight:600;color:var(--mute);margin-top:4px;display:flex;align-items:center;justify-content:center;gap:6px}
+
+/* ===== Billing screen ===== */
+.bstatus{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:14px;box-shadow:0 6px 18px rgba(16,24,40,.05)}
+.bstatus .top{display:flex;align-items:center;gap:11px}
+.bstatus .pi{width:42px;height:42px;border-radius:12px;background:#071020;color:var(--gold);display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.bstatus .pname{font-size:17px;font-weight:800;letter-spacing:-.01em;color:var(--deep)}
+.bstatus .pmeta{font-size:12px;font-weight:600;color:var(--slate);margin-top:2px}
+.bstatus .fdg{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#071020;background:var(--gold);padding:4px 9px;border-radius:999px;flex-shrink:0}
+.bstatus .renew{display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--slate);margin-top:13px;padding-top:13px;border-top:1px solid var(--line)}
+.bstatus .renew b{color:var(--deep)}
+.bpay{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:15px;padding:14px;margin-bottom:14px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.bpay .card{width:42px;height:30px;border-radius:7px;background:linear-gradient(135deg,#1A1F36,#2D3561);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;flex-shrink:0}
+.bpay .m{flex:1}
+.bpay h5{font-size:14px;font-weight:700;color:var(--ink)}
+.bpay p{font-size:11.5px;font-weight:600;color:var(--slate);margin-top:1px}
+.bpay a{font-size:12.5px;font-weight:700;color:var(--coral);cursor:pointer}
+.busage{display:flex;gap:10px;margin-bottom:14px}
+.busage .u{flex:1;background:#fff;border:1px solid var(--line);border-radius:15px;padding:13px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.busage .u .lab{font-size:10.5px;font-weight:800;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;display:flex;align-items:center;gap:5px}
+.busage .u b{display:block;font-size:24px;font-weight:900;letter-spacing:-.02em;color:var(--deep);margin-top:6px}
+.busage .u .bar{height:6px;border-radius:999px;background:#EEF0F4;margin-top:9px;overflow:hidden}
+.busage .u .bar i{display:block;height:100%;border-radius:999px;background:var(--coralg)}
+.busage .u span{font-size:10.5px;font-weight:700;color:var(--slate);margin-top:6px;display:block}
+.bmanage{width:100%;background:var(--deep);color:#fff;font-size:14.5px;font-weight:800;padding:15px;border-radius:14px;border:none;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 8px 20px rgba(7,16,32,.20);margin-bottom:10px}
+.brow{display:flex;align-items:center;gap:12px;padding:14px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.brow .ic{width:34px;height:34px;border-radius:9px;background:#F2F4F7;color:var(--slate);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.brow h5{font-size:14px;font-weight:700;color:var(--ink);flex:1}
+.brow .go{color:var(--mute);font-size:17px}
+.bcancel{text-align:center;font-size:13px;font-weight:700;color:var(--slate);padding:16px;cursor:pointer}
 .qr{width:138px;height:138px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px;margin:13px auto 0;box-shadow:0 4px 14px rgba(16,24,40,.08)}
 .qr svg{width:100%;height:100%;display:block}
 .pmtop{display:flex;align-items:center;gap:12px;padding:54px 16px 10px}
@@ -498,14 +527,6 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
         <section class="screen" data-screen="you">
           <div class="pad" style="padding-top:14px">
 
-            <!-- prototype-only persona preview switch -->
-            <div class="pf-proto">
-              <span>Preview as</span>
-              <div class="pf-pseg">
-                <div class="on" id="pf-as-pro" onclick="setPersona('pro')">Professional</div>
-                <div id="pf-as-goer" onclick="setPersona('goer')">Music goer</div>
-              </div>
-            </div>
 
             <!-- professional banner (pros only) -->
             <div id="pf-banner" class="pf-banner"><i class="ti ti-briefcase"></i> Professional Profile</div>
@@ -649,6 +670,7 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
             <div class="setrow" onclick="openConn()"><span class="ic"><i class="ti ti-plug-connected"></i></span> Connections <span class="go"><i class="ti ti-chevron-right"></i></span></div>
             <div class="setrow"><span class="ic"><i class="ti ti-bell"></i></span> Notifications &amp; alerts <span class="go"><i class="ti ti-chevron-right"></i></span></div>
             <div class="setrow" id="pf-set-qr"><span class="ic"><i class="ti ti-qrcode"></i></span> Share my profile (QR) <span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="setrow" id="pf-set-billing" onclick="showScreen('m-billing')"><span class="ic"><i class="ti ti-credit-card"></i></span> Plan &amp; billing <span class="go"><i class="ti ti-chevron-right"></i></span></div>
             <div class="setrow"><span class="ic"><i class="ti ti-shield-lock"></i></span> Account &amp; privacy <span class="go"><i class="ti ti-chevron-right"></i></span></div>
             <div class="setrow"><span class="ic"><i class="ti ti-help-circle"></i></span> Help &amp; feedback <span class="go"><i class="ti ti-chevron-right"></i></span></div>
             <div class="setrow" style="border:none;color:var(--coral)"><span class="ic" style="color:var(--coral)"><i class="ti ti-logout"></i></span> Sign out</div>
@@ -696,6 +718,57 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
             <button class="plcta" onclick="alert('Stripe Checkout (Founding $14.99/mo) — wired in Phase B')"><i class="ti ti-sparkles"></i> Start Venue Pro · $14.99/mo</button>
             <button class="pllater" onclick="showScreen('you')">Maybe later</button>
             <div class="plsecure"><i class="ti ti-lock"></i> Secure checkout · cancel anytime · multi-venue +$12 each</div>
+          </div>
+        </section>
+
+        <!-- ===== MANAGE: BILLING ===== -->
+        <section class="screen" data-screen="m-billing">
+          <div class="pmtop">
+            <div class="gbtn" onclick="showScreen('you')"><i class="ti ti-chevron-left"></i></div>
+            <h1>Billing</h1>
+          </div>
+          <div class="pad" style="padding-top:6px">
+            <div class="bstatus">
+              <div class="top">
+                <div class="pi"><i class="ti ti-bolt"></i></div>
+                <div>
+                  <div class="pname">Venue Pro</div>
+                  <div class="pmeta">Surfer the Bar · active</div>
+                </div>
+                <span class="fdg"><i class="ti ti-anchor" style="font-size:11px"></i> Founding</span>
+              </div>
+              <div class="renew"><i class="ti ti-calendar-repeat" style="color:var(--coral)"></i> <span>$14.99/mo · renews <b>Jul 14, 2026</b></span></div>
+            </div>
+
+            <div class="bpay">
+              <div class="card"><i class="ti ti-brand-visa"></i></div>
+              <div class="m"><h5>Visa ···· 4242</h5><p>Expires 08/28</p></div>
+              <a onclick="alert('Stripe Customer Portal — Phase B')">Update</a>
+            </div>
+
+            <div class="pf-sec" style="margin-top:4px">This period</div>
+            <div class="busage">
+              <div class="u">
+                <div class="lab"><i class="ti ti-rocket" style="color:var(--gold)"></i> Boosts</div>
+                <b>3</b>
+                <span>events boosted</span>
+              </div>
+              <div class="u">
+                <div class="lab"><i class="ti ti-map-pin" style="color:var(--coral)"></i> GPS push</div>
+                <b>1<span style="font-size:13px;font-weight:700;color:var(--mute)">/2 day</span></b>
+                <div class="bar"><i style="width:50%"></i></div>
+                <span>within daily cap</span>
+              </div>
+            </div>
+
+            <button class="bmanage" onclick="alert('Stripe Customer Portal — Phase B')"><i class="ti ti-external-link"></i> Manage billing &amp; invoices</button>
+
+            <div class="brow" onclick="showScreen('m-plan')"><span class="ic"><i class="ti ti-arrows-up-down"></i></span><h5>Change plan</h5><span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="brow" onclick="alert('Add another venue — multi-venue +$12/mo each')"><span class="ic"><i class="ti ti-building-store"></i></span><h5>Add another venue · +$12/mo</h5><span class="go"><i class="ti ti-chevron-right"></i></span></div>
+            <div class="brow" onclick="alert('Receipts — Phase B')"><span class="ic"><i class="ti ti-receipt"></i></span><h5>Receipts</h5><span class="go"><i class="ti ti-chevron-right"></i></span></div>
+
+            <div class="bcancel" onclick="alert('Cancel via Stripe Customer Portal — Phase B')">Cancel subscription</div>
+            <div class="plsecure"><i class="ti ti-anchor"></i> Founding rate stays $14.99 for as long as you keep Venue Pro</div>
           </div>
         </section>
 
@@ -1401,9 +1474,6 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
   function renderYou(){
     const pro = pfPersona==='pro';
     const work = pro && pfMode==='work';
-    // prototype preview seg
-    document.getElementById('pf-as-pro').classList.toggle('on',pro);
-    document.getElementById('pf-as-goer').classList.toggle('on',!pro);
     // role line under name — location only (banner carries the role label for pros)
     document.getElementById('pf-role').textContent = 'Jacksonville Beach, FL';
     show('pf-banner', pro);
@@ -1420,6 +1490,7 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
     show('pf-work', work);          // work dashboard only for pros in Work
     // settings that only apply to professionals (they get followed; they publish)
     show('pf-set-qr', pro);         // QR share — goers follow, aren't followed
+    show('pf-set-billing', work);   // plan & billing — pros managing in Work
     show('pf-publish', pro);        // publishing tools — pros only
     show('pf-music', pro);          // music links — artists (pros)
     show('pf-intdir-row', pro);     // full integrations directory — pros
