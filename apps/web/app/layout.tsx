@@ -1,7 +1,16 @@
 import type { Metadata, Viewport } from 'next'
-import { Barlow_Condensed, DM_Sans, JetBrains_Mono, Fraunces } from 'next/font/google'
+import { Inter, Barlow_Condensed, DM_Sans, JetBrains_Mono, Fraunces } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
+
+// Inter — the v2 "Live Pin" typeface. Exposed as --font-sans, which the shared
+// Tailwind preset's font stack resolves to (so web matches the mobile app).
+const interFont = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-sans',
+  display: 'swap',
+})
 
 const displayFont = Barlow_Condensed({
   subsets: ['latin'],
@@ -37,19 +46,36 @@ const editorialFont = Fraunces({
 })
 
 export const metadata: Metadata = {
-  title: "Who's Playing — Live local music",
+  metadataBase: new URL('https://whosplaying.live'),
+  title: {
+    default: "Who's Playing — Live local music",
+    template: "%s · Who's Playing",
+  },
   description: 'Discover live music near you. For artists, venues, and music-goers.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    url: 'https://whosplaying.live',
+    siteName: "Who's Playing",
+    title: "Who's Playing — Live local music",
+    description: 'Discover live music near you. For artists, venues, and music-goers.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Who's Playing — Live local music",
+    description: 'Discover live music near you. For artists, venues, and music-goers.',
+  },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0AA3A3',
+  themeColor: '#FF5A5F',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${displayFont.variable} ${bodyFont.variable} ${monoFont.variable} ${editorialFont.variable}`}
+      className={`${interFont.variable} ${displayFont.variable} ${bodyFont.variable} ${monoFont.variable} ${editorialFont.variable}`}
     >
       <body>
         <Providers>{children}</Providers>

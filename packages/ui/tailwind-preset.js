@@ -51,9 +51,11 @@ module.exports = {
         teal: { DEFAULT: '#0F6E56', soft: '#E1F5EE' }, // semantic "confirmed" only
       },
       fontFamily: {
-        display: ['Inter', '-apple-system', '"SF Pro Display"', 'system-ui', 'sans-serif'],
-        body: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        // var(--font-sans) is wired to Inter via next/font on web; on mobile it
+        // resolves to undefined and falls through to the literal Inter stack.
+        display: ['var(--font-sans)', 'Inter', '-apple-system', '"SF Pro Display"', 'system-ui', 'sans-serif'],
+        body: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Inter', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
       },
       fontSize: {
