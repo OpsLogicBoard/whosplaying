@@ -19,7 +19,8 @@ export async function listMessages(client: WhosPlayingClient, conversationId: st
 export async function sendMessage(
   client: WhosPlayingClient,
   conversation_id: string,
+  sender_user_id: string,
   body: string,
 ) {
-  return client.from('messages').insert({ conversation_id, body }).select().single()
+  return client.from('messages').insert({ conversation_id, sender_user_id, body }).select().single()
 }

@@ -1,4 +1,5 @@
 import type { WhosPlayingClient } from '../client'
+import type { Json } from '../types'
 
 /** All entitlement rows for an org — the input to hasEntitlement() in core. */
 export async function listOrgEntitlements(client: WhosPlayingClient, orgId: string) {
@@ -36,7 +37,7 @@ export type UsageEventInput = {
   organizationId: string | null
   venueId?: string | null
   kind: 'boost' | 'gps_push' | 'offer_redeemed' | 'ticket_tap'
-  metadata?: Record<string, unknown>
+  metadata?: Json
 }
 
 /** Log a usage event (ticket tap, redemption, …). Powers per-use billing + analytics. */

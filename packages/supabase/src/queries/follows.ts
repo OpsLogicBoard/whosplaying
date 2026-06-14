@@ -4,10 +4,11 @@ export type FollowTarget = 'artist' | 'band' | 'venue'
 
 export async function follow(
   client: WhosPlayingClient,
+  follower_user_id: string,
   target_type: FollowTarget,
   target_id: string,
 ) {
-  return client.from('follows').insert({ target_type, target_id })
+  return client.from('follows').insert({ follower_user_id, target_type, target_id })
 }
 
 export async function unfollow(

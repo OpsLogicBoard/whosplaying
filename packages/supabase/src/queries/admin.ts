@@ -1,4 +1,5 @@
 import type { WhosPlayingClient } from '../client'
+import type { Json } from '../types'
 
 /** True if the signed-in user is a platform admin (gates the /admin route). */
 export async function isPlatformAdmin(client: WhosPlayingClient) {
@@ -29,12 +30,12 @@ export async function adminLog(
   action: string,
   targetType?: string,
   targetId?: string,
-  metadata: Record<string, unknown> = {},
+  metadata: Json = {},
 ) {
   return client.rpc('admin_log', {
     _action: action,
-    _target_type: targetType ?? null,
-    _target_id: targetId ?? null,
+    _target_type: targetType,
+    _target_id: targetId,
     _metadata: metadata,
   })
 }
