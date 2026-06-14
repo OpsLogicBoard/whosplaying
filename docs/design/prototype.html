@@ -324,6 +324,41 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 .brow h5{font-size:14px;font-weight:700;color:var(--ink);flex:1}
 .brow .go{color:var(--mute);font-size:17px}
 .bcancel{text-align:center;font-size:13px;font-weight:700;color:var(--slate);padding:16px;cursor:pointer}
+
+/* ===== Boost + GPS push composers ===== */
+.cmpev{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:16px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.cmpev .th{width:54px;height:54px;border-radius:13px;flex-shrink:0;background:var(--coralg)}
+.cmpev h4{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.cmpev p{font-size:12.5px;font-weight:600;color:var(--slate);margin-top:3px}
+.reach{display:flex;align-items:center;gap:13px;background:linear-gradient(135deg,#071020,#16233b);border-radius:16px;padding:16px;color:#fff;margin-bottom:16px}
+.reach .ri{width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.10);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--lime);flex-shrink:0}
+.reach b{font-size:22px;font-weight:900;letter-spacing:-.02em;display:block}
+.reach span{font-size:12px;font-weight:600;color:rgba(255,255,255,.66)}
+.optseg{display:flex;gap:8px;margin-bottom:18px}
+.optseg .o{flex:1;text-align:center;font-size:12.5px;font-weight:700;color:var(--slate);background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:12px 6px;cursor:pointer}
+.optseg .o.on{border-color:var(--coral);color:var(--coral);background:#FFF6F6}
+.optseg .o b{display:block;font-size:15px;font-weight:800;color:var(--ink);margin-bottom:2px}
+.optseg .o.on b{color:var(--coral)}
+.flabel{font-size:13px;font-weight:800;color:var(--slate);margin:2px 2px 9px}
+.cmparea{width:100%;background:#fff;border:1px solid var(--line);border-radius:14px;padding:13px;font-family:inherit;font-size:14px;font-weight:500;color:var(--ink);min-height:84px;resize:none;box-shadow:0 2px 8px rgba(16,24,40,.04)}
+.cmpcount{text-align:right;font-size:11px;font-weight:700;color:var(--mute);margin:6px 2px 16px}
+.rad{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:16px;box-shadow:0 4px 14px rgba(16,24,40,.04)}
+.rad input{flex:1;accent-color:var(--coral)}
+.rad .val{font-size:13.5px;font-weight:800;color:var(--deep);min-width:52px;text-align:right}
+.capnote{display:flex;align-items:center;gap:9px;background:#E1F5EE;border-radius:12px;padding:11px 13px;font-size:12.5px;font-weight:700;color:#0F6E56;margin-bottom:14px}
+.capnote.warn{background:#FAEEDA;color:#854F0B}
+.guard{display:flex;gap:9px;font-size:12px;font-weight:600;color:var(--slate);line-height:1.5;padding:2px 4px 16px}
+.guard i{color:var(--coral);font-size:15px;margin-top:1px;flex-shrink:0}
+.cmpcta{width:100%;background:var(--coralg);color:#fff;font-size:15.5px;font-weight:800;padding:16px;border-radius:15px;border:none;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 26px rgba(255,79,99,.34)}
+.inclpro{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;color:#0F6E56;background:#E1F5EE;padding:5px 11px;border-radius:999px}
+
+/* reusable feature-lock nudge (Free venue hits a Pro gate) */
+.lockcard{text-align:center;background:#fff;border:1.5px dashed var(--mute);border-radius:18px;padding:24px 20px;margin-bottom:14px}
+.lockcard .li{width:52px;height:52px;border-radius:50%;background:#F2F4F7;color:var(--slate);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px}
+.lockcard .pro{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--coral);background:#FFF1F1;padding:4px 10px;border-radius:999px;margin-bottom:10px}
+.lockcard h4{font-size:17px;font-weight:800;letter-spacing:-.01em;color:var(--deep)}
+.lockcard p{font-size:13px;font-weight:600;color:var(--slate);margin:7px 0 16px;line-height:1.5}
+.lockcard .unlock{display:inline-flex;align-items:center;gap:7px;background:var(--coralg);color:#fff;font-size:14px;font-weight:800;padding:13px 22px;border-radius:13px;border:none;font-family:inherit;cursor:pointer;box-shadow:0 8px 20px rgba(255,79,99,.34)}
 .qr{width:138px;height:138px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px;margin:13px auto 0;box-shadow:0 4px 14px rgba(16,24,40,.08)}
 .qr svg{width:100%;height:100%;display:block}
 .pmtop{display:flex;align-items:center;gap:12px;padding:54px 16px 10px}
@@ -650,6 +685,17 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
                 <div class="go"><i class="ti ti-chevron-right"></i></div>
               </div>
 
+              <div class="hat" onclick="showScreen('m-boost')">
+                <div class="ic" style="background:#FFF7E6;color:var(--gold)"><i class="ti ti-rocket"></i></div>
+                <div><h4>Boost a show</h4><p>Top of Tonight &amp; the map · reach more fans</p></div>
+                <div class="go"><i class="ti ti-chevron-right"></i></div>
+              </div>
+              <div class="hat" onclick="showScreen('m-gpspush')">
+                <div class="ic" style="background:#FFF1F1;color:var(--coral)"><i class="ti ti-map-pin-bolt"></i></div>
+                <div><h4>Push to nearby fans</h4><p>Alert goers in range — capped &amp; mutable</p></div>
+                <div class="go"><i class="ti ti-chevron-right"></i></div>
+              </div>
+
               <div class="pf-sec">Plan</div>
               <div class="plancard" onclick="showScreen('m-plan')">
                 <div class="row">
@@ -769,6 +815,70 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
 
             <div class="bcancel" onclick="alert('Cancel via Stripe Customer Portal — Phase B')">Cancel subscription</div>
             <div class="plsecure"><i class="ti ti-anchor"></i> Founding rate stays $14.99 for as long as you keep Venue Pro</div>
+          </div>
+        </section>
+
+        <!-- ===== MANAGE: BOOST COMPOSER ===== -->
+        <section class="screen" data-screen="m-boost">
+          <div class="pmtop">
+            <div class="gbtn" onclick="showScreen('you')"><i class="ti ti-chevron-left"></i></div>
+            <h1>Boost a show</h1>
+          </div>
+          <div class="pad" style="padding-top:6px">
+            <div class="cmpev">
+              <div class="th"></div>
+              <div><h4>Chloe Kimes &amp; The Tide</h4><p>Sat Jun 14 · 8:30 PM · Surfer the Bar</p></div>
+            </div>
+
+            <div class="reach">
+              <div class="ri"><i class="ti ti-trending-up"></i></div>
+              <div><b>~1,200 fans</b><span>in range around the Beaches this week</span></div>
+            </div>
+
+            <div class="flabel">How long</div>
+            <div class="optseg">
+              <div class="o" onclick="pickOpt(this)"><b>24h</b>before show</div>
+              <div class="o on" onclick="pickOpt(this)"><b>3 days</b>most popular</div>
+              <div class="o" onclick="pickOpt(this)"><b>Til event</b>best reach</div>
+            </div>
+
+            <div class="capnote"><i class="ti ti-eye-check"></i> Top of Tonight &amp; a highlighted map pin. We only ever charge for impressions — never promised sales.</div>
+
+            <div class="guard"><i class="ti ti-discount-2"></i><span>You're on <b>Venue Pro</b> — boosts are included. <span class="inclpro"><i class="ti ti-check" style="font-size:11px"></i> Included</span></span></div>
+
+            <button class="cmpcta" onclick="alert('Boost scheduled — Pro includes boosts')"><i class="ti ti-rocket"></i> Boost this show</button>
+            <div class="plsecure"><i class="ti ti-info-circle"></i> On Free? A single boost is $5 — no subscription needed.</div>
+          </div>
+        </section>
+
+        <!-- ===== MANAGE: GPS PUSH COMPOSER ===== -->
+        <section class="screen" data-screen="m-gpspush">
+          <div class="pmtop">
+            <div class="gbtn" onclick="showScreen('you')"><i class="ti ti-chevron-left"></i></div>
+            <h1>Push to nearby fans</h1>
+          </div>
+          <div class="pad" style="padding-top:6px">
+            <div class="flabel">Message</div>
+            <textarea class="cmparea" id="gps-msg" maxlength="140" oninput="document.getElementById('gps-ct').textContent=this.value.length+'/140'">$4 SunCruisers til close — live music starting now at Surfer the Bar 🎶</textarea>
+            <div class="cmpcount" id="gps-ct">66/140</div>
+
+            <div class="flabel">Reach radius</div>
+            <div class="rad">
+              <i class="ti ti-map-pin" style="color:var(--coral);font-size:19px"></i>
+              <input type="range" min="0.5" max="5" step="0.5" value="2" oninput="document.getElementById('gps-rv').textContent=this.value+' mi'">
+              <span class="val" id="gps-rv">2 mi</span>
+            </div>
+
+            <div class="reach">
+              <div class="ri"><i class="ti ti-users"></i></div>
+              <div><b>~340 fans</b><span>browsing within 2 mi right now</span></div>
+            </div>
+
+            <div class="capnote"><i class="ti ti-bell-check"></i> 1 of 2 daily pushes used — 1 left today</div>
+            <div class="guard"><i class="ti ti-shield-check"></i><span>Capped to protect fans: at most 1–2 pushes a day across all venues, and anyone can mute. Over-pushing loses the audience we're here to grow.</span></div>
+
+            <button class="cmpcta" onclick="alert('GPS push sent to ~340 nearby fans')"><i class="ti ti-send"></i> Send to nearby fans</button>
+            <div class="plsecure"><i class="ti ti-bolt"></i> Venue Pro feature · GPS push is never sold à la carte</div>
           </div>
         </section>
 
@@ -1469,6 +1579,7 @@ body{font-family:Inter,-apple-system,system-ui,sans-serif;background:#e9ebf0;col
   // ===== Profile (You) state =====
   let pfPersona='pro', pfMode='play';
   function show(id,v){document.getElementById(id).classList.toggle('hidden',!v);}
+  function pickOpt(el){el.parentNode.querySelectorAll('.o').forEach(o=>o.classList.remove('on'));el.classList.add('on');}
   function setPersona(p){pfPersona=p; if(p==='goer') pfMode='play'; renderYou();}
   function pfSetMode(m){pfMode=m; renderYou();}
   function renderYou(){
