@@ -767,6 +767,72 @@ export type Database = {
           },
         ]
       }
+      offers: {
+        Row: {
+          active: boolean
+          created_at: string
+          created_by: string
+          days_of_week: number[]
+          expiration_date: string | null
+          gps_radius_m: number | null
+          id: string
+          message: string
+          on_event_pages: boolean
+          recurrence: Database["public"]["Enums"]["offer_recurrence"]
+          start_date: string
+          time_end: string | null
+          time_start: string | null
+          venue_id: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          created_by: string
+          days_of_week?: number[]
+          expiration_date?: string | null
+          gps_radius_m?: number | null
+          id?: string
+          message: string
+          on_event_pages?: boolean
+          recurrence?: Database["public"]["Enums"]["offer_recurrence"]
+          start_date?: string
+          time_end?: string | null
+          time_start?: string | null
+          venue_id: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          created_by?: string
+          days_of_week?: number[]
+          expiration_date?: string | null
+          gps_radius_m?: number | null
+          id?: string
+          message?: string
+          on_event_pages?: boolean
+          recurrence?: Database["public"]["Enums"]["offer_recurrence"]
+          start_date?: string
+          time_end?: string | null
+          time_start?: string | null
+          venue_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "offers_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "offers_venue_id_fkey"
+            columns: ["venue_id"]
+            isOneToOne: false
+            referencedRelation: "venues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       organization_members: {
         Row: {
           invited_by: string | null
@@ -1184,6 +1250,14 @@ export type Database = {
       is_platform_admin: { Args: never; Returns: boolean }
       is_venue_manager: { Args: { _venue_id: string }; Returns: boolean }
       is_venue_member: { Args: { _venue_id: string }; Returns: boolean }
+      offer_gps_ok: {
+        Args: { _radius: number; _venue: string }
+        Returns: boolean
+      }
+      offer_quota_ok: {
+        Args: { _active: boolean; _id: string; _venue: string }
+        Returns: boolean
+      }
       owns_artist: { Args: { _artist_id: string }; Returns: boolean }
       recompute_entitlements: { Args: { _org: string }; Returns: undefined }
       show_limit: { Args: never; Returns: number }
@@ -1205,6 +1279,7 @@ export type Database = {
       event_status: "draft" | "proposed" | "confirmed" | "cancelled"
       follow_target: "artist" | "band" | "venue"
       gig_status: "open" | "filled" | "cancelled"
+      offer_recurrence: "one_time" | "weekly"
       org_member_role: "owner" | "manager" | "staff"
       performer_status: "invited" | "confirmed" | "declined"
       performer_type: "artist" | "band"
@@ -1361,6 +1436,7 @@ export const Constants = {
       event_status: ["draft", "proposed", "confirmed", "cancelled"],
       follow_target: ["artist", "band", "venue"],
       gig_status: ["open", "filled", "cancelled"],
+      offer_recurrence: ["one_time", "weekly"],
       org_member_role: ["owner", "manager", "staff"],
       performer_status: ["invited", "confirmed", "declined"],
       performer_type: ["artist", "band"],
