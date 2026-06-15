@@ -8,6 +8,35 @@ itself is created and populated in a dedicated session (prompt at the bottom).
 
 ---
 
+## 0. Canonical implementation (supersedes the manual-paste framing below)
+
+The vault is **built and encrypted by a script, never hand-edited in Excel** — matching
+how the OpsBord vault (`~/update_vault.py`) actually works.
+
+- **Updater script:** `~/update_whosplaying_vault.py` (lives outside the repo; holds a
+  hardcoded `PASSWORD` constant — never commit it). Run it in Terminal:
+  `python3 -m pip install msoffcrypto-tool openpyxl` then `python3 ~/update_whosplaying_vault.py`.
+  It builds the encrypted workbook on first run, then collects each value via
+  `getpass` (hidden input — no echo, no shell history), writes it to the right row,
+  stamps the rotation date, and re-encrypts. **Claude never runs it and never sees a value.**
+- **Vault file:** `~/Documents/Whos Playing Security Vault.xlsx`, AES-encrypted via
+  `msoffcrypto` (not a readable zip). **7 functional sheets:** 🔗 Access Points ·
+  🌐 Frontend Keys · 🔴 Server Secrets · 🏗️ Infrastructure IDs · 📅 Rotation Schedule ·
+  🔐 Supabase Vault · 📖 Quick Reference.
+- **Three runtime layers** (where values are consumed):
+  1. **Frontend (public):** `NEXT_PUBLIC_*` (web) / `EXPO_PUBLIC_*` (mobile) — URL, anon
+     key, Mapbox token. Never a service-role or secret key here.
+  2. **Server secrets:** Supabase **Edge Function Secrets** (`supabase secrets set …`) —
+     service_role, Stripe secret/webhook, Resend, push keys.
+  3. **Supabase Vault:** encrypted Postgres, read by edge functions via the
+     `get_vault_secret(secret_name)` RPC (migration `0013_vault_secret_helper.sql`,
+     `service_role`-only) for rotate-without-redeploy secrets.
+
+The provider-oriented inventory in §3 below is still the authoritative *list of what to
+collect*; the script seeds those same credentials into the 7 sheets.
+
+---
+
 ## 1. Principles
 
 1. **One source of truth.** All secrets live in the vault; runtime stores

@@ -3,7 +3,7 @@
 // URL. Caller must be an owner/manager of the org (verified via their JWT).
 import Stripe from 'npm:stripe@17'
 import { createClient } from 'npm:@supabase/supabase-js@2'
-import { corsHeaders } from '../_shared/cors.ts'
+import { getCorsHeaders } from '../_shared/cors.ts'
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
   httpClient: Stripe.createFetchHttpClient(),
@@ -21,14 +21,13 @@ const PRICE = {
   boost: Deno.env.get('STRIPE_PRICE_BOOST_ONE_TIME')!,
 }
 
-function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...corsHeaders, 'content-type': 'application/json' },
-  })
-}
-
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req.headers.get('Origin') ?? '')
+  const json = (body: unknown, status = 200) =>
+    new Response(JSON.stringify(body), {
+      status,
+      headers: { ...corsHeaders, 'content-type': 'application/json' },
+    })
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
 
   // Identify the caller from their JWT.

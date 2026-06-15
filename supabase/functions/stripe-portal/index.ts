@@ -2,7 +2,7 @@
 // (update card, view invoices, cancel). Caller must own/manage the org.
 import Stripe from 'npm:stripe@17'
 import { createClient } from 'npm:@supabase/supabase-js@2'
-import { corsHeaders } from '../_shared/cors.ts'
+import { getCorsHeaders } from '../_shared/cors.ts'
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY')!, {
   httpClient: Stripe.createFetchHttpClient(),
@@ -13,14 +13,13 @@ const admin = createClient(
   { auth: { persistSession: false } },
 )
 
-function json(body: unknown, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { ...corsHeaders, 'content-type': 'application/json' },
-  })
-}
-
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req.headers.get('Origin') ?? '')
+  const json = (body: unknown, status = 200) =>
+    new Response(JSON.stringify(body), {
+      status,
+      headers: { ...corsHeaders, 'content-type': 'application/json' },
+    })
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
 
   const token = req.headers.get('authorization')?.replace('Bearer ', '')
