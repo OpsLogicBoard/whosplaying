@@ -1358,6 +1358,7 @@ export type Database = {
         Args: never
         Returns: Database["public"]["Enums"]["admin_role"]
       }
+      all_performers_confirmed: { Args: { _event: string }; Returns: boolean }
       entitlement_limit: {
         Args: { _feature: string; _org: string; _venue: string }
         Returns: number
@@ -1377,6 +1378,7 @@ export type Database = {
       is_platform_admin: { Args: never; Returns: boolean }
       is_venue_manager: { Args: { _venue_id: string }; Returns: boolean }
       is_venue_member: { Args: { _venue_id: string }; Returns: boolean }
+      log_ticket_tap: { Args: { _event_id: string }; Returns: undefined }
       offer_gps_ok: {
         Args: { _radius: number; _venue: string }
         Returns: boolean

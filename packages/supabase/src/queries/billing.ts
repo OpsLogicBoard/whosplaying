@@ -54,6 +54,24 @@ export async function listPlans(client: WhosPlayingClient) {
   return client.from('plans').select('*')
 }
 
+/** Record a free "Get Tickets" tap (views→taps funnel). Safe for anon/goers. */
+export async function logTicketTap(client: WhosPlayingClient, eventId: string) {
+  return client.rpc('log_ticket_tap', { _event_id: eventId })
+}
+
+/** Append UTM params so the venue sees WhosPlaying as a traffic source. */
+export function withTicketUtm(ticketUrl: string, eventId: string): string {
+  try {
+    const u = new URL(ticketUrl)
+    u.searchParams.set('utm_source', 'whosplaying')
+    u.searchParams.set('utm_medium', 'referral')
+    u.searchParams.set('utm_campaign', eventId)
+    return u.toString()
+  } catch {
+    return ticketUrl
+  }
+}
+
 // ── Checkout / Portal (invoke the Stripe edge functions) ────────────────────
 export type CheckoutParams = {
   orgId: string
