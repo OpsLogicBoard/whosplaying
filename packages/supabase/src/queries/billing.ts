@@ -53,3 +53,32 @@ export async function logUsageEvent(client: WhosPlayingClient, e: UsageEventInpu
 export async function listPlans(client: WhosPlayingClient) {
   return client.from('plans').select('*')
 }
+
+// ── Checkout / Portal (invoke the Stripe edge functions) ────────────────────
+export type CheckoutParams = {
+  orgId: string
+  successUrl: string
+  cancelUrl: string
+  /** 'subscription' (default) or 'boost' (one-off $5). */
+  kind?: 'subscription' | 'boost'
+  /** For subscriptions: 'venue_pro' (default) or 'founding'. */
+  plan?: 'venue_pro' | 'founding'
+  /** Additional venues beyond the first (multi-venue +$12 each). */
+  extraVenues?: number
+  /** For boosts. */
+  venueId?: string
+  eventId?: string
+}
+
+/** Create a hosted Checkout session; returns { url } to redirect to. */
+export async function createCheckoutSession(client: WhosPlayingClient, params: CheckoutParams) {
+  return client.functions.invoke<{ url: string }>('stripe-checkout', { body: params })
+}
+
+/** Create a Customer Portal session; returns { url } for self-serve billing. */
+export async function createPortalSession(
+  client: WhosPlayingClient,
+  params: { orgId: string; returnUrl: string },
+) {
+  return client.functions.invoke<{ url: string }>('stripe-portal', { body: params })
+}
