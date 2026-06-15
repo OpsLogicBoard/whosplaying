@@ -1,0 +1,139 @@
+# WhosPlaying — Secure Credentials Vault Architecture
+
+Mirrors the OpsBord approach (`~/Documents/Opsbord Security Vault.xlsx`): a single
+**encrypted spreadsheet**, stored **outside** the git repo, that is the source of
+truth for every API key, secret, and connection. This doc is the *architecture +
+inventory* — **it contains no secret values** and is safe to commit. The vault
+itself is created and populated in a dedicated session (prompt at the bottom).
+
+---
+
+## 1. Principles
+
+1. **One source of truth.** All secrets live in the vault; runtime stores
+   (Supabase secrets, Vercel/EAS env, `.env.local`) are *derived* from it.
+2. **Never in git.** No secret value is ever committed. `.gitignore` already
+   covers `.env*`; the vault lives in `~/Documents/`, never in the repo.
+3. **Encrypted at rest.** The workbook is password-protected (Excel AES) and/or
+   kept in an encrypted/synced secure folder — same as the OpsBord vault.
+4. **Metadata in the repo, values in the vault.** The repo holds names + "where
+   to get it" (`supabase/functions/.env.example`, this doc). Values do not.
+5. **Rotation is tracked.** Every credential has a "last rotated" date and a
+   status; exposed keys are rotated immediately.
+
+---
+
+## 2. Storage & format
+
+- **File:** `~/Documents/WhosPlaying Security Vault.xlsx` (alongside the OpsBord one).
+- **Format:** `.xlsx`, password-protected. Human-browsable, portable, matches OpsBord.
+- **Backup:** whatever secure/synced location the OpsBord vault uses.
+- **Access:** owner only. Never attach to chats, never paste values into prompts,
+  never upload to web services.
+
+### Sheet layout
+
+One sheet per provider, plus a rotation log. Columns (consistent across sheets):
+
+| Column | Meaning |
+|---|---|
+| **Service** | e.g. Supabase, Stripe |
+| **Credential** | the key/secret name |
+| **Env** | `test` / `live` / `n/a` |
+| **Value** | the secret (vault only) |
+| **Where used** | which app/function/store consumes it |
+| **Source** | exactly where to obtain/regenerate it |
+| **Last rotated** | date |
+| **Status** | active / rotate / retired |
+| **Notes** | constraints, e.g. "service-side only" |
+
+---
+
+## 3. Credential inventory (values blank — fill in the vault)
+
+### Sheet: Supabase  (project `pakzhnwumihecyfcjfln`, org `pnozibuffukdfmawqyde`, name "whosplaying")
+| Credential | Env | Where used | Source |
+|---|---|---|---|
+| `SUPABASE_URL` (`https://pakzhnwumihecyfcjfln.supabase.co`) | n/a | web, mobile, functions | Dashboard → Settings → API |
+| anon / publishable key | n/a | web, mobile (`NEXT_PUBLIC_SUPABASE_ANON_KEY`) | Settings → API |
+| **service_role** key | n/a | server only (functions auto-inject) | Settings → API — **rotate (exposed this session)** |
+| DB password | n/a | CLI / direct psql | Settings → Database |
+| JWT secret | n/a | token verification | Settings → API |
+| Access token (CLI) | n/a | `supabase` CLI login | account tokens |
+
+### Sheet: Stripe  (account "95 South", `acct_1TiMKIL6x6uykN3e`)
+| Credential | Env | Where used | Source |
+|---|---|---|---|
+| Secret key `sk_test_…` | test | `stripe-setup.mjs`, functions | Dashboard (Test) → Developers → API keys — **rotate (exposed)** |
+| Secret key `sk_live_…` | live | go-live only | Dashboard (Live) → API keys — **ROTATE NOW (pasted in chat)** |
+| Publishable key | test/live | client (if used) | API keys |
+| Webhook signing secret `whsec_…` | test | `stripe-webhook` | webhook endpoint (created at setup) — rotate with key |
+| Price: Venue Pro / Founding / Multi-venue / Boost | test | functions, web pricing | created by `scripts/stripe-setup.mjs` (IDs in `functions/.env.example`) |
+| MCP connector session | test | Stripe MCP | **was stuck in LIVE** — connect a test session if used |
+
+### Sheet: Auth / OAuth
+| Credential | Where used | Source |
+|---|---|---|
+| Google OAuth Client ID + Secret | Supabase Auth (Google provider) | console.cloud.google.com → redirect to Supabase `/auth/v1/callback` |
+| Apple Service ID + Key (+ Team/Key IDs) | Supabase Auth (Apple provider) | Apple Developer (requires paid account) |
+| Google Calendar service-account JSON | calendar sync | console.cloud.google.com (acct whosplayingjaxbeach@gmail.com) |
+
+### Sheet: Domain / DNS
+| Item | Notes |
+|---|---|
+| `whosplaying.live` registrar login | domain owner |
+| DNS records (Vercel, Supabase custom domain, email) | per-provider |
+
+### Sheet: Deploy
+| Credential | Where used | Source |
+|---|---|---|
+| Vercel token + project IDs | web deploy / env | Vercel account |
+| EAS / Expo token | mobile builds | expo.dev |
+| Apple App Store Connect / Google Play keys | app submission | respective consoles |
+
+### Sheet: Source
+| Credential | Where used |
+|---|---|
+| GitHub repo (`OpsLogicBoard/whosplaying`) + PAT/deploy keys | CI, pushes |
+
+### Sheet: Rotation Log
+`Date · Credential · Action (created/rotated/retired) · Reason · By`
+
+---
+
+## 4. Sync to runtime (vault → stores)
+
+- **Supabase function secrets:** keep a gitignored `supabase/functions/.env` (values from the vault) → `supabase secrets set --env-file supabase/functions/.env`.
+- **Web (Vercel):** set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, Stripe publishable + price IDs in Vercel env.
+- **Mobile (EAS):** EAS secrets for the same public values.
+- **Names are documented** in `supabase/functions/.env.example`; values never are.
+
+---
+
+## 5. Immediate rotation list (from this build session)
+
+1. `sk_live_…` Stripe secret key — **pasted in chat → rotate now.**
+2. `sk_test_…` Stripe test key — appeared in transcript → rotate (low-risk).
+3. Supabase `service_role` JWT — appeared in transcript → rotate (server-only).
+4. Stripe `whsec_…` test webhook secret — re-roll with the test key; re-set the function secret.
+
+---
+
+## 6. Build prompt (run in a new session to create + populate the vault)
+
+```
+Create the WhosPlaying Security Vault, mirroring ~/Documents/Opsbord Security
+Vault.xlsx. Use docs/SECURE_CREDENTIALS_ARCHITECTURE.md as the spec.
+
+1. Build a password-protected workbook at ~/Documents/WhosPlaying Security
+   Vault.xlsx with one sheet per provider (Supabase, Stripe, Auth/OAuth,
+   Domain/DNS, Deploy, Source) + a Rotation Log, using the columns and the
+   credential inventory in the architecture doc. Leave Value cells blank.
+2. Walk me through populating values ONE service at a time — I paste each value
+   into the spreadsheet myself; do not ask me to paste secrets into chat.
+3. First rotate the keys in the "Immediate rotation list", then record the new
+   values + rotation dates in the vault and re-set the Supabase function secrets.
+4. Verify the runtime still works (stripe-webhook smoke test) after re-keying.
+
+Never commit the vault or any secret value. The repo keeps names only.
+```
