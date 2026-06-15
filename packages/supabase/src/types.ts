@@ -419,6 +419,61 @@ export type Database = {
           },
         ]
       }
+      event_boosts: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          ends_at: string
+          event_id: string
+          id: string
+          source: Database["public"]["Enums"]["boost_source"]
+          starts_at: string
+          venue_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          ends_at: string
+          event_id: string
+          id?: string
+          source?: Database["public"]["Enums"]["boost_source"]
+          starts_at?: string
+          venue_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          ends_at?: string
+          event_id?: string
+          id?: string
+          source?: Database["public"]["Enums"]["boost_source"]
+          starts_at?: string
+          venue_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_boosts_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_boosts_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_boosts_venue_id_fkey"
+            columns: ["venue_id"]
+            isOneToOne: false
+            referencedRelation: "venues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       event_performers: {
         Row: {
           billing_order: number
@@ -721,6 +776,77 @@ export type Database = {
           },
           {
             foreignKeyName: "gig_listings_venue_id_fkey"
+            columns: ["venue_id"]
+            isOneToOne: false
+            referencedRelation: "venues"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gps_push_campaigns: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          event_id: string | null
+          id: string
+          message: string
+          offer_id: string | null
+          radius_m: number
+          scheduled_at: string | null
+          sent_at: string | null
+          status: Database["public"]["Enums"]["gps_push_status"]
+          venue_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          event_id?: string | null
+          id?: string
+          message: string
+          offer_id?: string | null
+          radius_m: number
+          scheduled_at?: string | null
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["gps_push_status"]
+          venue_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          event_id?: string | null
+          id?: string
+          message?: string
+          offer_id?: string | null
+          radius_m?: number
+          scheduled_at?: string | null
+          sent_at?: string | null
+          status?: Database["public"]["Enums"]["gps_push_status"]
+          venue_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gps_push_campaigns_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "gps_push_campaigns_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "gps_push_campaigns_offer_id_fkey"
+            columns: ["offer_id"]
+            isOneToOne: false
+            referencedRelation: "offers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "gps_push_campaigns_venue_id_fkey"
             columns: ["venue_id"]
             isOneToOne: false
             referencedRelation: "venues"
@@ -1236,6 +1362,7 @@ export type Database = {
         Args: { _feature: string; _org: string; _venue: string }
         Returns: number
       }
+      gps_push_cap_ok: { Args: { _venue: string }; Returns: boolean }
       has_entitlement: {
         Args: { _feature: string; _org: string; _venue: string }
         Returns: boolean
@@ -1262,6 +1389,10 @@ export type Database = {
       recompute_entitlements: { Args: { _org: string }; Returns: undefined }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
+      venue_has_entitlement: {
+        Args: { _feature: string; _venue: string }
+        Returns: boolean
+      }
     }
     Enums: {
       admin_role: "super_admin" | "sales" | "support" | "read_only"
@@ -1272,6 +1403,7 @@ export type Database = {
         | "accepted"
         | "rejected"
         | "withdrawn"
+      boost_source: "pro" | "purchase"
       conflict_kind: "venue_double_book" | "performer_double_book"
       conflict_subject: "venue" | "artist" | "band"
       device_platform: "ios" | "android" | "web"
@@ -1279,6 +1411,7 @@ export type Database = {
       event_status: "draft" | "proposed" | "confirmed" | "cancelled"
       follow_target: "artist" | "band" | "venue"
       gig_status: "open" | "filled" | "cancelled"
+      gps_push_status: "scheduled" | "sent" | "canceled"
       offer_recurrence: "one_time" | "weekly"
       org_member_role: "owner" | "manager" | "staff"
       performer_status: "invited" | "confirmed" | "declined"
@@ -1429,6 +1562,7 @@ export const Constants = {
         "rejected",
         "withdrawn",
       ],
+      boost_source: ["pro", "purchase"],
       conflict_kind: ["venue_double_book", "performer_double_book"],
       conflict_subject: ["venue", "artist", "band"],
       device_platform: ["ios", "android", "web"],
@@ -1436,6 +1570,7 @@ export const Constants = {
       event_status: ["draft", "proposed", "confirmed", "cancelled"],
       follow_target: ["artist", "band", "venue"],
       gig_status: ["open", "filled", "cancelled"],
+      gps_push_status: ["scheduled", "sent", "canceled"],
       offer_recurrence: ["one_time", "weekly"],
       org_member_role: ["owner", "manager", "staff"],
       performer_status: ["invited", "confirmed", "declined"],
