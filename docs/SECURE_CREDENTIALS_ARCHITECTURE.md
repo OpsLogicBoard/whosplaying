@@ -35,6 +35,28 @@ how the OpsBord vault (`~/update_vault.py`) actually works.
 The provider-oriented inventory in §3 below is still the authoritative *list of what to
 collect*; the script seeds those same credentials into the 7 sheets.
 
+### Setting / rotating a runtime secret — the ONE canonical process
+
+**Why secret entry always happens in *your* terminal:** Claude's tool shell has **no
+TTY** (a hidden `getpass`/`read -s` prompt raises `Inappropriate ioctl for device`), so a
+masked prompt can't reach you through Claude. Secret *values* therefore only ever enter
+via a prompt in your own terminal or a file you edit — never through chat, never through a
+Claude-run command. Claude runs everything *around* it (verify, hash-compare, deploy).
+
+**Do this** (run in your Terminal, from the repo root):
+
+```
+python3 scripts/set-secret.py STRIPE_SECRET_KEY
+```
+
+It prompts hidden, validates the prefix, writes `supabase/functions/.env`, pushes to
+Supabase Edge Function Secrets, and tells you if a function redeploy is needed. Then ask
+Claude to verify — it can hash-compare `.env` ↔ deployed (digests are plain SHA-256) and
+redeploy/smoke-test. Record the new value in the vault with `~/update_whosplaying_vault.py`.
+
+Don't hand-roll one-off `supabase secrets set KEY=…` lines (they leak into shell history
+and drift from `.env`). One script, every time.
+
 ---
 
 ## 1. Principles
