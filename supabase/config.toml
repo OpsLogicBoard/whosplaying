@@ -36,3 +36,9 @@ file_size_limit = "50MiB"
 [edge_runtime]
 enabled = true
 inspector_port = 8083
+
+# Stripe webhooks authenticate via signature, not a Supabase JWT — the gateway
+# must let unauthenticated requests reach the function (we verify the signature
+# inside). checkout/portal keep verify_jwt on (called with the user's JWT).
+[functions.stripe-webhook]
+verify_jwt = false

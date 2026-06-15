@@ -48,6 +48,13 @@ async function reconcileSubscription(sub: Stripe.Subscription) {
   const extraVenues = additionalItem?.quantity ?? 0
   const planKey = extraVenues > 0 ? 'multi_venue' : 'venue_pro'
 
+  // current_period_end moved from the subscription to the item in recent Stripe
+  // API versions — read whichever is present.
+  const periodEndUnix =
+    (sub as unknown as { current_period_end?: number }).current_period_end ??
+    items[0]?.current_period_end ??
+    null
+
   // One active subscription row per org — update the existing row (created free
   // at org signup) or insert if missing.
   const { data: existing } = await admin
@@ -62,7 +69,7 @@ async function reconcileSubscription(sub: Stripe.Subscription) {
     plan_key: planKey,
     status: STATUS_MAP[sub.status] ?? 'active',
     venue_quantity: 1 + extraVenues,
-    current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
+    current_period_end: periodEndUnix ? new Date(periodEndUnix * 1000).toISOString() : null,
     stripe_customer_id: typeof sub.customer === 'string' ? sub.customer : sub.customer.id,
     stripe_subscription_id: sub.id,
     updated_at: new Date().toISOString(),
