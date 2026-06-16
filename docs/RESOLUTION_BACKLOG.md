@@ -95,6 +95,24 @@ Re-run `get_advisors` (security + performance) after each migration.
 > Note: Supabase docs advise against pointing MCP at production. The connector is project-scoped
 > (`?project_ref=pakzhnwumihecyfcjfln`) but write-capable — apply DDL only with explicit approval.
 
+### Status after migrations 0015 + 0016 (applied 2026-06-16)
+- [x] Tightened the 2 `WITH CHECK(true)` UPDATE policies (gig_bids, conflict_flags) — **0015**.
+- [x] Revoked RPC EXECUTE on 6 trigger/internal SECURITY DEFINER fns — **0015**.
+- [x] Added 19 FK covering indexes (all unindexed-FK warnings cleared) — **0015**.
+- [x] Closed the `admin_*` anon surface (revoke from PUBLIC + grant authenticated) — **0016**.
+      (0015's revoke was incomplete; anon inherited EXECUTE via the PUBLIC grant.)
+
+**Still open / accepted:**
+- [ ] **Enable leaked-password protection** — Auth dashboard toggle (no SQL/MCP path); do before launch.
+- [ ] **`auth_rls_initplan` (~22 policies)** + **multiple-permissive consolidation (4 tables)** → migration **0017** (performance).
+- [ ] **`bands_insert_authenticated` WITH CHECK(true)** → needs schema change (`bands.created_by` + creator-as-admin trigger).
+- [ ] **`pg_trgm` in `public`** → relocate (minor).
+- _Accepted by design (no action):_ `log_ticket_tap` is intentionally anon-callable (anonymous tap
+  logging); RLS-helper predicates (`venue_has_entitlement`, `offer_quota_ok`, `is_platform_admin`,
+  `offer_gps_ok`, `gps_push_cap_ok`) stay EXECUTE-able since RLS evaluates them as the querying role;
+  `admin_*` remain callable by `authenticated` (admin console, self-gated). New FK indexes show as
+  "unused" only because there's no traffic yet — do not drop.
+
 ## Verified healthy (no action — recorded so we don't re-litigate)
 
 - ✅ All migrations `0005`–`0014` include RLS policies **and** explicit GRANTs.
