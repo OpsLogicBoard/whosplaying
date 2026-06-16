@@ -8,12 +8,12 @@
 
 ## P0 — Access / tooling blockers (fix before further backend work)
 
-- [ ] **Supabase MCP cannot reach the WhosPlaying project.**
-      One account, two orgs — but the connector's OAuth grant was scoped to only "Ops Bord
-      Org"; the "Who's Playing" org (project `pakzhnwumihecyfcjfln`) was left out, so it
-      returns *permission denied*. **Action:** re-authorize the Supabase connector as the
-      same account and grant **both** orgs (GUI, not terminal). Same identity → OpsBord
-      unaffected. Blocks all MCP-driven migrations and advisor sweeps. See `WORKFLOW_AND_TOOLING.md` §3.
+- [x] **Supabase MCP reaches the WhosPlaying project.** RESOLVED 2026-06-16 via a **second,
+      project-scoped hosted connector** (`https://mcp.supabase.com/mcp?project_ref=pakzhnwumihecyfcjfln`),
+      kept side-by-side with the Ops Bord Org connector. The hosted connector is OAuth-scoped
+      to one org per connection and doesn't read the vault, so a PAT there had no effect — the
+      second project-scoped connector is the fix. `list_projects`/`list_organizations` are
+      disabled on it by project scoping (expected). See `WORKFLOW_AND_TOOLING.md` §3.
 - [x] **Move Supabase owner identity off `admin@opsbord.com` to a 95 South address.**
       DONE 2026-06-15 → now `admin@ninety5south.com` (Zoho alias). Required fixing an
       orphaned DNSSEC DS record on `ninety5south.com` at Name.com (DS published but zone

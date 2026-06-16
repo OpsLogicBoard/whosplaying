@@ -40,4 +40,6 @@ Custom MapLibre style at `packages/ui/src/brand/map-style.json` — teal water, 
 
 - **Web** → Vercel from `main`.
 - **Mobile** → EAS preview on `main`, production builds promoted manually.
-- **Supabase** → migrations applied with `supabase db push` per environment.
+- **Supabase** → migrations authored in `supabase/migrations/` and applied via the Supabase
+  MCP `apply_migration` (project-scoped connector; approval-gated) — see
+  `WORKFLOW_AND_TOOLING.md` §3. The `supabase db push` CLI path remains a fallback.

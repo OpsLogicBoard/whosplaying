@@ -81,6 +81,9 @@ it expanded into rotating exposed keys, hardening, and standing up the **Resend 
   `functions deploy`, `secrets set`, Management API writes are all classifier-gated. Ask before each.
 - **Supabase: use the CLI, not MCP** (MCP token is read-only for this project). **`config push`
   is UNSAFE** — config.toml has localhost `site_url` and no OAuth providers, so it would clobber prod.
+  > ⚠️ SUPERSEDED 2026-06-16: MCP now reaches WhosPlaying via a project-scoped connector and is
+  > the preferred path for migrations/advisors — see `SESSION_WRAP_2026-06-16.md` and
+  > `WORKFLOW_AND_TOOLING.md` §3. The `config push` warning still stands.
 - **Auth config changes** = Management API `PATCH /v1/projects/<ref>/config/auth` with a user-supplied
   access token captured via dialog (the CLI's keychain token is off-limits). Patch only the fields you mean to.
 - Supabase secret digests are **plain SHA-256** → hash-compare `.env` vs deployed to check sync
