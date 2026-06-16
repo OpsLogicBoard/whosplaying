@@ -9,11 +9,15 @@
 ## P0 — Access / tooling blockers (fix before further backend work)
 
 - [ ] **Supabase MCP cannot reach the WhosPlaying project.**
-      Connected token is scoped to org `canvmbeehpufktigxxby` (ComNet, Termin8t); the
-      WhosPlaying project is `pakzhnwumihecyfcjfln` and returns *permission denied*.
-      **Action:** re-authorize the Supabase MCP connector against the account/org that owns
-      `pakzhnwumihecyfcjfln` (GUI connector settings, not terminal). Blocks all MCP-driven
-      migrations and advisor sweeps. See `WORKFLOW_AND_TOOLING.md` §3.
+      One account, two orgs — but the connector's OAuth grant was scoped to only "Ops Bord
+      Org"; the "Who's Playing" org (project `pakzhnwumihecyfcjfln`) was left out, so it
+      returns *permission denied*. **Action:** re-authorize the Supabase connector as the
+      same account and grant **both** orgs (GUI, not terminal). Same identity → OpsBord
+      unaffected. Blocks all MCP-driven migrations and advisor sweeps. See `WORKFLOW_AND_TOOLING.md` §3.
+- [ ] **Move Supabase owner identity off `admin@opsbord.com` to a 95 South / neutral
+      address.** Parent company is 95 South (matches Stripe account name). Do this AFTER the
+      connector fix (account email change affects login for both orgs); add a backup org
+      owner + 2FA; keep the one-account/two-org structure.
 - [ ] **Confirm Stripe MCP account is the intended one.** Connected account is
       `acct_1TiMKIL6x6uykN3e` ("95 South"). Verify this is the production/test WhosPlaying
       Stripe account before any catalog or refund writes.

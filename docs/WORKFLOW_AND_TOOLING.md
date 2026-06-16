@@ -71,17 +71,25 @@ Migrations specifically: author the SQL in `supabase/migrations/`, apply via the
 
 ## 3. The one open access gap — Supabase MCP (resolve before DB work)
 
-- **WhosPlaying project ref:** `pakzhnwumihecyfcjfln` (from `apps/*/.env.local`, `supabase/config.toml` id `whosplaying`).
-- **Connected MCP can see:** org `canvmbeehpufktigxxby` → `nwayqcczlecjszgvvohi` (ComNet), `aesyxxwlqjayzmopklef` (Termin8t).
-- **Result:** `get_project pakzhnwumihecyfcjfln` → *permission denied*. All MCP-driven DB
-  work for WhosPlaying is blocked until this is fixed.
+**It is ONE Supabase account with TWO organizations** (confirmed via dashboard):
 
-**Fix (user action, one-time, GUI — not terminal):** Re-authorize the Supabase MCP
-connector so it includes the Supabase account/organization that owns
-`pakzhnwumihecyfcjfln`. This is done in the Claude MCP/connector settings, not the
-shell. Until then, DB changes are authored as migration files and applied either after
-reconnection or via the Supabase dashboard SQL editor (GUI) — **never by asking the user
-to run `supabase db push` in a terminal.**
+- **Ops Bord Org** (`canvmbeehpufktigxxby`, Pro) → ComNet `nwayqcczlecjszgvvohi`, Termin8t `aesyxxwlqjayzmopklef`.
+- **Who's Playing** (Free) → `pakzhnwumihecyfcjfln` (WhosPlaying; `supabase/config.toml` id `whosplaying`).
+
+The connector's OAuth grant was scoped to **only Ops Bord Org** at consent time, so the MCP
+can't see the Who's Playing org. `get_project pakzhnwumihecyfcjfln` → *permission denied*.
+This is a **scope** problem, not a separate-account problem.
+
+**Fix (user action, GUI — not terminal):** Re-authorize the Supabase connector signed in as
+the **same** account, and grant access to **both** orgs (or all). Same identity → the
+OpsBord projects are unaffected. Then verify with `list_projects`. Until fixed, DB changes
+are authored as migration files and applied via the Supabase dashboard SQL editor (GUI) —
+**never by asking the user to run `supabase db push` in a terminal.**
+
+**Parent identity:** 95 South is the parent over OpsBord + WhosPlaying (Stripe account
+display name = "95 South"). The Supabase owner login is `admin@opsbord.com`; plan is to move
+it to a neutral 95 South address — do this as a *separate* step after the connector is fixed
+(it changes login for both orgs), add a backup org owner + 2FA, keep one-account/two-org.
 
 See memory: `project_supabase_mcp_access_gap`.
 
