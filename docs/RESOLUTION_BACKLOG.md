@@ -14,10 +14,18 @@
       returns *permission denied*. **Action:** re-authorize the Supabase connector as the
       same account and grant **both** orgs (GUI, not terminal). Same identity → OpsBord
       unaffected. Blocks all MCP-driven migrations and advisor sweeps. See `WORKFLOW_AND_TOOLING.md` §3.
-- [ ] **Move Supabase owner identity off `admin@opsbord.com` to a 95 South / neutral
-      address.** Parent company is 95 South (matches Stripe account name). Do this AFTER the
-      connector fix (account email change affects login for both orgs); add a backup org
-      owner + 2FA; keep the one-account/two-org structure.
+- [x] **Move Supabase owner identity off `admin@opsbord.com` to a 95 South address.**
+      DONE 2026-06-15 → now `admin@ninety5south.com` (Zoho alias). Required fixing an
+      orphaned DNSSEC DS record on `ninety5south.com` at Name.com (DS published but zone
+      unsigned → SERVFAIL on validating resolvers → external mail undeliverable, incl.
+      Supabase's confirmation email). Removing the DS at Name.com → DNSSEC Management fixed
+      it. Supabase account email change is a dual-confirmation flow (old + new address).
+      See memory `project_supabase_mcp_access_gap`.
+- [ ] **Harden the new owner account:** enable 2FA on `admin@ninety5south.com` and add a
+      backup Owner to both orgs so the parent company isn't single-point-of-failure.
+- [ ] **Disable auto-renew is OFF + transfer-lock review on `ninety5south.com`** — Name.com
+      showed Automatic Renewal OFF (expires 23 Jul 2027). Turn auto-renew ON so the parent
+      domain can't lapse.
 - [ ] **Confirm Stripe MCP account is the intended one.** Connected account is
       `acct_1TiMKIL6x6uykN3e` ("95 South"). Verify this is the production/test WhosPlaying
       Stripe account before any catalog or refund writes.
