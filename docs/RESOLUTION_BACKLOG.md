@@ -66,6 +66,35 @@
       dedicated automated test suite exists yet; the interactive `prototype.html` is the only
       "test" surface. Consider a minimal smoke-test layer for the cross-confirmation invariant.
 
+## P1.5 — Database advisor findings (first live sweep, 2026-06-16)
+
+First sweep run via the project-scoped Supabase MCP against `pakzhnwumihecyfcjfln`.
+Re-run `get_advisors` (security + performance) after each migration.
+
+**Security:**
+- [ ] **Enable leaked-password protection** (HaveIBeenPwned) in Auth. One toggle; do before launch.
+- [ ] **`SECURITY DEFINER` functions RPC-callable by `anon`/`authenticated`** (~21). Split:
+      - Trigger-only (`handle_new_user`, `performers_sync_event`, `venue_after_insert_entitlements`,
+        `rls_auto_enable`, `ensure_venue_org`, `recompute_entitlements`) → `REVOKE EXECUTE` from
+        anon/authenticated/public (safe — not used in RLS, not meant for RPC).
+      - `admin_log`, `admin_platform_kpis`, `admin_market_density` → **review bodies first**; if they
+        don't self-gate on `is_platform_admin()`, anon can write audit rows / read platform stats.
+      - RLS-helper predicates (`venue_has_entitlement`, `offer_quota_ok`, `is_platform_admin`, etc.) →
+        DO NOT blanket-revoke (RLS evaluates them as the querying role; revoking breaks policies).
+- [ ] **RLS policies with `WITH CHECK (true)`** — `bands_insert_authenticated` (unrestricted INSERT),
+      `conflict_flags_update_involved`, `gig_bids_update_visible` (open WITH CHECK on UPDATE). Tighten.
+- [ ] **`pg_trgm` extension in `public` schema** — relocate to a dedicated schema (minor).
+
+**Performance (scale prep for Beaches launch):**
+- [ ] **~22 RLS policies re-evaluate `auth.<fn>()` per row** → wrap as `(select auth.uid())`. High-leverage.
+- [ ] **~20 unindexed foreign keys** → add covering indexes (events, conversations, gig_listings, venues…).
+- [ ] **4 tables with overlapping permissive SELECT policies** (`band_members`, `gig_listings`,
+      `organization_members`, `venue_staff`) → consolidate.
+- [ ] **Unused indexes** — re-evaluate AFTER real traffic; do not drop prematurely (likely just no usage yet).
+
+> Note: Supabase docs advise against pointing MCP at production. The connector is project-scoped
+> (`?project_ref=pakzhnwumihecyfcjfln`) but write-capable — apply DDL only with explicit approval.
+
 ## Verified healthy (no action — recorded so we don't re-litigate)
 
 - ✅ All migrations `0005`–`0014` include RLS policies **and** explicit GRANTs.
