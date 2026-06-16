@@ -28,11 +28,12 @@ See memory: `feedback_no_terminal_interaction`, `feedback_tool_first_workflow`.
 
 ---
 
-## 1. Connected tool inventory (verified 2026-06-15)
+## 1. Connected tool inventory (verified 2026-06-16)
 
 | Capability | Tool | Status | Notes |
 |---|---|---|---|
-| **Supabase DB / migrations / advisors / edge fns** | Supabase MCP (`mcp__…__*`) | ⚠️ **WRONG ACCOUNT** | Token sees org `canvmbeehpufktigxxby` (ComNet, Termin8t). **Does NOT have WhosPlaying project `pakzhnwumihecyfcjfln`.** See §3. |
+| **Supabase DB / migrations / advisors / edge fns (WhosPlaying)** | Supabase MCP — **project-scoped connector** | ✅ Connected | URL `https://mcp.supabase.com/mcp?project_ref=pakzhnwumihecyfcjfln`. Reaches WhosPlaying; `list_projects`/`list_organizations` are intentionally disabled under project scoping. See §3. |
+| **Supabase DB (OpsBord org)** | Supabase MCP — Ops Bord Org connector | ✅ Connected | Separate connector, org `canvmbeehpufktigxxby` (ComNet, Termin8t). Kept side-by-side; do not repoint it. |
 | **Web deploys / runtime logs / domains** | Vercel MCP | ✅ Connected | Use for deploy, build logs, runtime logs, domain checks. |
 | **Billing / products / prices / refunds** | Stripe MCP | ✅ Connected | Account `acct_1TiMKIL6x6uykN3e` ("95 South"). Verify this is the intended WhosPlaying Stripe account before any write. |
 | **Local UI preview + verification** | Claude Preview MCP (`preview_*`) | ✅ Available | Use for the visual-approval gate. Never ask the user to "check the browser." |
@@ -64,32 +65,47 @@ For every change:
    functions, or any data collection, run the relevant sweep from §4.
 
 Migrations specifically: author the SQL in `supabase/migrations/`, apply via the
-**Supabase MCP `apply_migration`** (once §3 is resolved), then run `get_advisors`
-(security + performance) — never via the user's terminal.
+**Supabase MCP `apply_migration`** on the WhosPlaying project-scoped connector (§3), then
+run `get_advisors` (security + performance) — never via the user's terminal. Applying a
+migration is a hard-to-reverse production action: get explicit user approval each time
+(the harness blocks unapproved migrations by default).
 
 ---
 
-## 3. The one open access gap — Supabase MCP (resolve before DB work)
+## 3. Supabase MCP connection — RESOLVED (2026-06-16)
 
-**It is ONE Supabase account with TWO organizations** (confirmed via dashboard):
-
+**Account model:** ONE Supabase account, TWO organizations:
 - **Ops Bord Org** (`canvmbeehpufktigxxby`, Pro) → ComNet `nwayqcczlecjszgvvohi`, Termin8t `aesyxxwlqjayzmopklef`.
 - **Who's Playing** (Free) → `pakzhnwumihecyfcjfln` (WhosPlaying; `supabase/config.toml` id `whosplaying`).
 
-The connector's OAuth grant was scoped to **only Ops Bord Org** at consent time, so the MCP
-can't see the Who's Playing org. `get_project pakzhnwumihecyfcjfln` → *permission denied*.
-This is a **scope** problem, not a separate-account problem.
+**Root cause (now fixed):** the hosted Supabase connector authenticates via OAuth scoped to
+**one organization** per connection. The original connector was scoped to Ops Bord Org only,
+so WhosPlaying was unreachable (`permission denied`). The hosted connector does **not** read
+the credentials vault, so storing a PAT there had no effect.
 
-**Fix (user action, GUI — not terminal):** Re-authorize the Supabase connector signed in as
-the **same** account, and grant access to **both** orgs (or all). Same identity → the
-OpsBord projects are unaffected. Then verify with `list_projects`. Until fixed, DB changes
-are authored as migration files and applied via the Supabase dashboard SQL editor (GUI) —
-**never by asking the user to run `supabase db push` in a terminal.**
+**The working solution — two side-by-side connectors:** add a **second** hosted Supabase
+connector scoped directly to the WhosPlaying project via a URL query param:
 
-**Parent identity:** 95 South is the parent over OpsBord + WhosPlaying (Stripe account
-display name = "95 South"). The Supabase owner login is `admin@opsbord.com`; plan is to move
-it to a neutral 95 South address — do this as a *separate* step after the connector is fixed
-(it changes login for both orgs), add a backup org owner + 2FA, keep one-account/two-org.
+```
+https://mcp.supabase.com/mcp?project_ref=pakzhnwumihecyfcjfln
+```
+
+- The distinct URL avoids a collision with the existing Ops Bord connector; `project_ref`
+  locks it to WhosPlaying. During OAuth, sign in (now `admin@ninety5south.com`) and pick the
+  **Who's Playing** org.
+- **Trade-off:** `project_ref` scoping **disables account-level tools** (`list_projects`,
+  `list_organizations`) on that connector — expected, not a failure. Project tools
+  (`list_tables`, `apply_migration`, `get_advisors`, `execute_sql`, `deploy_edge_function`,
+  `list_migrations`, etc.) all work.
+- It is **write-capable** against production. Supabase recommends not pointing MCP at prod —
+  mitigation here is project scoping + per-action approval. Apply DDL only with explicit OK.
+- Alternative (not used): a Personal Access Token is account-wide and would cover both orgs
+  in one connection, but only via a token-based server config, not the hosted OAuth connector.
+
+**Owner identity:** the Supabase account login was moved `admin@opsbord.com` →
+`admin@ninety5south.com` on 2026-06-15 (required fixing broken DNSSEC on `ninety5south.com`
+— see `RESOLUTION_BACKLOG.md` and memory `project_supabase_mcp_access_gap`). 95 South is the
+parent over OpsBord + WhosPlaying. Follow-ups: 2FA + backup org owner; auto-renew the domain.
 
 See memory: `project_supabase_mcp_access_gap`.
 
