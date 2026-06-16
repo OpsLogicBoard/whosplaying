@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Canonical secret setter for WhosPlaying — run in YOUR Terminal, not through Claude.
+Canonical secret setter for WhosPlaying. NO TERMINAL REQUIRED.
 
   python3 scripts/set-secret.py STRIPE_SECRET_KEY
 
-Why you run it (not Claude): Claude's tool shell has no TTY, so a hidden prompt
-can't reach you through it. This is the same model as ~/update_whosplaying_vault.py
-and OpsBord's update_vault.py — the value is typed at a getpass prompt in your own
-terminal and never appears in chat, shell history, or any argument.
+Claude runs this for you. Because Claude's tool shell has no TTY, the script
+detects that and pops a NATIVE macOS dialog (masked field) on your screen — you
+type the value there and click OK. The value goes straight into .env + Supabase
+and never appears in chat, history, or any argument. (If you ever DO run it in a
+real terminal yourself, it falls back to a getpass prompt automatically.)
 
 What it does, in one step:
   1. Prompts for the value (hidden input via getpass).
@@ -47,6 +48,34 @@ def fail(msg):
     sys.exit(1)
 
 
+def prompt_value(name):
+    """Get the secret value WITHOUT a terminal.
+
+    If a TTY exists (user ran this in their own terminal), use getpass.
+    Otherwise — e.g. when Claude runs this via its tool shell, which has no TTY —
+    pop a native macOS dialog with a masked field. Either way the value is read
+    directly into this process and never printed, so it never reaches chat.
+    """
+    try:
+        if sys.stdin.isatty():
+            return getpass.getpass(f"Paste value for {name} (hidden): ").strip()
+    except Exception:
+        pass
+    # No TTY -> native macOS masked dialog (GUI, no terminal involved).
+    r = subprocess.run(
+        ["osascript",
+         "-e", (f'set r to display dialog "Enter value for {name}" '
+                'default answer "" with hidden answer '
+                'buttons {"Cancel", "OK"} default button "OK" '
+                'with title "WhosPlaying Secret Entry"'),
+         "-e", "return text returned of r"],
+        capture_output=True, text=True)
+    if r.returncode != 0:
+        fail("dialog was cancelled or no display is available: "
+             + (r.stderr.strip() or "unknown"))
+    return r.stdout.strip()
+
+
 def update_env(name, value):
     if not os.path.exists(ENV_PATH):
         fail(f"{ENV_PATH} not found — run from the repo root.")
@@ -67,7 +96,7 @@ def main():
         fail("usage: python3 scripts/set-secret.py <SECRET_NAME>")
     name = sys.argv[1]
 
-    value = getpass.getpass(f"Paste value for {name} (hidden): ").strip()
+    value = prompt_value(name)
     if not value:
         fail("empty — nothing changed.")
 

@@ -35,27 +35,29 @@ how the OpsBord vault (`~/update_vault.py`) actually works.
 The provider-oriented inventory in §3 below is still the authoritative *list of what to
 collect*; the script seeds those same credentials into the 7 sheets.
 
-### Setting / rotating a runtime secret — the ONE canonical process
+### Setting / rotating a runtime secret — the ONE canonical process (NO terminal)
 
-**Why secret entry always happens in *your* terminal:** Claude's tool shell has **no
-TTY** (a hidden `getpass`/`read -s` prompt raises `Inappropriate ioctl for device`), so a
-masked prompt can't reach you through Claude. Secret *values* therefore only ever enter
-via a prompt in your own terminal or a file you edit — never through chat, never through a
-Claude-run command. Claude runs everything *around* it (verify, hash-compare, deploy).
-
-**Do this** (run in your Terminal, from the repo root):
+**Claude runs this for you — you do not touch a terminal:**
 
 ```
 python3 scripts/set-secret.py STRIPE_SECRET_KEY
 ```
 
-It prompts hidden, validates the prefix, writes `supabase/functions/.env`, pushes to
-Supabase Edge Function Secrets, and tells you if a function redeploy is needed. Then ask
-Claude to verify — it can hash-compare `.env` ↔ deployed (digests are plain SHA-256) and
-redeploy/smoke-test. Record the new value in the vault with `~/update_whosplaying_vault.py`.
+Claude invokes it via its tool shell. That shell has **no TTY** (a `getpass`/`read -s`
+prompt there raises `Inappropriate ioctl for device` — that was the bug behind the earlier
+broken attempts), so the script detects the missing TTY and instead pops a **native macOS
+dialog with a masked field** on your screen. You type the value into that dialog and click
+OK. The value flows straight into `supabase/functions/.env` and the Supabase Edge Function
+Secrets store — it never appears in chat, shell history, or a command argument. (If you
+ever run the script in a real terminal yourself, it falls back to a `getpass` prompt.)
 
-Don't hand-roll one-off `supabase secrets set KEY=…` lines (they leak into shell history
-and drift from `.env`). One script, every time.
+Claude then does everything around it: validate the value against the provider, hash-compare
+`.env` ↔ deployed (Supabase secret digests are plain SHA-256), redeploy any function that
+builds a client at startup (e.g. `stripe-checkout`/`stripe-portal`), and smoke-test. Record
+the new value in the vault with `~/update_whosplaying_vault.py`.
+
+Don't hand-roll one-off `supabase secrets set KEY=…` lines — they leak into shell history
+and drift from `.env`. One script, every time.
 
 ---
 
