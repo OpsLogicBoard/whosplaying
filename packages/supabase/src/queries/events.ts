@@ -63,3 +63,56 @@ export async function createEvent(client: WhosPlayingClient, input: NewEventInpu
     .select('id')
     .single()
 }
+
+export type EventPrivateDetailsInput = {
+  event_id: string
+  gig_rate?: string | null
+  promoter_note?: string | null
+  load_in_at?: string | null
+  soundcheck_at?: string | null
+  lineup_order?: string | null
+  updated_by?: string | null
+}
+
+/**
+ * Upsert the event's private gig details (one row per event). Writable only by
+ * venue members per RLS (`epd_write_venue`); readable by every participant.
+ */
+export async function upsertEventPrivateDetails(
+  client: WhosPlayingClient,
+  input: EventPrivateDetailsInput,
+) {
+  return client.from('event_private_details').upsert(
+    {
+      event_id: input.event_id,
+      gig_rate: input.gig_rate ?? null,
+      promoter_note: input.promoter_note ?? null,
+      load_in_at: input.load_in_at ?? null,
+      soundcheck_at: input.soundcheck_at ?? null,
+      lineup_order: input.lineup_order ?? null,
+      updated_by: input.updated_by ?? null,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: 'event_id' },
+  )
+}
+
+/**
+ * Upsert the caller's own private note for an event. Each user sees and edits
+ * only their own row (`epn_all_self`); pass the signed-in user's id explicitly
+ * so the upsert can target the (event_id, user_id) primary key.
+ */
+export async function upsertEventParticipantNote(
+  client: WhosPlayingClient,
+  input: { event_id: string; user_id: string; note?: string | null },
+) {
+  return client.from('event_participant_notes').upsert(
+    {
+      event_id: input.event_id,
+      user_id: input.user_id,
+      note: input.note ?? null,
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: 'event_id,user_id' },
+  )
+}

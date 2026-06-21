@@ -33,6 +33,8 @@ import { useAuth } from '../lib/auth'
 import { supabase } from '../lib/supabase'
 
 const HOURS = [17, 18, 19, 20, 21, 22, 23] // 5 PM – 11 PM
+// Load-in / sound-check can run earlier than music; null = "Not set".
+const TIME_SLOTS: (number | null)[] = [null, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
 
 function hourLabel(h: number): string {
   const ampm = h >= 12 ? 'PM' : 'AM'
@@ -197,12 +199,20 @@ export default function CreateEventScreen() {
   const [hour, setHour] = useState(20)
   const [submitting, setSubmitting] = useState(false)
 
-  // New mockup-parity form state (UI-only until the backend pass wires them).
   const [visibility, setVisibility] = useState<'public' | 'private'>('public')
   const [setting, setSetting] = useState<'indoor' | 'outdoor' | 'patio'>('indoor')
   const [familyFriendly, setFamilyFriendly] = useState(true)
   const [tickets, setTickets] = useState<'free' | 'ticketed'>('free')
   const [moreOpen, setMoreOpen] = useState(false)
+
+  // Private gig details → event_private_details (venue-writable, participant-readable).
+  const [gigRate, setGigRate] = useState('')
+  const [promoterNote, setPromoterNote] = useState('')
+  const [loadInHour, setLoadInHour] = useState<number | null>(null)
+  const [soundcheckHour, setSoundcheckHour] = useState<number | null>(null)
+  const [lineupOrder, setLineupOrder] = useState('')
+  // Caller's own private note → event_participant_notes (self-scoped).
+  const [privateNote, setPrivateNote] = useState('')
 
   const venueName = venue?.name ?? 'your venue'
   const canSubmit = !!venue && !submitting
@@ -215,7 +225,7 @@ export default function CreateEventScreen() {
       const startsAt = new Date(day)
       startsAt.setHours(hour, 0, 0, 0)
       const priceNum = Number.parseFloat(price)
-      const { error } = await eventsQ.createEvent(supabase, {
+      const { data: created, error } = await eventsQ.createEvent(supabase, {
         venue_id: venue.id,
         title: title.trim() || venue.name,
         starts_at: startsAt.toISOString(),
@@ -231,10 +241,56 @@ export default function CreateEventScreen() {
             : null,
       })
       if (error) throw error
+
+      // Persist private gig details now that the event exists. These are
+      // secondary to the event itself — a failure here must NOT prompt a
+      // re-submit (that would duplicate the event), so surface it softly.
+      const eventId = created?.id
+      const timeOnDay = (h: number | null): string | null => {
+        if (h == null) return null
+        const t = new Date(day)
+        t.setHours(h, 0, 0, 0)
+        return t.toISOString()
+      }
+      const rate = gigRate.trim()
+      const promoter = promoterNote.trim()
+      const lineup = lineupOrder.trim()
+      const note = privateNote.trim()
+      const hasPrivateDetails =
+        rate || promoter || lineup || loadInHour != null || soundcheckHour != null
+
+      let privateError: Error | null = null
+      if (eventId && hasPrivateDetails) {
+        const { error: e } = await eventsQ.upsertEventPrivateDetails(supabase, {
+          event_id: eventId,
+          gig_rate: rate || null,
+          promoter_note: promoter || null,
+          load_in_at: timeOnDay(loadInHour),
+          soundcheck_at: timeOnDay(soundcheckHour),
+          lineup_order: lineup || null,
+          updated_by: userId,
+        })
+        if (e) privateError = e
+      }
+      if (eventId && note) {
+        const { error: e } = await eventsQ.upsertEventParticipantNote(supabase, {
+          event_id: eventId,
+          user_id: userId,
+          note,
+        })
+        if (e) privateError = e
+      }
+
       await Promise.all([
         qc.invalidateQueries({ queryKey: ['events'] }),
         qc.invalidateQueries({ queryKey: ['hosted-events'] }),
       ])
+      if (privateError) {
+        Alert.alert(
+          'Event published',
+          'Your event is live, but the private gig details didn’t save. You can add them from the event later.',
+        )
+      }
       router.replace('/calendar')
     } catch (e) {
       Alert.alert('Couldn’t publish the event', e instanceof Error ? e.message : 'Please try again.')
@@ -460,12 +516,24 @@ export default function CreateEventScreen() {
               </Text>
 
               <FieldLabel>Gig rate</FieldLabel>
-              <StaticField className="bg-white">$350 guarantee + bar split</StaticField>
+              <TextInput
+                value={gigRate}
+                onChangeText={setGigRate}
+                placeholder="e.g. $350 guarantee + bar split"
+                placeholderTextColor="#9AA1AC"
+                maxLength={200}
+                className="rounded-2xl border border-ink-line bg-white px-4 py-3.5 text-[15px] text-ink"
+              />
 
-              <FieldLabel>Promoter profile</FieldLabel>
-              <StaticField className="bg-white" muted>
-                — none —
-              </StaticField>
+              <FieldLabel>Promoter / booking note</FieldLabel>
+              <TextInput
+                value={promoterNote}
+                onChangeText={setPromoterNote}
+                placeholder="Promoter, booking contact, or deal terms"
+                placeholderTextColor="#9AA1AC"
+                maxLength={500}
+                className="rounded-2xl border border-ink-line bg-white px-4 py-3.5 text-[15px] text-ink"
+              />
 
               {/* Expandable More · load-in, sound check, lineup */}
               <Pressable
@@ -488,24 +556,50 @@ export default function CreateEventScreen() {
                   <View className="flex-row gap-3">
                     <View className="flex-1">
                       <FieldLabel>Load-in</FieldLabel>
-                      <StaticField className="bg-white">6:00 PM</StaticField>
+                      <PickerField
+                        title="Load-in time"
+                        value={loadInHour == null ? 'Set time' : hourLabel(loadInHour)}
+                        options={TIME_SLOTS}
+                        optionLabel={(h) => (h == null ? 'Not set' : hourLabel(h))}
+                        isSelected={(h) => h === loadInHour}
+                        onSelect={setLoadInHour}
+                      />
                     </View>
                     <View className="flex-1">
                       <FieldLabel>Sound check</FieldLabel>
-                      <StaticField className="bg-white">7:00 PM</StaticField>
+                      <PickerField
+                        title="Sound-check time"
+                        value={soundcheckHour == null ? 'Set time' : hourLabel(soundcheckHour)}
+                        options={TIME_SLOTS}
+                        optionLabel={(h) => (h == null ? 'Not set' : hourLabel(h))}
+                        isSelected={(h) => h === soundcheckHour}
+                        onSelect={setSoundcheckHour}
+                      />
                     </View>
                   </View>
                   <FieldLabel>Lineup order</FieldLabel>
-                  <StaticField className="bg-white">Headliner</StaticField>
+                  <TextInput
+                    value={lineupOrder}
+                    onChangeText={setLineupOrder}
+                    placeholder="e.g. Headliner, or Opener → The Tide"
+                    placeholderTextColor="#9AA1AC"
+                    maxLength={200}
+                    className="rounded-2xl border border-ink-line bg-white px-4 py-3.5 text-[15px] text-ink"
+                  />
                 </View>
               ) : null}
 
               <FieldLabel>Your private notes</FieldLabel>
-              <View className="min-h-[56px] rounded-2xl border border-ink-line bg-white px-4 py-3.5">
-                <Text className="text-[15px] font-semibold text-ink-mute">
-                  Notes only you can see…
-                </Text>
-              </View>
+              <TextInput
+                value={privateNote}
+                onChangeText={setPrivateNote}
+                placeholder="Notes only you can see…"
+                placeholderTextColor="#9AA1AC"
+                multiline
+                maxLength={1000}
+                textAlignVertical="top"
+                className="min-h-[56px] rounded-2xl border border-ink-line bg-white px-4 py-3.5 text-[15px] text-ink"
+              />
               <Text className="mt-2 text-[12px] font-semibold text-ink-mute">
                 Each participant keeps their own private notes for this event.
               </Text>
