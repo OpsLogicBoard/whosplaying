@@ -46,8 +46,17 @@ Cross-confirmation is the core invariant: an event is `confirmed` only when **bo
 
 ## Branding
 
-**Canonical brand = v2 "Live Pin" system** (`docs/Whos_Playing_Corrected_Brand_Implementation_Package_v2/`). The earlier teal/yellow stacked-shadow direction is **retired** — see `docs/RE_EVALUATION.md` §4.
+**Canonical design = v2 "Live Pin", as built in `apps/mobile/` and frozen in `docs/design/prototype.html`.** The earlier teal/yellow stacked-shadow direction is **retired**. The governing docs — follow them to the letter:
+- [`docs/BRAND.md`](docs/BRAND.md) — brand essence, palette, logo, voice.
+- [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) — exact tokens, components, the color-discipline rules + per-screen QA gate.
+- [`docs/MOBILE_APP.md`](docs/MOBILE_APP.md) — screen inventory, persona/Work-Play tab-swap model, screen→data map.
 
+Non-negotiable design rules (the ones that have drifted before):
+- **Coral `#FF5A5F` = primary CTA + active state only.** Primary buttons are the coral gradient (`<GradientButton>`); dark/heavy actions use `bg-ink-deep`.
+- **Status pills use the semantic map, never grey-by-default or coral:** green `#0F6E56`/`#E1F5EE` = confirmed/active/linked/fan/connected; gold = waiting/pending/expiring; blue = open/scheduled; slate = muted/paused/expired. Use `<StatusBadge>`.
+- **Tabler icons only** (+ `TonightMark`/`GigsMark`). No emoji/other icon sets.
+- **Cover/photo tag bottom-left, camera top-right.** Top-level tabs have no back chevron (only pushed screens use `BackHeader`).
+- **Work mode swaps the tab bar** (Calendar·Gigs·Create·Messages·You); never duplicate a Work tab as a dashboard card.
 - Visual language: **Apple clarity + Spotify energy + Airbnb friendliness.** Clean white/`#F7F8FA` grounds, coral `#FF5A5F` primary CTA, blue/lime/purple/golden accents. NOT a poppy collage.
 - Logo: the **Live Pin Lockup** (location pin + play triangle + signal waves) with stacked `who's / playing` wordmark. Three artifacts, never mixed: (1) **brand review board** = design route only; (2) **logo component** with exactly `full` / `compact` / `mark-only` variants in `packages/ui/src/brand/`; (3) **production pages** = compact header logo + real content only.
 - **NEVER render brand-spec boards** (`PRIMARY LOGO`, `COLOR PALETTE`, `TYPOGRAPHY` panels) inside any production page. This was the repeated frontend failure (`docs/.../09_Codex_Failure_Review.md`). Treat as a hard QA gate.
