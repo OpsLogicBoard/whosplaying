@@ -56,7 +56,10 @@ export default function YouScreen() {
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10 pt-4">
-        <View className="flex-row items-center gap-4">
+        <Pressable
+          onPress={() => router.push('/edit-profile')}
+          className="flex-row items-center gap-4"
+        >
           <View className="h-[68px] w-[68px] items-center justify-center rounded-full bg-purple">
             <Text className="text-[24px] font-extrabold text-white">{initials(name)}</Text>
           </View>
@@ -68,7 +71,8 @@ export default function YouScreen() {
               Music goer{city ? ` · ${city}` : ''}
             </Text>
           </View>
-        </View>
+          <Feather name="edit-2" size={18} color="#9AA1AC" />
+        </Pressable>
 
         {/* Work/Play selector — entry point to the artist/venue Manage mode */}
         <View className="mt-5 flex-row rounded-xl bg-[#EEF0F4] p-1">
