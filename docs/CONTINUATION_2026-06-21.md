@@ -46,18 +46,27 @@ from the real app.
 
 ---
 
-## ⚠️ Blocking item: migration 0017 is staged, NOT applied
+## ✅ Resolved: migration 0017 applied (2026-06-21)
 
-`supabase/migrations/0017_fix_org_rls_recursion.sql` fixes **infinite RLS
-recursion** in the org predicates (`is_org_member`/`is_org_manager`) AND the
-venue predicates (`is_venue_member`/`is_venue_manager`) — both recurse via their
-own table's SELECT policy once a membership/staff row exists (the venue one is
-dormant only because `venue_staff` is empty). The user is **reviewing it; do not
-apply without explicit OK.**
+`supabase/migrations/0017_fix_org_rls_recursion.sql` is **APPLIED to production**
+(`pakzhnwumihecyfcjfln`) and verified. It fixed **infinite RLS recursion** in the
+org predicates (`is_org_member`/`is_org_manager`) AND the venue predicates
+(`is_venue_member`/`is_venue_manager`) by marking all four `SECURITY DEFINER`.
 
-Until applied, these stay blocked: the **web billing dashboard** (`/me/billing`
-recurses), **`useEntitlements`** on mobile, and **inviting venue staff**. Apply
-0017 before doing any of those.
+Why it was urgent: by 2026-06-21 the DB had a live org + member (no longer the
+zero-org dormant state the wrap assumed), so the org-side recursion was *actively*
+failing every authenticated org read. Verified post-apply: a simulated
+`authenticated` read (`set request.jwt.claims`) of `organizations` /
+`organization_members` / `subscriptions` returns rows with **no `54001` stack
+depth error**. Grants confirmed: org helpers `authenticated`-only; venue helpers
+keep `anon` EXECUTE (needed by `events_select_public`).
+
+The advisor `*_security_definer_function_executable` WARNs on these four are
+expected — exposing the predicates via PostgREST RPC is inherent to the fix and
+matches the posture already accepted for `venue_has_entitlement` / `offer_gps_ok`.
+
+**Now unblocked:** the web billing dashboard (`/me/billing`), `useEntitlements`
+on mobile, and inviting venue staff.
 
 ---
 
@@ -79,10 +88,10 @@ recurses), **`useEntitlements`** on mobile, and **inviting venue staff**. Apply
 
 ## What's NOT done / next steps (rough priority)
 
-1. **After user OK: apply 0017**, regenerate types, then wire the **web venue
-   dashboard + billing** (`createCheckoutSession`/`createPortalSession` are built
-   and deployed in test mode; CTAs need connecting) and **`useEntitlements`** so
-   mobile paywalls work.
+1. **0017 is applied (done).** Next: wire the **web venue dashboard + billing**
+   (`createCheckoutSession`/`createPortalSession` are built and deployed in test
+   mode; CTAs need connecting) and replace the **`useEntitlements`** stub with a
+   real query so mobile paywalls work. Both were 0017-blocked; now unblocked.
 2. **Native map** — `apps/mobile/app/(tabs)/map.tsx` is a placeholder. A real map
    needs MapLibre/Mapbox, which is **not Expo Go compatible** → requires an EAS
    dev build. Decide on that before building it.
@@ -117,7 +126,7 @@ project_mobile_app_functional + project_mockup_and_test_data.
 
 The Expo app builds and runs; the core goer + venue-owner flows are wired to
 live Supabase and verified on the simulator. Migration 0017 (RLS recursion fix)
-is STAGED, NOT APPLIED — do not apply without my OK. Never touch docs/design or
+is APPLIED + verified — billing/entitlements/venue-staff are unblocked. Never touch docs/design or
 the whosplaying-mockup Vercel project. Run the app yourself
 (pnpm --filter @whosplaying/mobile exec expo start --ios), verify changes on the
 simulator (sign in wp-billingtest@example.com / TestVenue123!, paste into fields
