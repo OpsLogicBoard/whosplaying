@@ -1,26 +1,73 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Pressable, ScrollView, Text, TextInput, View } from 'react-native'
+import { useMemo, useState } from 'react'
+import { ActivityIndicator, Pressable, ScrollView, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useEvents } from '@whosplaying/core'
 
-const days = [
-  { d: 'Sat', n: '14', on: true },
-  { d: 'Sun', n: '15' },
-  { d: 'Mon', n: '16' },
-  { d: 'Tue', n: '17' },
-  { d: 'Wed', n: '18' },
-  { d: 'Thu', n: '19' },
-]
+const THUMBS = ['#FFB020', '#B7F34A', '#FF3F73', '#2D7FF9', '#8B5CF6', '#1D9E75']
 
-const shows = [
-  { id: 'sunset', title: 'Sunset Sessions', venue: 'Surfer the Bar · Acoustic', time: '7:00', color: '#FFB020' },
-  { id: 'saltwater', title: 'The Saltwater Revival', venue: "Lonnie's Western Room · Country", time: '8:30', color: '#B7F34A' },
-  { id: 'brass', title: 'Beaches Brass Band', venue: 'Blue Jay Listening Room · Funk', time: '9:30', color: '#FF3F73' },
-  { id: 'coastline', title: 'Coastline', venue: 'Ocean Street Taproom · Indie', time: '10:30', color: '#2D7FF9' },
-]
+function startOfDay(d: Date) {
+  const s = new Date(d)
+  s.setHours(0, 0, 0, 0)
+  return s
+}
+
+function timeLabel(iso: string): { time: string; ampm: string } {
+  const d = new Date(iso)
+  let h = d.getHours()
+  const m = d.getMinutes()
+  const ampm = h >= 12 ? 'PM' : 'AM'
+  h = h % 12 || 12
+  return { time: `${h}:${m.toString().padStart(2, '0')}`, ampm }
+}
 
 export default function ExploreScreen() {
   const router = useRouter()
+  const [search, setSearch] = useState('')
+  const [offset, setOffset] = useState(0) // days from today
+
+  // Build the next 7 days from today for the selector.
+  const today = useMemo(() => startOfDay(new Date()), [])
+  const days = useMemo(
+    () =>
+      Array.from({ length: 7 }, (_, i) => {
+        const date = new Date(today)
+        date.setDate(today.getDate() + i)
+        return {
+          offset: i,
+          label: date.toLocaleDateString(undefined, { weekday: 'short' }),
+          num: date.getDate().toString(),
+          date,
+        }
+      }),
+    [today],
+  )
+
+  const selected = days[offset] ?? days[0]!
+  const from = startOfDay(selected.date)
+  const to = useMemo(() => {
+    const t = new Date(from)
+    t.setHours(23, 59, 59, 999)
+    return t
+  }, [from])
+
+  const { data: events, isLoading, error } = useEvents({ from, to, status: 'confirmed' })
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    if (!q) return events
+    return events.filter(
+      (e) => e.title.toLowerCase().includes(q) || (e.venue?.name ?? '').toLowerCase().includes(q),
+    )
+  }, [events, search])
+
+  const heading = selected.date.toLocaleDateString(undefined, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+  })
+
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10 pt-2">
@@ -29,19 +76,23 @@ export default function ExploreScreen() {
           showsHorizontalScrollIndicator={false}
           contentContainerClassName="gap-2.5 pr-4"
         >
-          {days.map((day) => (
-            <Pressable
-              key={day.n}
-              className={`w-[52px] items-center rounded-xl py-2.5 ${day.on ? 'bg-coral' : ''}`}
-            >
-              <Text className={`text-[11px] font-bold uppercase ${day.on ? 'text-white' : 'text-ink-mute'}`}>
-                {day.d}
-              </Text>
-              <Text className={`mt-0.5 text-[18px] font-extrabold ${day.on ? 'text-white' : 'text-ink'}`}>
-                {day.n}
-              </Text>
-            </Pressable>
-          ))}
+          {days.map((day) => {
+            const on = day.offset === offset
+            return (
+              <Pressable
+                key={day.offset}
+                onPress={() => setOffset(day.offset)}
+                className={`w-[52px] items-center rounded-xl py-2.5 ${on ? 'bg-coral' : ''}`}
+              >
+                <Text className={`text-[11px] font-bold uppercase ${on ? 'text-white' : 'text-ink-mute'}`}>
+                  {day.label}
+                </Text>
+                <Text className={`mt-0.5 text-[18px] font-extrabold ${on ? 'text-white' : 'text-ink'}`}>
+                  {day.num}
+                </Text>
+              </Pressable>
+            )
+          })}
         </ScrollView>
 
         <View className="mt-4 h-12 flex-row items-center rounded-2xl border border-ink-line bg-surface px-4">
@@ -51,36 +102,64 @@ export default function ExploreScreen() {
             placeholder="Search events, artists, venues"
             placeholderTextColor="#9AA1AC"
             returnKeyType="search"
+            value={search}
+            onChangeText={setSearch}
           />
         </View>
 
         <Text className="mt-5 text-[13px] font-extrabold uppercase tracking-wide text-ink-slate">
-          Saturday, June 14
+          {heading}
         </Text>
 
-        <View className="mt-3">
-          {shows.map((e) => (
-            <Pressable
-              key={e.id}
-              onPress={() => router.push(`/event/${e.id}`)}
-              className="mb-4 flex-row items-center gap-3"
-            >
-              <View className="h-16 w-16 rounded-2xl" style={{ backgroundColor: e.color }} />
-              <View className="flex-1">
-                <Text className="text-[15.5px] font-semibold text-ink" numberOfLines={1}>
-                  {e.title}
-                </Text>
-                <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate" numberOfLines={1}>
-                  {e.venue}
-                </Text>
-              </View>
-              <View className="items-end">
-                <Text className="text-[14px] font-extrabold text-ink-deep">{e.time}</Text>
-                <Text className="text-[11px] font-bold text-ink-mute">PM</Text>
-              </View>
-            </Pressable>
-          ))}
-        </View>
+        {isLoading ? (
+          <View className="mt-14 items-center">
+            <ActivityIndicator color="#FF5A5F" />
+          </View>
+        ) : error ? (
+          <View className="mt-12 items-center px-6">
+            <Feather name="wifi-off" size={26} color="#9AA1AC" />
+            <Text className="mt-3 text-center text-[14px] font-semibold text-ink-slate">
+              Couldn’t load shows. Pull to retry.
+            </Text>
+          </View>
+        ) : filtered.length === 0 ? (
+          <View className="mt-12 items-center px-6">
+            <Feather name="calendar" size={26} color="#9AA1AC" />
+            <Text className="mt-3 text-center text-[14px] font-semibold text-ink-slate">
+              {search.trim() ? 'No matches for your search.' : 'No shows scheduled this day.'}
+            </Text>
+          </View>
+        ) : (
+          <View className="mt-3">
+            {filtered.map((e, i) => {
+              const t = timeLabel(e.starts_at)
+              return (
+                <Pressable
+                  key={e.id}
+                  onPress={() => router.push(`/event/${e.id}`)}
+                  className="mb-4 flex-row items-center gap-3"
+                >
+                  <View
+                    className="h-16 w-16 rounded-2xl"
+                    style={{ backgroundColor: THUMBS[i % THUMBS.length] }}
+                  />
+                  <View className="flex-1">
+                    <Text className="text-[15.5px] font-semibold text-ink" numberOfLines={1}>
+                      {e.title}
+                    </Text>
+                    <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate" numberOfLines={1}>
+                      {e.venue?.name ?? 'TBA'}
+                    </Text>
+                  </View>
+                  <View className="items-end">
+                    <Text className="text-[14px] font-extrabold text-ink-deep">{t.time}</Text>
+                    <Text className="text-[11px] font-bold text-ink-mute">{t.ampm}</Text>
+                  </View>
+                </Pressable>
+              )
+            })}
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   )

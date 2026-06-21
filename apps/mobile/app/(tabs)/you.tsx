@@ -1,7 +1,17 @@
 import { Feather } from '@expo/vector-icons'
+import { useQuery } from '@tanstack/react-query'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useAppMode } from '../../lib/appMode'
+import { useAuth } from '../../lib/auth'
+import { supabase } from '../../lib/supabase'
+
+function initials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean)
+  if (parts.length === 0) return '?'
+  if (parts.length === 1) return parts[0]!.slice(0, 2).toUpperCase()
+  return (parts[0]![0]! + parts[parts.length - 1]![0]!).toUpperCase()
+}
 
 const hats = [
   { icon: 'headphones', tint: '#FFF1F1', color: '#FF5A5F', title: 'Music goer', sub: 'Following 5 · 8 saved shows' },
@@ -18,16 +28,41 @@ const connections = [
 
 export default function YouScreen() {
   const { mode, setMode, canManage } = useAppMode()
+  const { session } = useAuth()
+  const userId = session?.user?.id
+  const email = session?.user?.email ?? ''
+
+  const { data: profile } = useQuery({
+    queryKey: ['profile', userId ?? null],
+    enabled: !!userId,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('display_name, home_city, avatar_url')
+        .eq('id', userId as string)
+        .single()
+      if (error) throw error
+      return data as { display_name: string | null; home_city: string | null; avatar_url: string | null }
+    },
+  })
+
+  const name = profile?.display_name?.trim() || email.split('@')[0] || 'You'
+  const city = profile?.home_city?.trim() || null
+
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10 pt-4">
         <View className="flex-row items-center gap-4">
           <View className="h-[68px] w-[68px] items-center justify-center rounded-full bg-purple">
-            <Text className="text-[24px] font-extrabold text-white">JW</Text>
+            <Text className="text-[24px] font-extrabold text-white">{initials(name)}</Text>
           </View>
-          <View>
-            <Text className="text-[21px] font-extrabold text-ink-deep">James W.</Text>
-            <Text className="mt-0.5 text-[13px] font-semibold text-ink-slate">Music goer · Jacksonville Beach</Text>
+          <View className="flex-1">
+            <Text className="text-[21px] font-extrabold text-ink-deep" numberOfLines={1}>
+              {name}
+            </Text>
+            <Text className="mt-0.5 text-[13px] font-semibold text-ink-slate">
+              Music goer{city ? ` · ${city}` : ''}
+            </Text>
           </View>
         </View>
 
