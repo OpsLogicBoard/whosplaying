@@ -3,6 +3,7 @@ import { Stack, useRouter, useSegments } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import * as Linking from 'expo-linking'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { WhosPlayingProvider } from '@whosplaying/core'
 import { AuthProvider, useAuth } from '../lib/auth'
 import { supabase } from '../lib/supabase'
 import '../global.css'
@@ -45,15 +46,17 @@ function AuthGate({ children }: { children: React.ReactNode }) {
 export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <AuthGate>
-          <StatusBar style="dark" />
-          <Stack screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="(auth)" />
-            <Stack.Screen name="(tabs)" />
-          </Stack>
-        </AuthGate>
-      </AuthProvider>
+      <WhosPlayingProvider client={supabase}>
+        <AuthProvider>
+          <AuthGate>
+            <StatusBar style="dark" />
+            <Stack screenOptions={{ headerShown: false }}>
+              <Stack.Screen name="(auth)" />
+              <Stack.Screen name="(tabs)" />
+            </Stack>
+          </AuthGate>
+        </AuthProvider>
+      </WhosPlayingProvider>
     </QueryClientProvider>
   )
 }

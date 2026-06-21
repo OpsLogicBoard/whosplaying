@@ -2,8 +2,7 @@
 // query helper in @whosplaying/supabase. Real implementation lands when
 // the apps consume them.
 
-export { useEvents } from './useEvents'
-export { useEvent } from './useEvents'
+export { useEvents, useEvent, type EventWithRelations } from './useEvents'
 export { useArtist } from './useArtist'
 export { useVenue } from './useVenue'
 export { useFollows } from './useFollows'

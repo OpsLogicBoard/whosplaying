@@ -1,24 +1,49 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { Pressable, ScrollView, Text, TextInput, View } from 'react-native'
+import { useMemo, useState } from 'react'
+import { ActivityIndicator, Pressable, ScrollView, Text, TextInput, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useEvents, type EventWithRelations } from '@whosplaying/core'
 
-const featured = {
-  id: 'firewater',
-  genre: 'Rock',
-  title: 'The Firewater Tent Revival',
-  venue: 'Surfer the Bar',
-  dist: '0.4 mi',
+// Accent palette for the "Also tonight" thumbnails (cycled by index).
+const THUMBS = ['#2D7FF9', '#FFB020', '#1D9E75', '#8B5CF6', '#FF5A5F']
+
+function todayRange() {
+  const start = new Date()
+  start.setHours(0, 0, 0, 0)
+  const end = new Date(start)
+  end.setHours(23, 59, 59, 999)
+  return { from: start, to: end }
 }
 
-const alsoTonight = [
-  { id: 'chloe', title: 'Chloe Kimes & The Tide', venue: 'Blue Jay Listening Room', time: '8:30', color: '#2D7FF9' },
-  { id: 'lowtide', title: 'Low Tide Social Club', venue: 'Ocean Street Taproom', time: '9:15', color: '#FFB020' },
-  { id: 'saltwater', title: 'The Saltwater Revival', venue: "Lonnie's Western Room", time: '10:00', color: '#1D9E75' },
-]
+function timeLabel(iso: string): { time: string; ampm: string } {
+  const d = new Date(iso)
+  let h = d.getHours()
+  const m = d.getMinutes()
+  const ampm = h >= 12 ? 'PM' : 'AM'
+  h = h % 12 || 12
+  return { time: `${h}:${m.toString().padStart(2, '0')}`, ampm }
+}
 
 export default function TonightScreen() {
   const router = useRouter()
+  const [search, setSearch] = useState('')
+  const { from, to } = useMemo(todayRange, [])
+  const { data: events, isLoading, error } = useEvents({ from, to, status: 'confirmed' })
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase()
+    if (!q) return events
+    return events.filter(
+      (e) =>
+        e.title.toLowerCase().includes(q) ||
+        (e.venue?.name ?? '').toLowerCase().includes(q),
+    )
+  }, [events, search])
+
+  const featured = filtered[0] as EventWithRelations | undefined
+  const rest = filtered.slice(1)
+
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10">
@@ -44,55 +69,99 @@ export default function TonightScreen() {
             placeholder="Search events, artists, venues"
             placeholderTextColor="#9AA1AC"
             returnKeyType="search"
+            value={search}
+            onChangeText={setSearch}
           />
         </View>
 
-        <Pressable
-          onPress={() => router.push(`/event/${featured.id}`)}
-          className="mt-5 h-52 justify-end overflow-hidden rounded-xl bg-night p-4"
-        >
-          <View className="absolute left-4 top-4 self-start rounded-full bg-white/20 px-3 py-1">
-            <Text className="text-[11px] font-extrabold text-white">{featured.genre}</Text>
+        {isLoading ? (
+          <View className="mt-16 items-center">
+            <ActivityIndicator color="#FF5A5F" />
           </View>
-          <View className="absolute right-3 top-3 h-9 w-9 items-center justify-center rounded-full bg-white/90">
-            <Feather name="heart" size={16} color="#FF5A5F" />
+        ) : error ? (
+          <View className="mt-10 items-center px-6">
+            <Feather name="wifi-off" size={28} color="#9AA1AC" />
+            <Text className="mt-3 text-center text-[14px] font-semibold text-ink-slate">
+              Couldn’t load tonight’s shows. Pull to retry.
+            </Text>
           </View>
-          <View className="flex-row items-center gap-1.5">
-            <View className="h-2 w-2 rounded-full bg-white" />
-            <Text className="text-[11px] font-extrabold tracking-wide text-white">LIVE NOW</Text>
+        ) : !featured ? (
+          <View className="mt-10 items-center px-6">
+            <Feather name="moon" size={28} color="#9AA1AC" />
+            <Text className="mt-3 text-[16px] font-extrabold text-ink-deep">Nothing booked tonight</Text>
+            <Text className="mt-1 text-center text-[13px] font-semibold text-ink-slate">
+              {search.trim()
+                ? 'No matches for your search.'
+                : 'Check back soon — new shows get confirmed daily.'}
+            </Text>
           </View>
-          <Text className="mt-1 text-[22px] font-extrabold leading-tight text-white">{featured.title}</Text>
-          <Text className="mt-0.5 text-[13px] font-semibold text-white/90">
-            {featured.venue} · {featured.dist}
-          </Text>
-        </Pressable>
-
-        <View className="mt-6 flex-row items-center justify-between">
-          <Text className="text-[18px] font-extrabold text-ink-deep">Also tonight</Text>
-          <Text className="text-[13px] font-bold text-coral">See all</Text>
-        </View>
-
-        <View className="mt-3">
-          {alsoTonight.map((e) => (
+        ) : (
+          <>
             <Pressable
-              key={e.id}
-              onPress={() => router.push(`/event/${e.id}`)}
-              className="mb-4 flex-row items-center gap-3"
+              onPress={() => router.push(`/event/${featured.id}`)}
+              className="mt-5 h-52 justify-end overflow-hidden rounded-xl bg-night p-4"
             >
-              <View className="h-16 w-16 rounded-2xl" style={{ backgroundColor: e.color }} />
-              <View className="flex-1">
-                <Text className="text-[15.5px] font-semibold text-ink" numberOfLines={1}>
-                  {e.title}
-                </Text>
-                <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate">{e.venue}</Text>
+              {featured.is_special ? (
+                <View className="absolute left-4 top-4 self-start rounded-full bg-white/20 px-3 py-1">
+                  <Text className="text-[11px] font-extrabold text-white">Featured</Text>
+                </View>
+              ) : null}
+              <View className="absolute right-3 top-3 h-9 w-9 items-center justify-center rounded-full bg-white/90">
+                <Feather name="heart" size={16} color="#FF5A5F" />
               </View>
-              <View className="items-end">
-                <Text className="text-[14px] font-extrabold text-ink-deep">{e.time}</Text>
-                <Text className="text-[11px] font-bold text-ink-mute">PM</Text>
+              <View className="flex-row items-center gap-1.5">
+                <View className="h-2 w-2 rounded-full bg-white" />
+                <Text className="text-[11px] font-extrabold tracking-wide text-white">TONIGHT</Text>
               </View>
+              <Text className="mt-1 text-[22px] font-extrabold leading-tight text-white">
+                {featured.title}
+              </Text>
+              <Text className="mt-0.5 text-[13px] font-semibold text-white/90">
+                {featured.venue?.name ?? 'TBA'} · {timeLabel(featured.starts_at).time}{' '}
+                {timeLabel(featured.starts_at).ampm}
+              </Text>
             </Pressable>
-          ))}
-        </View>
+
+            {rest.length > 0 ? (
+              <>
+                <View className="mt-6 flex-row items-center justify-between">
+                  <Text className="text-[18px] font-extrabold text-ink-deep">Also tonight</Text>
+                  <Text className="text-[13px] font-bold text-coral">See all</Text>
+                </View>
+
+                <View className="mt-3">
+                  {rest.map((e, i) => {
+                    const t = timeLabel(e.starts_at)
+                    return (
+                      <Pressable
+                        key={e.id}
+                        onPress={() => router.push(`/event/${e.id}`)}
+                        className="mb-4 flex-row items-center gap-3"
+                      >
+                        <View
+                          className="h-16 w-16 rounded-2xl"
+                          style={{ backgroundColor: THUMBS[i % THUMBS.length] }}
+                        />
+                        <View className="flex-1">
+                          <Text className="text-[15.5px] font-semibold text-ink" numberOfLines={1}>
+                            {e.title}
+                          </Text>
+                          <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate">
+                            {e.venue?.name ?? 'TBA'}
+                          </Text>
+                        </View>
+                        <View className="items-end">
+                          <Text className="text-[14px] font-extrabold text-ink-deep">{t.time}</Text>
+                          <Text className="text-[11px] font-bold text-ink-mute">{t.ampm}</Text>
+                        </View>
+                      </Pressable>
+                    )
+                  })}
+                </View>
+              </>
+            ) : null}
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   )

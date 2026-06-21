@@ -1,6 +1,7 @@
 export * from './domain'
 export * from './hooks'
 export * from './entitlements'
+export { WhosPlayingProvider, useWhosPlayingClient } from './provider'
 export * as calendar from './calendar'
 export * as notifications from './notifications'
 export * as permissions from './permissions'
