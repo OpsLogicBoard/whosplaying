@@ -13,11 +13,11 @@ function Stat({
   label: string
   value: string
   sub?: string
-  tone?: 'ink' | 'teal' | 'coral' | 'gold'
+  tone?: 'ink' | 'green' | 'coral' | 'gold'
 }) {
   const toneCls = {
     ink: 'text-ink-deep',
-    teal: 'text-teal',
+    green: 'text-green',
     coral: 'text-coral',
     gold: 'text-gold-ink',
   }[tone]
@@ -44,12 +44,12 @@ export default function AdminOverview() {
       {/* KPI grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <Stat label="MAU" value={fmt(KPIS.mau)} sub={`${fmt(KPIS.dau)} DAU`} />
-        <Stat label="MRR" value={usd(KPIS.mrr_cents)} sub={`${KPIS.paying_venues} paying · ${KPIS.founding_venues} founding`} tone="teal" />
+        <Stat label="MRR" value={usd(KPIS.mrr_cents)} sub={`${KPIS.paying_venues} paying · ${KPIS.founding_venues} founding`} tone="green" />
         <Stat label="Paying venues" value={`${KPIS.paying_venues}/${KPIS.total_venues}`} sub={`${KPIS.trial_venues} in trial`} />
-        <Stat label="Churn (30d)" value={pct(KPIS.churn_30d)} sub="No cancellations" tone="teal" />
+        <Stat label="Churn (30d)" value={pct(KPIS.churn_30d)} sub="No cancellations" tone="green" />
         <Stat label="Confirmed events" value={fmt(KPIS.confirmed_events)} sub={`${pct(KPIS.cross_confirm_rate)} cross-confirm rate`} />
         <Stat label="Ticket taps (30d)" value={fmt(KPIS.ticket_taps_30d)} sub="Link-out attribution" />
-        <Stat label="Break-even" value={`${KPIS.paying_venues}/6`} sub="venues to cover opex" tone={KPIS.paying_venues >= 6 ? 'teal' : 'gold'} />
+        <Stat label="Break-even" value={`${KPIS.paying_venues}/6`} sub="venues to cover opex" tone={KPIS.paying_venues >= 6 ? 'green' : 'gold'} />
         <Stat label="ARPU (venue)" value={usd(KPIS.mrr_cents / KPIS.paying_venues)} sub="Founding rate" />
       </div>
 
@@ -67,7 +67,7 @@ export default function AdminOverview() {
               />
             ))}
           </div>
-          <div className="mt-2 text-xs font-medium text-teal">↑ 104% over the window</div>
+          <div className="mt-2 text-xs font-medium text-green">↑ 104% over the window</div>
         </div>
 
         {/* Maps cost cliff */}
@@ -78,7 +78,7 @@ export default function AdminOverview() {
             <span className="text-sm font-semibold text-ink-soft">/ {fmt(MAPS_CLIFF.limit)} MAU free</span>
           </div>
           <div className="mt-3 h-3 rounded-full bg-ink-line overflow-hidden">
-            <div className="h-full rounded-full bg-gradient-to-r from-teal to-gold" style={{ width: `${cliffPct * 100}%` }} />
+            <div className="h-full rounded-full bg-gradient-to-r from-green to-gold" style={{ width: `${cliffPct * 100}%` }} />
           </div>
           <div className="mt-2 text-xs font-medium text-ink-soft">
             {pct(cliffPct)} of the free tier. Costs scale with goers (free side); revenue with venues —

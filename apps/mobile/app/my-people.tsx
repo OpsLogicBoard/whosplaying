@@ -127,8 +127,8 @@ export default function MyPeopleScreen() {
                       <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate">{f.city}</Text>
                     ) : null}
                   </View>
-                  <View className="rounded-full bg-teal-soft px-2.5 py-1">
-                    <Text className="text-[10px] font-extrabold uppercase tracking-wide text-teal">Fan</Text>
+                  <View className="rounded-full bg-green-soft px-2.5 py-1">
+                    <Text className="text-[10px] font-extrabold uppercase tracking-wide text-green">Fan</Text>
                   </View>
                 </View>
               ))}

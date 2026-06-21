@@ -59,9 +59,9 @@ export default function PlanScreen() {
           </View>
         </View>
 
-        <View className="mb-3.5 mt-1 flex-row items-center justify-center gap-1.5 rounded-xl bg-teal-soft px-3 py-2.5">
+        <View className="mb-3.5 mt-1 flex-row items-center justify-center gap-1.5 rounded-xl bg-green-soft px-3 py-2.5">
           <IconAnchor size={13} color="#0F6E56" />
-          <Text className="text-[12px] font-bold text-teal">Founding rate — locked for life for the first Beaches venues</Text>
+          <Text className="text-[12px] font-bold text-green">Founding rate — locked for life for the first Beaches venues</Text>
         </View>
 
         <View className="mb-3.5 rounded-[18px] border border-ink-line bg-surface px-4 shadow-card">
@@ -70,7 +70,7 @@ export default function PlanScreen() {
               key={f.title}
               className={`flex-row items-start gap-3 py-3 ${i < FEATURES.length - 1 ? 'border-b border-ink-line' : ''}`}
             >
-              <View className="mt-0.5 h-[22px] w-[22px] items-center justify-center rounded-full bg-teal-soft">
+              <View className="mt-0.5 h-[22px] w-[22px] items-center justify-center rounded-full bg-green-soft">
                 <IconCheck size={13} color="#0F6E56" />
               </View>
               <View className="flex-1">

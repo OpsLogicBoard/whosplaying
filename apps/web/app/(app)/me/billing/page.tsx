@@ -103,7 +103,7 @@ export default async function BillingPage() {
           {features.map((f) => (
             <li key={f.label} className="flex items-center gap-2 text-sm">
               <span
-                className={f.on ? 'text-teal' : 'text-ink-line'}
+                className={f.on ? 'text-green' : 'text-ink-line'}
                 aria-hidden="true"
               >
                 {f.on ? '✓' : '○'}
@@ -124,7 +124,7 @@ export default async function BillingPage() {
       {!pro && (
         <p className="mt-4 text-sm text-ink-soft">
           Compare everything on the{' '}
-          <Link href="/pricing" className="text-teal-700 hover:text-teal-900 font-medium">
+          <Link href="/pricing" className="text-green-700 hover:text-green-900 font-medium">
             pricing page
           </Link>
           .

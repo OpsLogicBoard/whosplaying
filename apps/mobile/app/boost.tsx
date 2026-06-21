@@ -63,9 +63,9 @@ export default function BoostScreen() {
           })}
         </View>
 
-        <View className="mb-3.5 flex-row items-center gap-2.5 rounded-xl bg-teal-soft px-3 py-3">
+        <View className="mb-3.5 flex-row items-center gap-2.5 rounded-xl bg-green-soft px-3 py-3">
           <IconEyeCheck size={16} color="#0F6E56" />
-          <Text className="flex-1 text-[12.5px] font-bold text-teal">
+          <Text className="flex-1 text-[12.5px] font-bold text-green">
             Top of Tonight & a highlighted map pin. We only ever charge for impressions — never promised sales.
           </Text>
         </View>

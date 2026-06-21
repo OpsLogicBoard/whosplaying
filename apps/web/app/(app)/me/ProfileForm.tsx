@@ -110,7 +110,7 @@ export function ProfileForm({
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               maxLength={80}
-              className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal-200"
+              className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200"
             />
           </Field>
           <Field label="Home city">
@@ -118,7 +118,7 @@ export function ProfileForm({
               value={homeCity}
               onChange={(e) => setHomeCity(e.target.value)}
               placeholder="Jacksonville Beach, FL"
-              className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal-200"
+              className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200"
             />
           </Field>
           <Field label="Short bio">
@@ -127,7 +127,7 @@ export function ProfileForm({
               onChange={(e) => setBio(e.target.value)}
               maxLength={500}
               rows={3}
-              className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal-200"
+              className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200"
             />
           </Field>
         </div>
@@ -145,11 +145,11 @@ export function ProfileForm({
                 type="button"
                 onClick={() => toggleRole(r.key)}
                 className={`text-left rounded-lg border-2 p-4 transition ${
-                  on ? 'border-teal bg-teal-50' : 'border-ink-line hover:border-ink-mute'
+                  on ? 'border-green bg-green-50' : 'border-ink-line hover:border-ink-mute'
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <Chip tone={on ? 'teal' : 'ink'}>{on ? 'on' : 'off'}</Chip>
+                  <Chip tone={on ? 'green' : 'ink'}>{on ? 'on' : 'off'}</Chip>
                   <span className="font-semibold text-ink">{r.label}</span>
                 </div>
                 <p className="text-sm text-ink-soft mt-1">{r.help}</p>
@@ -174,7 +174,7 @@ export function ProfileForm({
         >
           {saving ? 'Saving…' : 'Save'}
         </button>
-        {savedAt && <span className="text-sm text-teal-700">Saved.</span>}
+        {savedAt && <span className="text-sm text-green-700">Saved.</span>}
       </div>
     </div>
   )

@@ -56,7 +56,7 @@ export default function AnalyticsScreen() {
             <Text className="text-[12px] font-bold text-ink-slate">Profile & event views</Text>
             <View className="flex-row items-center">
               <IconArrowUpRight size={12} color="#0F6E56" />
-              <Text className="text-[12px] font-extrabold text-teal">18%</Text>
+              <Text className="text-[12px] font-extrabold text-green">18%</Text>
             </View>
           </View>
           <Text className="mt-1.5 text-[30px] font-black tracking-tight text-ink-deep">2,840</Text>
@@ -77,7 +77,7 @@ export default function AnalyticsScreen() {
             <Text className="text-[12px] font-bold text-ink-slate">Get Tickets taps</Text>
             <View className="flex-row items-center">
               <IconArrowUpRight size={12} color="#0F6E56" />
-              <Text className="text-[12px] font-extrabold text-teal">9%</Text>
+              <Text className="text-[12px] font-extrabold text-green">9%</Text>
             </View>
           </View>
           <Text className="mt-1.5 text-[30px] font-black tracking-tight text-ink-deep">213</Text>

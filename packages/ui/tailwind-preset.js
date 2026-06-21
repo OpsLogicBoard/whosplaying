@@ -1,10 +1,8 @@
 // Shared Tailwind preset — Web (Tailwind) and Mobile (NativeWind) both consume this.
 //
-// CANONICAL v2 "Live Pin" palette. The earlier teal/yellow stacked-shadow
-// direction is retired (see docs/RE_EVALUATION.md §4). The legacy TS token
-// objects in `src/tokens/colors.ts` remain only to feed the not-yet-rebuilt
-// web primitives (LayeredHeadline/Card/Button) and will be removed when the
-// web app is ported to v2. This preset is the source of truth for what renders.
+// CANONICAL v2 "Live Pin" palette — the single source of truth for what
+// renders on both Web (Tailwind) and Mobile (NativeWind). The earlier retired
+// colour direction has been removed.
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -48,7 +46,7 @@ module.exports = {
         lime: { DEFAULT: '#B7F34A', soft: '#EAF3DE', ink: '#3B6D11' },
         purple: { DEFAULT: '#8B5CF6', soft: '#EEEDFE', ink: '#3C3489' },
         gold: { DEFAULT: '#FFB020', soft: '#FAEEDA', ink: '#854F0B' },
-        teal: { DEFAULT: '#0F6E56', soft: '#E1F5EE' }, // semantic "confirmed" only
+        green: { DEFAULT: '#0F6E56', soft: '#E1F5EE' }, // semantic "confirmed" only
       },
       fontFamily: {
         // var(--font-sans) is wired to Inter via next/font on web; on mobile it

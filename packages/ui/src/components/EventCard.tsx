@@ -15,7 +15,7 @@ type EventCardProps = {
 const statusTone = {
   draft: 'ink',
   proposed: 'yellow',
-  confirmed: 'teal',
+  confirmed: 'green',
   cancelled: 'coral',
 } as const
 
@@ -29,7 +29,7 @@ export function EventCard({
   onPress,
 }: EventCardProps) {
   const when = typeof startsAt === 'string' ? new Date(startsAt) : startsAt
-  const accent = isSpecial ? 'coral' : status === 'confirmed' ? 'teal' : 'yellow'
+  const accent = isSpecial ? 'coral' : status === 'confirmed' ? 'green' : 'yellow'
   return (
     <Card accent={accent} onClick={onPress} role={onPress ? 'button' : undefined}>
       <div className="flex items-start justify-between gap-3">

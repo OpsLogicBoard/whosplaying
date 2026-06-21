@@ -96,7 +96,7 @@ export default function ConnectionsScreen() {
                   ) : (
                     <View className="flex-row items-center gap-1">
                       <IconCircleCheckFilled size={14} color="#0F6E56" />
-                      <Text className="text-[11.5px] font-extrabold text-teal">
+                      <Text className="text-[11.5px] font-extrabold text-green">
                         {r.status === 'synced' ? 'Synced' : 'Connected'}
                       </Text>
                     </View>

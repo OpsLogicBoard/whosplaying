@@ -13,8 +13,7 @@ faithful Expo implementation in `apps/mobile/`.
 ## 1. Tokens (NativeWind / Tailwind preset)
 
 All colors come from `packages/ui/tailwind-preset.js`. Never hard-code a hex that
-isn't in the palette below; never import `packages/ui/src/tokens/colors.ts`
-(retired teal/yellow set).
+isn't in the palette below.
 
 | Class | Hex | |
 |---|---|---|
@@ -27,7 +26,7 @@ isn't in the palette below; never import `packages/ui/src/tokens/colors.ts`
 | `border-ink-line` | `#E9EAED` | borders |
 | `coral` | `#FF5A5F` | primary CTA + active state |
 | `blue` `lime` `purple` `gold` `pink` | see BRAND | accents (each has `-soft`/`-ink`) |
-| `teal` / `bg-teal-soft` | `#0F6E56` / `#E1F5EE` | semantic success/confirmed |
+| `green` / `bg-green-soft` | `#0F6E56` / `#E1F5EE` | semantic success/confirmed |
 
 Type: Inter only, weights 400–900. Headlines `font-extrabold` + tight tracking.
 
@@ -118,7 +117,7 @@ inline carousels/chip-grids so screens read like the mockup.
 1. Coral only on primary actions / active state. ✅
 2. Primary button is the gradient; status pills use the semantic map (green for
    confirmed/connected). ✅
-3. Tabler icons only; no emoji/other icon sets; no retired teal/yellow. ✅
+3. Tabler icons only; no emoji/other icon sets; no retired colours. ✅
 4. Cover tag bottom-left; tabs have no back chevron. ✅
 5. No brand-spec boards rendered in the screen. ✅
 6. Renders against the matching `prototype.html` screen with no visible drift. ✅

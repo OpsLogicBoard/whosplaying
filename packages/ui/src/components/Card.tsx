@@ -2,11 +2,11 @@ import * as React from 'react'
 import clsx from 'clsx'
 
 type CardProps = React.HTMLAttributes<HTMLDivElement> & {
-  accent?: 'teal' | 'yellow' | 'orange' | 'coral' | 'none'
+  accent?: 'green' | 'yellow' | 'orange' | 'coral' | 'none'
 }
 
 const accents = {
-  teal: 'shadow-stack-teal',
+  green: 'shadow-stack-green',
   yellow: 'shadow-stack-yellow',
   orange: 'shadow-stack-orange',
   coral: 'shadow-stack-coral',

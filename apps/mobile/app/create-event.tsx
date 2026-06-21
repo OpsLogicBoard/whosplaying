@@ -353,8 +353,8 @@ export default function CreateEventScreen() {
               <Text className="text-[12px] font-extrabold uppercase tracking-wide text-ink-slate">
                 Artist
               </Text>
-              <View className="rounded-full bg-teal-soft px-2 py-0.5">
-                <Text className="text-[10px] font-extrabold uppercase text-teal">auto</Text>
+              <View className="rounded-full bg-green-soft px-2 py-0.5">
+                <Text className="text-[10px] font-extrabold uppercase text-green">auto</Text>
               </View>
             </View>
             <StaticField>The Firewater Tent Revival</StaticField>
@@ -364,8 +364,8 @@ export default function CreateEventScreen() {
               <Text className="text-[12px] font-extrabold uppercase tracking-wide text-ink-slate">
                 Venue / location
               </Text>
-              <View className="rounded-full bg-teal-soft px-2 py-0.5">
-                <Text className="text-[10px] font-extrabold uppercase text-teal">auto</Text>
+              <View className="rounded-full bg-green-soft px-2 py-0.5">
+                <Text className="text-[10px] font-extrabold uppercase text-green">auto</Text>
               </View>
             </View>
             <StaticField icon={<IconMapPin size={16} color="#FF5A5F" strokeWidth={2} style={{ marginRight: 7 }} />}>
@@ -377,8 +377,8 @@ export default function CreateEventScreen() {
               <Text className="text-[12px] font-extrabold uppercase tracking-wide text-ink-slate">
                 Genre
               </Text>
-              <View className="rounded-full bg-teal-soft px-2 py-0.5">
-                <Text className="text-[10px] font-extrabold uppercase text-teal">from artist</Text>
+              <View className="rounded-full bg-green-soft px-2 py-0.5">
+                <Text className="text-[10px] font-extrabold uppercase text-green">from artist</Text>
               </View>
             </View>
             <StaticField>Rock · roots</StaticField>

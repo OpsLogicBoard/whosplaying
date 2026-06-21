@@ -43,7 +43,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             Platform Operations
           </span>
           <span className="flex items-center gap-2 text-xs font-medium text-ink-soft">
-            <span className="h-2 w-2 rounded-full bg-teal" />
+            <span className="h-2 w-2 rounded-full bg-green" />
             super_admin · james@
           </span>
         </header>

@@ -39,7 +39,7 @@ function cell(value: unknown): { text: string; on: boolean } {
 function Check({ text, on }: { text: string; on: boolean }) {
   if (text === '✓')
     return (
-      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-teal-soft text-teal text-sm">
+      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-green-soft text-green text-sm">
         ✓
       </span>
     )
@@ -114,7 +114,7 @@ export default async function PricingPage() {
             <span className="text-lg font-semibold text-ink-mute line-through">$24.99</span>
             <span className="text-body-sm font-semibold text-ink-soft">/venue/mo</span>
           </div>
-          <p className="mt-1.5 text-caption font-bold text-teal">
+          <p className="mt-1.5 text-caption font-bold text-green">
             Locked for life for our founding venues
           </p>
           <Link

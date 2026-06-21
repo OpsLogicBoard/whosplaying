@@ -68,8 +68,8 @@ export default function ProfilesScreen() {
                     <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate">{e.kind}</Text>
                   </View>
                   {isActive ? (
-                    <View className="rounded-full bg-teal-soft px-2.5 py-1">
-                      <Text className="text-[10px] font-extrabold uppercase tracking-wide text-teal">Active</Text>
+                    <View className="rounded-full bg-green-soft px-2.5 py-1">
+                      <Text className="text-[10px] font-extrabold uppercase tracking-wide text-green">Active</Text>
                     </View>
                   ) : (
                     <Text className="text-[12px] font-extrabold text-coral">Act as</Text>

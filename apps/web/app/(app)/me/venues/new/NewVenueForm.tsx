@@ -231,7 +231,7 @@ export function NewVenueForm({ userId }: { userId: string }) {
 }
 
 const inputCls =
-  'mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-teal focus:outline-none focus:ring-2 focus:ring-teal-200'
+  'mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200'
 
 function Field({
   label,

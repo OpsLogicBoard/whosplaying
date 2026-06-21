@@ -2,8 +2,8 @@
 
 **This is the law.** The approved design is the v2 prototype
 (`docs/design/prototype.html`) as implemented in the Expo app. Every surface —
-mobile, web, marketing — follows it to the letter. The earlier teal/yellow
-stacked-shadow direction is **retired**; do not reintroduce it.
+mobile, web, marketing — follows it to the letter. The earlier retired colour
+direction is gone; do not reintroduce it.
 
 For exact tokens, components, and the rules that keep this from drifting, see
 [`DESIGN_SYSTEM.md`](./DESIGN_SYSTEM.md). For the screen inventory and navigation
@@ -39,7 +39,7 @@ colorful Live-Pin markers) and in accent colors — never in the logo or homepag
 | `purple` | `#8B5CF6` | Accent (soft `#EEEDFE`, ink `#3C3489`) |
 | `gold` | `#FFB020` | Accent / founding (soft `#FAEEDA`, ink `#854F0B`) |
 | `pink` | `#FF3F73` | Accent |
-| `teal` (semantic) | `#0F6E56` on `#E1F5EE` | **Confirmed / connected / linked / active status ONLY** |
+| `green` (semantic) | `#0F6E56` on `#E1F5EE` | **Confirmed / connected / linked / active status ONLY** |
 
 Gradients:
 - **Coral CTA gradient** — `135deg, #FF4F63 → #FF6B42 (48%) → #FF2F70`. Every primary button.

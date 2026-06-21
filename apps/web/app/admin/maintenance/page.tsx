@@ -25,7 +25,7 @@ export default function AdminMaintenance() {
             <code className="text-xs text-ink-mute font-mono">{f.key}</code>
             <span
               className={`inline-flex items-center rounded-pill px-3 py-1 text-[11px] font-bold ${
-                f.on ? 'bg-teal-soft text-teal' : 'bg-ink-line text-ink-soft'
+                f.on ? 'bg-green-soft text-green' : 'bg-ink-line text-ink-soft'
               }`}
             >
               {f.on ? 'ON' : 'OFF'}

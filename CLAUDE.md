@@ -46,7 +46,7 @@ Cross-confirmation is the core invariant: an event is `confirmed` only when **bo
 
 ## Branding
 
-**Canonical design = v2 "Live Pin", as built in `apps/mobile/` and frozen in `docs/design/prototype.html`.** The earlier teal/yellow stacked-shadow direction is **retired**. The governing docs — follow them to the letter:
+**Canonical design = v2 "Live Pin", as built in `apps/mobile/` and frozen in `docs/design/prototype.html`.** The earlier retired colour direction is **gone**. The governing docs — follow them to the letter:
 - [`docs/BRAND.md`](docs/BRAND.md) — brand essence, palette, logo, voice.
 - [`docs/DESIGN_SYSTEM.md`](docs/DESIGN_SYSTEM.md) — exact tokens, components, the color-discipline rules + per-screen QA gate.
 - [`docs/MOBILE_APP.md`](docs/MOBILE_APP.md) — screen inventory, persona/Work-Play tab-swap model, screen→data map.

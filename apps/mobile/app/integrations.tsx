@@ -93,7 +93,7 @@ function StatusTag({ status }: { status: Status }) {
     return (
       <View className="flex-row items-center gap-1">
         <IconCircleCheckFilled size={14} color="#0F6E56" />
-        <Text className="text-[11.5px] font-extrabold text-teal">{status === 'synced' ? 'Synced' : 'Connected'}</Text>
+        <Text className="text-[11.5px] font-extrabold text-green">{status === 'synced' ? 'Synced' : 'Connected'}</Text>
       </View>
     )
   }

@@ -19,7 +19,7 @@ const PILLARS = [
   },
   {
     chip: 'Cross-confirmed',
-    tone: 'bg-teal-soft text-teal',
+    tone: 'bg-green-soft text-green',
     title: 'No more double-bookings',
     body: 'Venues invite, performers confirm. A show is “Confirmed” only when both sides agree.',
     icon: '✓',
@@ -106,7 +106,7 @@ export default function HomePage() {
             </Link>
           </div>
           <p className="mt-5 flex items-center gap-2 text-caption font-semibold text-ink-soft">
-            <span className="text-teal">✓</span> Free forever for fans &amp; artists
+            <span className="text-green">✓</span> Free forever for fans &amp; artists
           </p>
         </div>
         <div className="md:justify-self-end">

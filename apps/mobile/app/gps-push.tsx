@@ -94,9 +94,9 @@ export default function GpsPushScreen() {
           </View>
         </View>
 
-        <View className="mb-3 flex-row items-center gap-2.5 rounded-xl bg-teal-soft px-3 py-3">
+        <View className="mb-3 flex-row items-center gap-2.5 rounded-xl bg-green-soft px-3 py-3">
           <IconBellCheck size={16} color="#0F6E56" />
-          <Text className="flex-1 text-[12.5px] font-bold text-teal">1 of 2 daily pushes used — 1 left today</Text>
+          <Text className="flex-1 text-[12.5px] font-bold text-green">1 of 2 daily pushes used — 1 left today</Text>
         </View>
         <View className="mb-4 flex-row gap-2.5 px-1">
           <IconShieldCheck size={14} color="#FF5A5F" style={{ marginTop: 1 }} />

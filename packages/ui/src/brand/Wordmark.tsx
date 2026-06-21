@@ -12,8 +12,8 @@ type WordmarkProps = {
  * "who's playing" — the v2 "Live Pin" wordmark. Lowercase Inter Black with
  * tight tracking: "who's" in ink-deep, "playing" in coral. Mirrors the
  * canonical treatment in the design prototype and docs/RE_EVALUATION.md §4
- * (the earlier teal/yellow layered lockup is retired). Vector so it renders
- * identically on web and mobile (via react-native-svg).
+ * (the earlier layered lockup is retired). Vector so it renders identically on
+ * web and mobile (via react-native-svg).
  */
 export function Wordmark({ width = 240, mono = false, className }: WordmarkProps) {
   const aspect = 430 / 84
