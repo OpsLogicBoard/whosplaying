@@ -1,7 +1,7 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useMemo } from 'react'
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native'
+import { ActivityIndicator, Pressable, RefreshControl, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useSavedFollows, type SavedFollow } from '@whosplaying/core'
 import { useAuth } from '../../lib/auth'
@@ -23,7 +23,7 @@ export default function SavedScreen() {
   const router = useRouter()
   const { session } = useAuth()
   const userId = session?.user?.id
-  const { data: follows, isLoading, error } = useSavedFollows(userId)
+  const { data: follows, isLoading, error, refetch, isRefetching } = useSavedFollows(userId)
 
   const sections = useMemo(() => {
     return SECTION_ORDER.map((type) => ({
@@ -41,7 +41,13 @@ export default function SavedScreen() {
 
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerClassName="px-5 pb-10"
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#FF5A5F" />
+        }
+      >
         <Text className="mt-3 text-[33px] font-extrabold text-ink-deep">
           <Text className="text-coral">Saved.</Text>
         </Text>

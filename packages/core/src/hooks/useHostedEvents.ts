@@ -49,5 +49,7 @@ export function useHostedEvents(userId: string | undefined) {
     ownsVenue: query.data?.ownsVenue ?? false,
     isLoading: query.isLoading,
     error: (query.error as Error | null) ?? null,
+    refetch: query.refetch,
+    isRefetching: query.isRefetching,
   }
 }

@@ -61,5 +61,7 @@ export function useSavedFollows(userId: string | undefined) {
     data: query.data ?? [],
     isLoading: query.isLoading,
     error: (query.error as Error | null) ?? null,
+    refetch: query.refetch,
+    isRefetching: query.isRefetching,
   }
 }

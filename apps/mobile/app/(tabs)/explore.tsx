@@ -1,7 +1,15 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useMemo, useState } from 'react'
-import { ActivityIndicator, Pressable, ScrollView, Text, TextInput, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useEvents } from '@whosplaying/core'
 
@@ -52,7 +60,11 @@ export default function ExploreScreen() {
     return t
   }, [from])
 
-  const { data: events, isLoading, error } = useEvents({ from, to, status: 'confirmed' })
+  const { data: events, isLoading, error, refetch, isRefetching } = useEvents({
+    from,
+    to,
+    status: 'confirmed',
+  })
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -70,7 +82,13 @@ export default function ExploreScreen() {
 
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10 pt-2">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerClassName="px-5 pb-10 pt-2"
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#FF5A5F" />
+        }
+      >
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}

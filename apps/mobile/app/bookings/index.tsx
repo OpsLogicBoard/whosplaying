@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native'
+import { ActivityIndicator, Pressable, RefreshControl, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useHostedEvents } from '@whosplaying/core'
 import { useAuth } from '../../lib/auth'
@@ -22,7 +22,9 @@ function timeLabel(iso: string): string {
 export default function BookingsScreen() {
   const router = useRouter()
   const { session } = useAuth()
-  const { events, ownsVenue, isLoading, error } = useHostedEvents(session?.user?.id)
+  const { events, ownsVenue, isLoading, error, refetch, isRefetching } = useHostedEvents(
+    session?.user?.id,
+  )
 
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
@@ -35,7 +37,13 @@ export default function BookingsScreen() {
         </Pressable>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerClassName="px-5 pb-10"
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#FF5A5F" />
+        }
+      >
         <Text className="mt-3 text-[33px] font-extrabold text-ink-deep">
           Your <Text className="text-coral">shows.</Text>
         </Text>

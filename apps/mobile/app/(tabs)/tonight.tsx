@@ -1,7 +1,15 @@
 import { Feather } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
 import { useMemo, useState } from 'react'
-import { ActivityIndicator, Pressable, ScrollView, Text, TextInput, View } from 'react-native'
+import {
+  ActivityIndicator,
+  Pressable,
+  RefreshControl,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useEvents, type EventWithRelations } from '@whosplaying/core'
 
@@ -29,7 +37,11 @@ export default function TonightScreen() {
   const router = useRouter()
   const [search, setSearch] = useState('')
   const { from, to } = useMemo(todayRange, [])
-  const { data: events, isLoading, error } = useEvents({ from, to, status: 'confirmed' })
+  const { data: events, isLoading, error, refetch, isRefetching } = useEvents({
+    from,
+    to,
+    status: 'confirmed',
+  })
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
@@ -46,7 +58,13 @@ export default function TonightScreen() {
 
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10">
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerClassName="px-5 pb-10"
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#FF5A5F" />
+        }
+      >
         <View className="flex-row items-center justify-between pt-1">
           <Pressable className="flex-row items-center gap-1 py-1">
             <Text className="text-[17px] font-extrabold text-ink-deep">Jacksonville Beach</Text>

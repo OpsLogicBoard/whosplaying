@@ -39,6 +39,8 @@ export function useEvents(filter: EventsFilter = {}) {
     data: query.data ?? [],
     isLoading: query.isLoading,
     error: (query.error as Error | null) ?? null,
+    refetch: query.refetch,
+    isRefetching: query.isRefetching,
   }
 }
 
