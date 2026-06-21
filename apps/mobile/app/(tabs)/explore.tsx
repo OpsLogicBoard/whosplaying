@@ -11,7 +11,9 @@ import {
   View,
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { LinearGradient } from 'expo-linear-gradient'
 import { useEvents } from '@whosplaying/core'
+import { CORAL_GRADIENT } from '../../components/ui'
 
 const THUMBS = ['#FFB020', '#B7F34A', '#FF3F73', '#2D7FF9', '#8B5CF6', '#1D9E75']
 
@@ -100,8 +102,17 @@ export default function ExploreScreen() {
               <Pressable
                 key={day.offset}
                 onPress={() => setOffset(day.offset)}
-                className={`w-[52px] items-center rounded-xl py-2.5 ${on ? 'bg-coral' : ''}`}
+                className="w-[50px] items-center overflow-hidden rounded-[14px] py-2.5"
               >
+                {on ? (
+                  <LinearGradient
+                    colors={CORAL_GRADIENT}
+                    locations={[0, 0.48, 1]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }}
+                  />
+                ) : null}
                 <Text className={`text-[11px] font-bold uppercase ${on ? 'text-white' : 'text-ink-mute'}`}>
                   {day.label}
                 </Text>

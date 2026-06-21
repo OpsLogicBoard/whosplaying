@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router'
 import { useMemo, useState } from 'react'
 import {
   ActivityIndicator,
+  ImageBackground,
   Pressable,
   RefreshControl,
   ScrollView,
@@ -12,6 +13,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useEvents, type EventWithRelations } from '@whosplaying/core'
+import { Scrim } from '../../components/ui'
 
 // Accent palette for the "Also tonight" thumbnails (cycled by index).
 const THUMBS = ['#2D7FF9', '#FFB020', '#1D9E75', '#8B5CF6', '#FF5A5F']
@@ -31,6 +33,11 @@ function timeLabel(iso: string): { time: string; ampm: string } {
   const ampm = h >= 12 ? 'PM' : 'AM'
   h = h % 12 || 12
   return { time: `${h}:${m.toString().padStart(2, '0')}`, ampm }
+}
+
+/** A show counts as "live now" once its start time has passed (it's playing). */
+function isLive(iso: string): boolean {
+  return new Date(iso).getTime() <= Date.now()
 }
 
 export default function TonightScreen() {
@@ -117,27 +124,48 @@ export default function TonightScreen() {
           <>
             <Pressable
               onPress={() => router.push(`/event/${featured.id}`)}
-              className="mt-5 h-52 justify-end overflow-hidden rounded-xl bg-night p-4"
+              className="mt-5 h-[212px] justify-end overflow-hidden rounded-[22px] bg-night"
             >
+              {featured.cover_image_url ? (
+                <ImageBackground
+                  source={{ uri: featured.cover_image_url }}
+                  className="absolute inset-0"
+                  resizeMode="cover"
+                />
+              ) : null}
+              <Scrim />
               {featured.is_special ? (
-                <View className="absolute left-4 top-4 self-start rounded-full bg-white/20 px-3 py-1">
-                  <Text className="text-[11px] font-extrabold text-white">Featured</Text>
+                <View className="absolute left-3 top-3 self-start rounded-full bg-white/20 px-3 py-1.5">
+                  <Text className="text-[11px] font-extrabold tracking-wide text-white">Featured</Text>
                 </View>
               ) : null}
-              <View className="absolute right-3 top-3 h-9 w-9 items-center justify-center rounded-full bg-white/90">
+              <View className="absolute right-3 top-3 h-[34px] w-[34px] items-center justify-center rounded-full bg-white/90">
                 <Feather name="heart" size={16} color="#FF5A5F" />
               </View>
-              <View className="flex-row items-center gap-1.5">
-                <View className="h-2 w-2 rounded-full bg-white" />
-                <Text className="text-[11px] font-extrabold tracking-wide text-white">TONIGHT</Text>
+              <View className="p-4">
+                <View className="flex-row items-center gap-1.5">
+                  {isLive(featured.starts_at) ? (
+                    <>
+                      <View className="h-[15px] w-[15px] items-center justify-center rounded-full bg-white/35">
+                        <View className="h-[7px] w-[7px] rounded-full bg-white" />
+                      </View>
+                      <Text className="text-[11px] font-extrabold tracking-wide text-white">LIVE NOW</Text>
+                    </>
+                  ) : (
+                    <>
+                      <View className="h-2 w-2 rounded-full bg-white" />
+                      <Text className="text-[11px] font-extrabold tracking-wide text-white">TONIGHT</Text>
+                    </>
+                  )}
+                </View>
+                <Text className="mt-1.5 text-[23px] font-extrabold leading-tight text-white">
+                  {featured.title}
+                </Text>
+                <Text className="mt-0.5 text-[13px] font-semibold text-white/90">
+                  {featured.venue?.name ?? 'TBA'} · {timeLabel(featured.starts_at).time}{' '}
+                  {timeLabel(featured.starts_at).ampm}
+                </Text>
               </View>
-              <Text className="mt-1 text-[22px] font-extrabold leading-tight text-white">
-                {featured.title}
-              </Text>
-              <Text className="mt-0.5 text-[13px] font-semibold text-white/90">
-                {featured.venue?.name ?? 'TBA'} · {timeLabel(featured.starts_at).time}{' '}
-                {timeLabel(featured.starts_at).ampm}
-              </Text>
             </Pressable>
 
             {rest.length > 0 ? (
