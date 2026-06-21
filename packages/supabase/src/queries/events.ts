@@ -29,8 +29,13 @@ export type NewEventInput = {
   title: string
   starts_at: string
   created_by: string
+  ends_at?: string | null
   description?: string | null
   ticket_url?: string | null
+  visibility?: 'public' | 'private'
+  setting?: 'indoor' | 'outdoor' | 'patio'
+  family_friendly?: boolean
+  price_cents?: number | null
 }
 
 /**
@@ -46,8 +51,13 @@ export async function createEvent(client: WhosPlayingClient, input: NewEventInpu
       title: input.title,
       starts_at: input.starts_at,
       created_by: input.created_by,
+      ends_at: input.ends_at ?? null,
       description: input.description ?? null,
       ticket_url: input.ticket_url ?? null,
+      visibility: input.visibility ?? 'public',
+      setting: input.setting ?? 'indoor',
+      family_friendly: input.family_friendly ?? true,
+      price_cents: input.price_cents ?? null,
       status: 'confirmed',
     })
     .select('id')

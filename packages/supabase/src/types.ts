@@ -474,6 +474,42 @@ export type Database = {
           },
         ]
       }
+      event_participant_notes: {
+        Row: {
+          event_id: string
+          note: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          event_id: string
+          note?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          event_id?: string
+          note?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_participant_notes_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_participant_notes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       event_performers: {
         Row: {
           billing_order: number
@@ -505,6 +541,54 @@ export type Database = {
             columns: ["event_id"]
             isOneToOne: false
             referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_private_details: {
+        Row: {
+          event_id: string
+          gig_rate: string | null
+          lineup_order: string | null
+          load_in_at: string | null
+          promoter_note: string | null
+          soundcheck_at: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          event_id: string
+          gig_rate?: string | null
+          lineup_order?: string | null
+          load_in_at?: string | null
+          promoter_note?: string | null
+          soundcheck_at?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          event_id?: string
+          gig_rate?: string | null
+          lineup_order?: string | null
+          load_in_at?: string | null
+          promoter_note?: string | null
+          soundcheck_at?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_private_details_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: true
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_private_details_updated_by_fkey"
+            columns: ["updated_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -549,13 +633,18 @@ export type Database = {
           created_by: string
           description: string | null
           ends_at: string | null
+          family_friendly: boolean
           id: string
           is_special: boolean
+          min_age: number | null
+          price_cents: number | null
+          setting: Database["public"]["Enums"]["event_setting"]
           starts_at: string
           status: Database["public"]["Enums"]["event_status"]
           ticket_url: string | null
           title: string
           venue_id: string
+          visibility: Database["public"]["Enums"]["event_visibility"]
         }
         Insert: {
           cover_image_url?: string | null
@@ -563,13 +652,18 @@ export type Database = {
           created_by: string
           description?: string | null
           ends_at?: string | null
+          family_friendly?: boolean
           id?: string
           is_special?: boolean
+          min_age?: number | null
+          price_cents?: number | null
+          setting?: Database["public"]["Enums"]["event_setting"]
           starts_at: string
           status?: Database["public"]["Enums"]["event_status"]
           ticket_url?: string | null
           title: string
           venue_id: string
+          visibility?: Database["public"]["Enums"]["event_visibility"]
         }
         Update: {
           cover_image_url?: string | null
@@ -577,13 +671,18 @@ export type Database = {
           created_by?: string
           description?: string | null
           ends_at?: string | null
+          family_friendly?: boolean
           id?: string
           is_special?: boolean
+          min_age?: number | null
+          price_cents?: number | null
+          setting?: Database["public"]["Enums"]["event_setting"]
           starts_at?: string
           status?: Database["public"]["Enums"]["event_status"]
           ticket_url?: string | null
           title?: string
           venue_id?: string
+          visibility?: Database["public"]["Enums"]["event_visibility"]
         }
         Relationships: [
           {
@@ -1363,6 +1462,15 @@ export type Database = {
         Args: { _feature: string; _org: string; _venue: string }
         Returns: number
       }
+      event_follower_emails: {
+        Args: { _event_id: string }
+        Returns: {
+          display_name: string
+          email: string
+          user_id: string
+        }[]
+      }
+      get_vault_secret: { Args: { secret_name: string }; Returns: string }
       gps_push_cap_ok: { Args: { _venue: string }; Returns: boolean }
       has_entitlement: {
         Args: { _feature: string; _org: string; _venue: string }
@@ -1373,6 +1481,7 @@ export type Database = {
         Args: { _conversation_id: string }
         Returns: boolean
       }
+      is_event_participant: { Args: { _event_id: string }; Returns: boolean }
       is_org_manager: { Args: { _org: string }; Returns: boolean }
       is_org_member: { Args: { _org: string }; Returns: boolean }
       is_platform_admin: { Args: never; Returns: boolean }
@@ -1410,7 +1519,9 @@ export type Database = {
       conflict_subject: "venue" | "artist" | "band"
       device_platform: "ios" | "android" | "web"
       entitlement_source: "plan" | "purchase" | "comp"
+      event_setting: "indoor" | "outdoor" | "patio"
       event_status: "draft" | "proposed" | "confirmed" | "cancelled"
+      event_visibility: "public" | "private"
       follow_target: "artist" | "band" | "venue"
       gig_status: "open" | "filled" | "cancelled"
       gps_push_status: "scheduled" | "sent" | "canceled"
@@ -1569,7 +1680,9 @@ export const Constants = {
       conflict_subject: ["venue", "artist", "band"],
       device_platform: ["ios", "android", "web"],
       entitlement_source: ["plan", "purchase", "comp"],
+      event_setting: ["indoor", "outdoor", "patio"],
       event_status: ["draft", "proposed", "confirmed", "cancelled"],
+      event_visibility: ["public", "private"],
       follow_target: ["artist", "band", "venue"],
       gig_status: ["open", "filled", "cancelled"],
       gps_push_status: ["scheduled", "sent", "canceled"],
