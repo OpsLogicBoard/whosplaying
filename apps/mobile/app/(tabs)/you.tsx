@@ -141,7 +141,10 @@ export default function YouScreen() {
           ))}
         </View>
 
-        <Pressable className="mt-2 flex-row items-center justify-center gap-2 rounded-2xl bg-coral py-4">
+        <Pressable
+          onPress={() => router.push('/create-event')}
+          className="mt-2 flex-row items-center justify-center gap-2 rounded-2xl bg-coral py-4"
+        >
           <Feather name="plus" size={18} color="#FFFFFF" />
           <Text className="text-[15px] font-extrabold text-white">Create event</Text>
         </Pressable>
