@@ -2,6 +2,7 @@ import { Feather } from '@expo/vector-icons'
 import { useQuery } from '@tanstack/react-query'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useFollows } from '@whosplaying/core'
 import { useAppMode } from '../../lib/appMode'
 import { useAuth } from '../../lib/auth'
 import { supabase } from '../../lib/supabase'
@@ -48,6 +49,7 @@ export default function YouScreen() {
 
   const name = profile?.display_name?.trim() || email.split('@')[0] || 'You'
   const city = profile?.home_city?.trim() || null
+  const followCount = useFollows(userId).data.length
 
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
@@ -96,7 +98,11 @@ export default function YouScreen() {
               </View>
               <View className="flex-1">
                 <Text className="text-[15px] font-bold text-ink">{h.title}</Text>
-                <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate">{h.sub}</Text>
+                <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate">
+                  {h.title === 'Music goer'
+                    ? `Following ${followCount} ${followCount === 1 ? 'act' : 'acts'}`
+                    : h.sub}
+                </Text>
               </View>
               <Feather name="chevron-right" size={18} color="#9AA1AC" />
             </Pressable>

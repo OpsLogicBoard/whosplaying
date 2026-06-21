@@ -3,15 +3,18 @@ import { useRouter } from 'expo-router'
 import { useMemo } from 'react'
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useFollows, type Follow } from '@whosplaying/core'
+import { useSavedFollows, type SavedFollow } from '@whosplaying/core'
 import { useAuth } from '../../lib/auth'
 
-type TargetType = Follow['target_type']
+type TargetType = SavedFollow['type']
 
-const TYPE_META: Record<TargetType, { label: string; icon: keyof typeof Feather.glyphMap; color: string; route: string }> = {
-  venue: { label: 'Venues', icon: 'home', color: '#1D9E75', route: 'venue' },
-  artist: { label: 'Artists', icon: 'mic', color: '#2D7FF9', route: 'artist' },
-  band: { label: 'Bands', icon: 'users', color: '#8B5CF6', route: 'band' },
+const TYPE_META: Record<
+  TargetType,
+  { label: string; icon: keyof typeof Feather.glyphMap; color: string }
+> = {
+  venue: { label: 'Venues', icon: 'home', color: '#1D9E75' },
+  artist: { label: 'Artists', icon: 'mic', color: '#2D7FF9' },
+  band: { label: 'Bands', icon: 'users', color: '#8B5CF6' },
 }
 
 const SECTION_ORDER: TargetType[] = ['venue', 'artist', 'band']
@@ -20,15 +23,21 @@ export default function SavedScreen() {
   const router = useRouter()
   const { session } = useAuth()
   const userId = session?.user?.id
-  const { data: follows, isLoading, error } = useFollows(userId)
+  const { data: follows, isLoading, error } = useSavedFollows(userId)
 
   const sections = useMemo(() => {
     return SECTION_ORDER.map((type) => ({
       type,
       meta: TYPE_META[type],
-      items: follows.filter((f) => f.target_type === type),
+      items: follows.filter((f) => f.type === type),
     })).filter((s) => s.items.length > 0)
   }, [follows])
+
+  const openFollow = (f: SavedFollow) => {
+    if (f.type === 'venue') router.push(`/venue/${f.id}`)
+    else if (f.type === 'artist') router.push(`/artist/${f.id}`)
+    else router.push(`/band/${f.id}`)
+  }
 
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
@@ -66,13 +75,8 @@ export default function SavedScreen() {
               <View className="mt-2">
                 {section.items.map((f) => (
                   <Pressable
-                    key={`${f.target_type}-${f.target_id}`}
-                    onPress={() => {
-                      const id = f.target_id
-                      if (f.target_type === 'venue') router.push(`/venue/${id}`)
-                      else if (f.target_type === 'artist') router.push(`/artist/${id}`)
-                      else router.push(`/band/${id}`)
-                    }}
+                    key={`${f.type}-${f.id}`}
+                    onPress={() => openFollow(f)}
                     className="flex-row items-center gap-3 border-b border-ink-line py-3"
                   >
                     <View
@@ -83,10 +87,10 @@ export default function SavedScreen() {
                     </View>
                     <View className="flex-1">
                       <Text className="text-[15px] font-semibold text-ink" numberOfLines={1}>
-                        {f.target_id}
+                        {f.name}
                       </Text>
                       <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate capitalize">
-                        {f.target_type}
+                        {f.type}
                       </Text>
                     </View>
                     <Feather name="chevron-right" size={20} color="#9AA1AC" />

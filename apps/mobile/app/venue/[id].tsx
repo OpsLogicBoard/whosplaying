@@ -3,7 +3,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useMemo } from 'react'
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useVenue, useEvents } from '@whosplaying/core'
+import { useVenue, useEvents, useFollows } from '@whosplaying/core'
+import { useAuth } from '../../lib/auth'
 
 // Accent palette for upcoming-show thumbnails (cycled by index).
 const THUMBS = ['#2D7FF9', '#FFB020', '#1D9E75', '#8B5CF6', '#FF5A5F']
@@ -36,6 +37,14 @@ export default function VenueScreen() {
     from,
     status: 'confirmed',
   })
+  const { session } = useAuth()
+  const follows = useFollows(session?.user?.id)
+  const following = id ? follows.isFollowing('venue', id) : false
+  const toggleFollow = () => {
+    if (!id) return
+    if (following) follows.unfollow('venue', id)
+    else follows.follow('venue', id)
+  }
 
   if (isLoading) {
     return (
@@ -64,6 +73,12 @@ export default function VenueScreen() {
       <Header onBack={() => router.back()} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10">
         <View className="mt-2 h-56 justify-end overflow-hidden rounded-2xl bg-night p-4">
+          <Pressable
+            onPress={toggleFollow}
+            className={`absolute right-3 top-3 h-9 w-9 items-center justify-center rounded-full ${following ? 'bg-coral' : 'bg-white/90'}`}
+          >
+            <Feather name="heart" size={16} color={following ? '#FFFFFF' : '#FF5A5F'} />
+          </Pressable>
           {venue.is_verified ? (
             <View className="flex-row items-center gap-1.5">
               <Feather name="check-circle" size={13} color="#1D9E75" />

@@ -2,12 +2,21 @@ import { Feather } from '@expo/vector-icons'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { ActivityIndicator, Image, Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useArtist } from '@whosplaying/core'
+import { useArtist, useFollows } from '@whosplaying/core'
+import { useAuth } from '../../lib/auth'
 
 export default function ArtistScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const router = useRouter()
   const { data: artist, isLoading, error } = useArtist(id)
+  const { session } = useAuth()
+  const follows = useFollows(session?.user?.id)
+  const following = id ? follows.isFollowing('artist', id) : false
+  const toggleFollow = () => {
+    if (!id) return
+    if (following) follows.unfollow('artist', id)
+    else follows.follow('artist', id)
+  }
 
   if (isLoading) {
     return (
@@ -58,6 +67,16 @@ export default function ArtistScreen() {
             </View>
           ) : null}
         </View>
+
+        <Pressable
+          onPress={toggleFollow}
+          className={`mt-5 flex-row items-center justify-center gap-2 rounded-2xl py-3.5 ${following ? 'bg-surface border border-ink-line' : 'bg-coral'}`}
+        >
+          <Feather name="heart" size={16} color={following ? '#FF5A5F' : '#FFFFFF'} />
+          <Text className={`text-[15px] font-extrabold ${following ? 'text-ink' : 'text-white'}`}>
+            {following ? 'Following' : 'Follow'}
+          </Text>
+        </Pressable>
 
         {artist.genres.length > 0 ? (
           <View className="mt-5 flex-row flex-wrap gap-2">
