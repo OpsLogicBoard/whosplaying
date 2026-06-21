@@ -128,7 +128,13 @@ export default function YouScreen() {
         <Text className="mt-6 text-[18px] font-extrabold text-ink-deep">Your hats</Text>
         <View className="mt-3">
           {hats.map((h) => (
-            <Pressable key={h.title} className="mb-3 flex-row items-center gap-3 rounded-xl border border-ink-line bg-surface p-4">
+            <Pressable
+              key={h.title}
+              onPress={() => {
+                if (h.title === 'Are you an artist?') router.push('/create-artist')
+              }}
+              className="mb-3 flex-row items-center gap-3 rounded-xl border border-ink-line bg-surface p-4"
+            >
               <View className="h-11 w-11 items-center justify-center rounded-md" style={{ backgroundColor: h.tint }}>
                 <Feather name={h.icon} size={20} color={h.color} />
               </View>
