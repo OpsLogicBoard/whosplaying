@@ -32,14 +32,21 @@ function payLabel(low: number | null, high: number | null): string | null {
   return null
 }
 
-function Header({ onBack }: { onBack: () => void }) {
+function Header({ onBack, onPost }: { onBack: () => void; onPost: () => void }) {
   return (
-    <View className="flex-row items-center px-5 pt-1">
+    <View className="flex-row items-center justify-between px-5 pt-1">
       <Pressable
         onPress={onBack}
         className="h-10 w-10 items-center justify-center rounded-full border border-ink-line bg-surface"
       >
         <Feather name="chevron-left" size={20} color="#071020" />
+      </Pressable>
+      <Pressable
+        onPress={onPost}
+        className="flex-row items-center gap-1.5 rounded-full bg-coral px-4 py-2"
+      >
+        <Feather name="plus" size={15} color="#FFFFFF" />
+        <Text className="text-[13px] font-extrabold text-white">Post a gig</Text>
       </Pressable>
     </View>
   )
@@ -51,7 +58,7 @@ export default function GigBoardScreen() {
 
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
-      <Header onBack={() => router.back()} />
+      <Header onBack={() => router.back()} onPost={() => router.push('/create-gig')} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10">
         <Text className="mt-3 text-[33px] font-extrabold text-ink-deep">
           Open <Text className="text-coral">gigs.</Text>
