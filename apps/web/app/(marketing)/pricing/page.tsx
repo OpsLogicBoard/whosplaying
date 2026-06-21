@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { Feature, FEATURE_MATRIX, type FeatureKey } from '@whosplaying/core'
+import { createServerSupabase } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: "Pricing — Who's Playing",
@@ -46,7 +47,16 @@ function Check({ text, on }: { text: string; on: boolean }) {
   return <span className="text-body-sm font-bold text-ink-deep">{text}</span>
 }
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const supabase = await createServerSupabase()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  // Signed-in venues go straight to their billing dashboard; everyone else
+  // signs in first (carry the destination so they land on billing after auth).
+  const proHref = user ? '/me/billing' : '/login?next=/me/billing'
+  const freeHref = user ? '/calendar' : '/login'
+
   return (
     <div className="mx-auto max-w-5xl px-5 py-14">
       {/* Hero */}
@@ -76,7 +86,7 @@ export default function PricingPage() {
             <span className="text-body-sm font-semibold text-ink-soft">forever</span>
           </div>
           <Link
-            href="/login"
+            href={freeHref}
             className="mt-6 block rounded-lg border border-ink-line bg-surface py-3 text-center text-body-sm font-bold text-ink hover:border-ink-mute transition-colors"
           >
             Get started
@@ -108,7 +118,7 @@ export default function PricingPage() {
             Locked for life for our founding venues
           </p>
           <Link
-            href="/login"
+            href={proHref}
             className="mt-6 block rounded-lg bg-coral py-3 text-center text-body-sm font-bold text-white shadow-card hover:bg-coral-600 transition-colors"
           >
             Start Venue Pro
