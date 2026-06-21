@@ -51,3 +51,40 @@ revoke execute on function public.is_org_member(uuid) from public, anon;
 revoke execute on function public.is_org_manager(uuid) from public, anon;
 grant execute on function public.is_org_member(uuid) to authenticated, service_role;
 grant execute on function public.is_org_manager(uuid) to authenticated, service_role;
+
+-- Same latent bug on the VENUE side: is_venue_member/is_venue_manager are read
+-- by the SELECT policy on venue_staff (and called from many other policies), and
+-- they read venue_staff themselves → recursion once any venue_staff row exists.
+-- It's dormant only because venue_staff is currently empty (so the policy's
+-- USING clause is never evaluated per-row). Apply the identical SECURITY DEFINER
+-- fix before inviting staff. Bodies unchanged from 0003.
+
+create or replace function public.is_venue_member(_venue_id uuid)
+returns boolean language sql stable security definer
+set search_path = public
+as $$
+  select exists (
+    select 1 from public.venue_staff
+    where venue_id = _venue_id and user_id = auth.uid()
+  ) or exists (
+    select 1 from public.venues
+    where id = _venue_id and owner_user_id = auth.uid()
+  );
+$$;
+
+create or replace function public.is_venue_manager(_venue_id uuid)
+returns boolean language sql stable security definer
+set search_path = public
+as $$
+  select exists (
+    select 1 from public.venue_staff
+    where venue_id = _venue_id and user_id = auth.uid() and role = 'manager'
+  ) or exists (
+    select 1 from public.venues
+    where id = _venue_id and owner_user_id = auth.uid()
+  );
+$$;
+
+-- NOTE: unlike the org helpers, is_venue_member is referenced by the PUBLIC
+-- events_select_public policy (anon browsing), so anon must keep EXECUTE.
+-- Redefining preserves existing grants; we deliberately do NOT revoke here.
