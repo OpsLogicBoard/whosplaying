@@ -1,9 +1,8 @@
-// React Query hook stubs. Each one is a thin wrapper around the matching
-// query helper in @whosplaying/supabase. Real implementation lands when
-// the apps consume them.
+// React Query hooks — thin wrappers around the matching query helpers in
+// @whosplaying/supabase, reading the client from <WhosPlayingProvider>.
 
 export { useEvents, useEvent, type EventWithRelations } from './useEvents'
-export { useArtist } from './useArtist'
+export { useArtist, useBand } from './useArtist'
 export { useVenue } from './useVenue'
 export { useFollows } from './useFollows'
 export { useConflicts } from './useConflicts'

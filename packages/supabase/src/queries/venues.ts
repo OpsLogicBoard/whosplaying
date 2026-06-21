@@ -4,6 +4,10 @@ export async function getVenueBySlug(client: WhosPlayingClient, slug: string) {
   return client.from('venues').select('*').eq('slug', slug).single()
 }
 
+export async function getVenueById(client: WhosPlayingClient, id: string) {
+  return client.from('venues').select('*').eq('id', id).single()
+}
+
 export type VenueMapBounds = {
   minLat: number
   maxLat: number

@@ -4,6 +4,18 @@ export async function getArtistBySlug(client: WhosPlayingClient, slug: string) {
   return client.from('artists').select('*').eq('slug', slug).single()
 }
 
+export async function getArtistById(client: WhosPlayingClient, id: string) {
+  return client.from('artists').select('*').eq('id', id).single()
+}
+
+export async function getBandById(client: WhosPlayingClient, id: string) {
+  return client
+    .from('bands')
+    .select('*, members:band_members(artist:artists(*))')
+    .eq('id', id)
+    .single()
+}
+
 export async function listBandsForArtist(client: WhosPlayingClient, artistId: string) {
   return client
     .from('band_members')
