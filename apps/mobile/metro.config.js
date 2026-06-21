@@ -30,4 +30,18 @@ if (metroRuntimeDir) {
 // nested .pnpm/<pkg>/node_modules trees to resolve a package's own deps
 // (e.g. expo-router → @expo/metro-runtime). Disabling it breaks those.
 
+// Web-only: stub native/optional Node modules that Supabase pulls in but that
+// have no place in a browser bundle (otel is an optional peer; ws is replaced
+// by the browser's WebSocket). Native bundles are untouched.
+const STUB_ON_WEB = new Set(['@opentelemetry/api', 'ws'])
+const baseResolveRequest = config.resolver.resolveRequest
+config.resolver.resolveRequest = (context, moduleName, platform) => {
+  if (platform === 'web' && STUB_ON_WEB.has(moduleName)) {
+    return { type: 'empty' }
+  }
+  return baseResolveRequest
+    ? baseResolveRequest(context, moduleName, platform)
+    : context.resolveRequest(context, moduleName, platform)
+}
+
 module.exports = withNativeWind(config, { input: './global.css' })

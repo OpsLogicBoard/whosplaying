@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import * as WebBrowser from 'expo-web-browser'
 import * as Linking from 'expo-linking'
 import { Wordmark } from '@whosplaying/ui'
+import { GradientButton } from '../../components/ui'
 import { supabase } from '../../lib/supabase'
 
 WebBrowser.maybeCompleteAuthSession()
@@ -67,7 +68,7 @@ export default function LoginScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-teal-50">
+    <SafeAreaView className="flex-1 bg-canvas">
       <View className="flex-1 items-center justify-center p-6">
         <Wordmark width={260} />
 
@@ -75,10 +76,10 @@ export default function LoginScreen() {
           <Pressable
             onPress={continueWithGoogle}
             disabled={busy}
-            className="flex-row items-center justify-center gap-3 bg-paper border-2 border-ink-line rounded-lg py-3 disabled:opacity-50"
+            className="flex-row items-center justify-center gap-3 bg-white border border-ink-line rounded-2xl py-4 disabled:opacity-50"
           >
             <Text className="text-2xl">G</Text>
-            <Text className="text-ink font-semibold text-lg">Continue with Google</Text>
+            <Text className="text-ink font-bold text-lg">Continue with Google</Text>
           </Pressable>
 
           <View className="flex-row items-center gap-3 my-5">
@@ -94,7 +95,8 @@ export default function LoginScreen() {
             autoCapitalize="none"
             autoComplete="email"
             placeholder="you@example.com"
-            className="bg-paper border border-ink-line rounded-lg px-4 py-3 text-ink"
+            placeholderTextColor="#9AA1AC"
+            className="bg-white border border-ink-line rounded-2xl px-4 py-4 text-ink"
           />
           <TextInput
             value={password}
@@ -102,23 +104,22 @@ export default function LoginScreen() {
             secureTextEntry
             autoComplete={mode === 'sign-in' ? 'current-password' : 'new-password'}
             placeholder={mode === 'sign-up' ? 'Password (8+ characters)' : 'Password'}
-            className="mt-3 bg-paper border border-ink-line rounded-lg px-4 py-3 text-ink"
+            placeholderTextColor="#9AA1AC"
+            className="mt-3 bg-white border border-ink-line rounded-2xl px-4 py-4 text-ink"
           />
-          <Pressable
-            onPress={submitEmail}
-            disabled={!email || !password || busy}
-            className="mt-4 bg-teal rounded-lg py-3 disabled:opacity-50"
-          >
-            <Text className="text-white text-center font-semibold text-lg">
-              {busy ? '…' : mode === 'sign-in' ? 'Sign in' : 'Create account'}
-            </Text>
-          </Pressable>
+          <View className="mt-4">
+            <GradientButton
+              label={busy ? '…' : mode === 'sign-in' ? 'Sign in' : 'Create account'}
+              onPress={submitEmail}
+              disabled={!email || !password || busy}
+            />
+          </View>
 
           <Pressable
             onPress={() => setMode(mode === 'sign-in' ? 'sign-up' : 'sign-in')}
-            className="mt-4"
+            className="mt-5"
           >
-            <Text className="text-teal text-center underline">
+            <Text className="text-coral text-center font-bold">
               {mode === 'sign-in' ? 'Need an account? Create one' : 'Already have an account? Sign in'}
             </Text>
           </Pressable>

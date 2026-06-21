@@ -1,8 +1,17 @@
-import { Feather } from '@expo/vector-icons'
+import {
+  IconAnchor,
+  IconBolt,
+  IconCheck,
+  IconChevronLeft,
+  IconHeartHandshake,
+  IconLock,
+  IconRocket,
+  IconSparkles,
+} from '@tabler/icons-react-native'
 import { useRouter } from 'expo-router'
-import { Alert, ScrollView, Text, View } from 'react-native'
+import { Alert, Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { BackHeader, GradientButton } from '../components/ui'
+import { GradientButton } from '../components/ui'
 
 // Venue Pro pricing (mockup m-plan). Checkout (Stripe) is Phase B — the CTA
 // surfaces that rather than pretending to charge. Copy is canonical from the
@@ -20,11 +29,23 @@ export default function PlanScreen() {
   const router = useRouter()
   return (
     <SafeAreaView edges={['top']} className="flex-1 bg-canvas">
-      <BackHeader title="Venue Pro" onBack={() => router.back()} />
+      {/* Two-line header (mockup .pmtop): "Plan for" eyebrow over the venue name. */}
+      <View className="flex-row items-center gap-3 px-5 pt-1">
+        <Pressable
+          onPress={() => router.back()}
+          className="h-10 w-10 items-center justify-center rounded-full border border-ink-line bg-surface"
+        >
+          <IconChevronLeft size={20} color="#071020" />
+        </Pressable>
+        <View className="flex-1">
+          <Text className="text-[11px] font-extrabold uppercase tracking-wide text-ink-mute">Plan for</Text>
+          <Text className="text-[16px] font-extrabold tracking-tight text-ink-deep">Surfer the Bar</Text>
+        </View>
+      </View>
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10 pt-2">
         <View className="items-center">
           <View className="mb-3 flex-row items-center gap-1.5 rounded-full bg-coral-soft px-3 py-1.5">
-            <Feather name="zap" size={12} color="#FF5A5F" />
+            <IconBolt size={12} color="#FF5A5F" />
             <Text className="text-[11px] font-extrabold uppercase tracking-wide text-coral">Venue Pro</Text>
           </View>
           <Text className="text-[29px] font-black tracking-tight text-ink-deep">Fill the room.</Text>
@@ -39,7 +60,7 @@ export default function PlanScreen() {
         </View>
 
         <View className="mb-3.5 mt-1 flex-row items-center justify-center gap-1.5 rounded-xl bg-teal-soft px-3 py-2.5">
-          <Feather name="anchor" size={13} color="#0F6E56" />
+          <IconAnchor size={13} color="#0F6E56" />
           <Text className="text-[12px] font-bold text-teal">Founding rate — locked for life for the first Beaches venues</Text>
         </View>
 
@@ -50,7 +71,7 @@ export default function PlanScreen() {
               className={`flex-row items-start gap-3 py-3 ${i < FEATURES.length - 1 ? 'border-b border-ink-line' : ''}`}
             >
               <View className="mt-0.5 h-[22px] w-[22px] items-center justify-center rounded-full bg-teal-soft">
-                <Feather name="check" size={13} color="#0F6E56" />
+                <IconCheck size={13} color="#0F6E56" />
               </View>
               <View className="flex-1">
                 <Text className="text-[14px] font-bold text-ink">{f.title}</Text>
@@ -65,7 +86,7 @@ export default function PlanScreen() {
 
         <View className="mb-3.5 flex-row items-center gap-3 rounded-[15px] border-[1.5px] px-3.5 py-3.5" style={{ borderColor: '#F2D58A', backgroundColor: '#FFFBF0' }}>
           <View className="h-[38px] w-[38px] items-center justify-center rounded-xl bg-surface">
-            <Feather name="zap" size={19} color="#FFB020" />
+            <IconRocket size={19} color="#FFB020" />
           </View>
           <View className="flex-1">
             <Text className="text-[13.5px] font-extrabold" style={{ color: '#7a5a12' }}>Just need one big night?</Text>
@@ -74,7 +95,7 @@ export default function PlanScreen() {
         </View>
 
         <View className="mb-4 flex-row gap-2.5 px-1">
-          <Feather name="heart" size={15} color="#FF5A5F" style={{ marginTop: 1 }} />
+          <IconHeartHandshake size={15} color="#FF5A5F" style={{ marginTop: 1 }} />
           <Text className="flex-1 text-[12px] font-semibold leading-5 text-ink-slate">
             Free forever for fans and artists. <Text className="font-extrabold">Get Tickets</Text> links are always free.
             We only charge venues — enough to keep the lights on and support local music.
@@ -83,14 +104,14 @@ export default function PlanScreen() {
 
         <GradientButton
           label="Start Venue Pro · $14.99/mo"
-          icon="zap"
+          icon={IconSparkles}
           onPress={() => Alert.alert('Checkout', 'Stripe Checkout (Founding $14.99/mo) — wiring in progress.')}
         />
         <Text onPress={() => router.back()} className="py-3 text-center text-[13.5px] font-bold text-ink-slate">
           Maybe later
         </Text>
         <View className="flex-row items-center justify-center gap-1.5">
-          <Feather name="lock" size={12} color="#9AA1AC" />
+          <IconLock size={12} color="#9AA1AC" />
           <Text className="text-[11px] font-semibold text-ink-mute">Secure checkout · cancel anytime · multi-venue +$12 each</Text>
         </View>
       </ScrollView>

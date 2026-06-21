@@ -1,4 +1,5 @@
-import { Feather } from '@expo/vector-icons'
+import { IconHeart, IconBell, IconBellOff, IconWifiOff, IconCalendar } from '@tabler/icons-react-native'
+import type { TablerIcon } from '../../components/icon'
 import { useQuery } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
 import { useMemo, useState } from 'react'
@@ -11,13 +12,13 @@ import { supabase } from '../../lib/supabase'
 
 type TargetType = SavedFollow['type']
 
-const TYPE_META: Record<
-  TargetType,
-  { label: string; icon: keyof typeof Feather.glyphMap; color: string }
-> = {
-  venue: { label: 'Venue', icon: 'home', color: '#1D9E75' },
-  artist: { label: 'Artist', icon: 'mic', color: '#2D7FF9' },
-  band: { label: 'Band', icon: 'users', color: '#8B5CF6' },
+// `detail` is a placeholder genre/location — the SavedFollow shape doesn't yet
+// carry the artist genre or venue city, so this keeps the mockup's
+// "Type · genre/location" subtitle structure.
+const TYPE_META: Record<TargetType, { label: string; color: string; detail: string }> = {
+  venue: { label: 'Venue', color: '#1D9E75', detail: 'Jacksonville Beach' },
+  artist: { label: 'Artist', color: '#2D7FF9', detail: 'roots rock' },
+  band: { label: 'Band', color: '#8B5CF6', detail: 'indie' },
 }
 
 type SavedShow = {
@@ -100,21 +101,16 @@ export default function SavedScreen() {
           <RefreshControl refreshing={isRefetching} onRefresh={refetch} tintColor="#FF5A5F" />
         }
       >
-        <Text className="mt-3 text-[33px] font-extrabold text-ink-deep">
-          <Text className="text-coral">Saved.</Text>
-        </Text>
-        <Text className="mb-4 mt-1 text-[13px] font-semibold text-ink-slate">
-          Acts you follow and shows you’re tracking.
-        </Text>
-
-        <Segmented
-          value={tab}
-          onChange={setTab}
-          options={[
-            { value: 'following', label: 'Following' },
-            { value: 'shows', label: 'Shows' },
-          ]}
-        />
+        <View className="mt-1">
+          <Segmented
+            value={tab}
+            onChange={setTab}
+            options={[
+              { value: 'following', label: 'Following' },
+              { value: 'shows', label: 'Shows' },
+            ]}
+          />
+        </View>
 
         {tab === 'following' ? (
           isLoading ? (
@@ -122,9 +118,9 @@ export default function SavedScreen() {
               <ActivityIndicator color="#FF5A5F" />
             </View>
           ) : error ? (
-            <EmptyState icon="wifi-off" title="Couldn’t load" sub="Pull to retry." />
+            <EmptyState icon={IconWifiOff} title="Couldn’t load" sub="Pull to retry." />
           ) : follows.length === 0 ? (
-            <EmptyState icon="heart" title="Nothing followed yet" sub="Follow venues, artists, and bands to see them here." />
+            <EmptyState icon={IconHeart} title="Nothing followed yet" sub="Follow venues, artists, and bands to see them here." />
           ) : (
             <View className="mt-4">
               {follows.map((f) => {
@@ -136,7 +132,7 @@ export default function SavedScreen() {
                     className="flex-row items-center gap-3 border-b border-ink-line py-3"
                   >
                     <View
-                      className="h-[46px] w-[46px] items-center justify-center rounded-full"
+                      className="h-[46px] w-[46px] items-center justify-center rounded-2xl"
                       style={{ backgroundColor: meta.color }}
                     >
                       <Text className="text-[15px] font-extrabold text-white">{initials(f.name)}</Text>
@@ -145,24 +141,30 @@ export default function SavedScreen() {
                       <Text className="text-[15px] font-semibold text-ink" numberOfLines={1}>
                         {f.name}
                       </Text>
-                      <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate">{meta.label}</Text>
+                      <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate" numberOfLines={1}>
+                        {meta.label} · {meta.detail}
+                      </Text>
                     </View>
-                    <Feather name="heart" size={20} color="#FF5A5F" />
+                    <IconHeart size={20} color="#FF5A5F" fill="#FF5A5F" strokeWidth={2} />
                   </Pressable>
                 )
               })}
             </View>
           )
         ) : followedVenueIds.length === 0 ? (
-          <EmptyState icon="calendar" title="No shows yet" sub="Follow a venue to track its upcoming shows here." />
+          <EmptyState icon={IconCalendar} title="No shows yet" sub="Follow a venue to track its upcoming shows here." />
         ) : shows.isLoading ? (
           <View className="mt-16 items-center">
             <ActivityIndicator color="#FF5A5F" />
           </View>
         ) : (shows.data ?? []).length === 0 ? (
-          <EmptyState icon="calendar" title="No upcoming shows" sub="Nothing booked yet at the venues you follow." />
+          <EmptyState icon={IconCalendar} title="No upcoming shows" sub="Nothing booked yet at the venues you follow." />
         ) : (
           <View className="mt-4">
+            <View className="mb-1 flex-row items-center justify-between">
+              <Text className="text-[13px] font-extrabold text-ink-deep">Upcoming</Text>
+              <Text className="text-[12.5px] font-bold text-coral">Alerts on</Text>
+            </View>
             {(shows.data ?? []).map((s) => {
               const b = dateBadge(s.starts_at)
               const muted = mutedShows[s.id]
@@ -181,7 +183,10 @@ export default function SavedScreen() {
                       {s.title}
                     </Text>
                     <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate" numberOfLines={1}>
-                      {s.venue} · {showWhen(s.starts_at)}
+                      {s.venue}
+                    </Text>
+                    <Text className="mt-0.5 text-[12px] font-semibold text-ink-mute" numberOfLines={1}>
+                      {showWhen(s.starts_at)}
                     </Text>
                   </View>
                   <Pressable
@@ -190,7 +195,11 @@ export default function SavedScreen() {
                     className="h-[34px] w-[34px] items-center justify-center rounded-full"
                     style={{ backgroundColor: muted ? '#EEF0F4' : '#FFF1F1' }}
                   >
-                    <Feather name={muted ? 'bell-off' : 'bell'} size={16} color={muted ? '#9AA1AC' : '#FF5A5F'} />
+                    {muted ? (
+                      <IconBellOff size={16} color="#9AA1AC" strokeWidth={2} />
+                    ) : (
+                      <IconBell size={16} color="#FF5A5F" strokeWidth={2} />
+                    )}
                   </Pressable>
                 </Pressable>
               )
@@ -203,17 +212,17 @@ export default function SavedScreen() {
 }
 
 function EmptyState({
-  icon,
+  icon: Icon,
   title,
   sub,
 }: {
-  icon: keyof typeof Feather.glyphMap
+  icon: TablerIcon
   title: string
   sub: string
 }) {
   return (
     <View className="mt-12 items-center px-6">
-      <Feather name={icon} size={28} color="#9AA1AC" />
+      <Icon size={28} color="#9AA1AC" strokeWidth={2} />
       <Text className="mt-3 text-[16px] font-extrabold text-ink-deep">{title}</Text>
       <Text className="mt-1 text-center text-[13px] font-semibold text-ink-slate">{sub}</Text>
     </View>

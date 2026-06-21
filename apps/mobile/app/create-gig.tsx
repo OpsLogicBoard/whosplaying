@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import { IconChevronLeft, IconHome, IconPlus } from '@tabler/icons-react-native'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
 import { useMemo, useState } from 'react'
@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { gigsQ } from '@whosplaying/supabase'
+import { Segmented } from '../components/ui'
 import { useAuth } from '../lib/auth'
 import { supabase } from '../lib/supabase'
 
@@ -77,6 +78,8 @@ export default function CreateGigScreen() {
   const [payLow, setPayLow] = useState('')
   const [payHigh, setPayHigh] = useState('')
   const [requirements, setRequirements] = useState('')
+  const [genre, setGenre] = useState('')
+  const [setting, setSetting] = useState<'indoor' | 'outdoor' | 'patio'>('indoor')
   const [dayOffset, setDayOffset] = useState(0)
   const [hour, setHour] = useState(20)
   const [submitting, setSubmitting] = useState(false)
@@ -101,7 +104,7 @@ export default function CreateGigScreen() {
       })
       if (error) throw error
       await qc.invalidateQueries({ queryKey: ['gig-board'] })
-      router.replace('/gig-board')
+      router.replace('/gigs')
     } catch (e) {
       Alert.alert('Couldn’t post the gig', e instanceof Error ? e.message : 'Please try again.')
       setSubmitting(false)
@@ -115,7 +118,7 @@ export default function CreateGigScreen() {
           onPress={() => router.back()}
           className="h-10 w-10 items-center justify-center rounded-full border border-ink-line bg-surface"
         >
-          <Feather name="chevron-left" size={20} color="#071020" />
+          <IconChevronLeft size={20} color="#071020" strokeWidth={2} />
         </Pressable>
       </View>
 
@@ -130,7 +133,7 @@ export default function CreateGigScreen() {
           </View>
         ) : !venue ? (
           <View className="mt-12 items-center px-6">
-            <Feather name="home" size={28} color="#9AA1AC" />
+            <IconHome size={28} color="#9AA1AC" strokeWidth={2} />
             <Text className="mt-3 text-[16px] font-extrabold text-ink-deep">No venue yet</Text>
             <Text className="mt-1 text-center text-[13px] font-semibold text-ink-slate">
               Claim your venue before posting gigs.
@@ -227,6 +230,32 @@ export default function CreateGigScreen() {
             </View>
 
             <Text className="mt-6 text-[13px] font-extrabold uppercase tracking-wide text-ink-slate">
+              Genre
+            </Text>
+            <TextInput
+              value={genre}
+              onChangeText={setGenre}
+              placeholder="e.g. Indie / rock"
+              placeholderTextColor="#9AA1AC"
+              className="mt-2 rounded-2xl border border-ink-line bg-surface px-4 py-3 text-[15px] text-ink"
+            />
+
+            <Text className="mt-6 text-[13px] font-extrabold uppercase tracking-wide text-ink-slate">
+              Setting
+            </Text>
+            <View className="mt-2">
+              <Segmented
+                value={setting}
+                onChange={setSetting}
+                options={[
+                  { value: 'indoor', label: 'Indoor' },
+                  { value: 'outdoor', label: 'Outdoor' },
+                  { value: 'patio', label: 'Patio' },
+                ]}
+              />
+            </View>
+
+            <Text className="mt-6 text-[13px] font-extrabold uppercase tracking-wide text-ink-slate">
               Requirements
             </Text>
             <TextInput
@@ -244,7 +273,7 @@ export default function CreateGigScreen() {
               disabled={!canSubmit}
               className={`mt-8 flex-row items-center justify-center gap-2 rounded-2xl py-4 ${canSubmit ? 'bg-coral' : 'bg-coral/40'}`}
             >
-              <Feather name="plus" size={18} color="#FFFFFF" />
+              <IconPlus size={18} color="#FFFFFF" strokeWidth={2} />
               <Text className="text-[15px] font-extrabold text-white">
                 {submitting ? 'Posting…' : 'Post gig'}
               </Text>

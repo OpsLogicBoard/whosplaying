@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import { IconBell, IconBrandInstagram } from '@tabler/icons-react-native'
 import { useRouter } from 'expo-router'
 import { useState } from 'react'
 import { Pressable, ScrollView, Text, View } from 'react-native'
@@ -27,7 +27,7 @@ export default function SuggestedFollowsScreen() {
       <BackHeader title="People you follow" onBack={() => router.back()} />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 pb-10 pt-2">
         <View className="mb-3 flex-row gap-2 px-1">
-          <Feather name="instagram" size={14} color="#FF5A5F" style={{ marginTop: 1 }} />
+          <IconBrandInstagram size={14} color="#FF5A5F" style={{ marginTop: 1 }} />
           <Text className="flex-1 text-[11.5px] font-semibold leading-5 text-ink-mute">
             Matched from your Instagram &amp; Facebook. Follow them to get alerts when they play.
           </Text>
@@ -35,7 +35,7 @@ export default function SuggestedFollowsScreen() {
 
         <View className="mb-2 flex-row items-center justify-between rounded-2xl border border-ink-line bg-surface px-4 py-3">
           <View className="flex-row items-center gap-2">
-            <Feather name="bell" size={16} color="#5C6470" />
+            <IconBell size={16} color="#FF5A5F" />
             <Text className="text-[14px] font-semibold text-ink">Tell me when people I follow join</Text>
           </View>
           <Toggle on={notify} onToggle={() => setNotify((v) => !v)} />
@@ -64,6 +64,13 @@ export default function SuggestedFollowsScreen() {
             </View>
           )
         })}
+
+        <Pressable
+          onPress={() => setFollowed(Object.fromEntries(SUGGESTIONS.map((s) => [s.name, true])))}
+          className="mt-4 items-center rounded-[15px] border border-ink-line bg-surface py-3.5"
+        >
+          <Text className="text-[15px] font-extrabold text-ink">Follow all</Text>
+        </Pressable>
       </ScrollView>
     </SafeAreaView>
   )

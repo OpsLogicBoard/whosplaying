@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import { IconMessage2, IconSend } from '@tabler/icons-react-native'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useState } from 'react'
 import {
@@ -56,7 +56,7 @@ export default function ThreadScreen() {
           <ScrollView showsVerticalScrollIndicator={false} contentContainerClassName="px-5 py-4">
             {messages.length === 0 ? (
               <View className="mt-16 items-center px-6">
-                <Feather name="message-square" size={26} color="#9AA1AC" />
+                <IconMessage2 size={26} color="#9AA1AC" />
                 <Text className="mt-3 text-center text-[13px] font-semibold text-ink-slate">
                   No messages yet — say hello.
                 </Text>
@@ -94,7 +94,7 @@ export default function ThreadScreen() {
             className="h-10 w-10 items-center justify-center rounded-full bg-coral"
             style={{ opacity: sending || !draft.trim() ? 0.5 : 1 }}
           >
-            <Feather name="send" size={17} color="#FFFFFF" />
+            <IconSend size={17} color="#FFFFFF" />
           </Pressable>
         </View>
       </KeyboardAvoidingView>

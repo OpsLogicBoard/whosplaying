@@ -19,9 +19,11 @@ function AuthGate({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (loading) return
-    const inAuthGroup = segments[0] === '(auth)'
-    if (!session && !inAuthGroup) router.replace('/(auth)/login')
-    else if (session && inAuthGroup) router.replace('/(tabs)/tonight')
+    // Open access: discovery is public — guests are NEVER forced to log in. The
+    // home page is not behind a security wall. Login is optional (it unlocks
+    // saving, following, the You profile and the pro/Work suite). We only bounce
+    // a signed-in user off the auth screens back into the app.
+    if (session && segments[0] === '(auth)') router.replace('/(tabs)/tonight')
   }, [loading, session, segments, router])
 
   // Deep-link handler — magic link arrives as whosplaying://auth/callback#access_token=...

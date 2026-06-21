@@ -3,10 +3,11 @@
 // pieces — coral CTA gradient, photo scrim, status pills, segmented control,
 // toggle, feature-lock card — so screens stay consistent and terse.
 
-import { Feather } from '@expo/vector-icons'
+import { IconBolt, IconChevronLeft, IconChevronRight, IconLock } from '@tabler/icons-react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import type { ReactNode } from 'react'
 import { Pressable, Text, View } from 'react-native'
+import { renderIcon, type IconSpec } from './icon'
 
 // --coralg: linear-gradient(135deg,#FF4F63,#FF6B42 48%,#FF2F70)
 export const CORAL_GRADIENT = ['#FF4F63', '#FF6B42', '#FF2F70'] as const
@@ -21,7 +22,7 @@ export function GradientButton({
   size = 'lg',
 }: {
   label: string
-  icon?: keyof typeof Feather.glyphMap
+  icon?: IconSpec
   onPress?: () => void
   disabled?: boolean
   size?: 'lg' | 'md'
@@ -42,7 +43,7 @@ export function GradientButton({
           gap: 8,
         }}
       >
-        {icon ? <Feather name={icon} size={18} color="#FFFFFF" /> : null}
+        {icon ? renderIcon(icon, 18, '#FFFFFF') : null}
         <Text className="text-[15px] font-extrabold text-white">{label}</Text>
       </LinearGradient>
     </Pressable>
@@ -143,10 +144,10 @@ export function LockCard({
         ))}
       </View>
       <View className="h-13 w-13 mb-3 items-center justify-center rounded-full bg-[#F2F4F7]" style={{ height: 52, width: 52 }}>
-        <Feather name="lock" size={24} color="#5C6470" />
+        <IconLock size={24} color="#5C6470" />
       </View>
       <View className="mb-2.5 flex-row items-center gap-1.5 rounded-full bg-coral-soft px-2.5 py-1">
-        <Feather name="zap" size={11} color="#FF5A5F" />
+        <IconBolt size={11} color="#FF5A5F" />
         <Text className="text-[10px] font-extrabold uppercase tracking-wide text-coral">Venue Pro</Text>
       </View>
       <Text className="text-[17px] font-extrabold text-ink-deep">{title}</Text>
@@ -166,7 +167,7 @@ export function HatCard({
   badge,
   onPress,
 }: {
-  icon: keyof typeof Feather.glyphMap
+  icon: IconSpec
   tint: string
   color: string
   title: string
@@ -180,7 +181,7 @@ export function HatCard({
       className="mb-2.5 flex-row items-center gap-3 rounded-[17px] border border-ink-line bg-surface p-[15px]"
     >
       <View className="h-[42px] w-[42px] items-center justify-center rounded-xl" style={{ backgroundColor: tint }}>
-        <Feather name={icon} size={20} color={color} />
+        {renderIcon(icon, 20, color)}
       </View>
       <View className="flex-1">
         <Text className="text-[15px] font-extrabold text-ink">{title}</Text>
@@ -191,7 +192,7 @@ export function HatCard({
           <Text className="text-[11px] font-extrabold text-white">{badge}</Text>
         </View>
       ) : (
-        <Feather name="chevron-right" size={18} color="#9AA1AC" />
+        <IconChevronRight size={18} color="#9AA1AC" />
       )}
     </Pressable>
   )
@@ -205,7 +206,7 @@ export function BackHeader({ title, onBack, right }: { title?: string; onBack: (
         onPress={onBack}
         className="h-10 w-10 items-center justify-center rounded-full border border-ink-line bg-surface"
       >
-        <Feather name="chevron-left" size={20} color="#071020" />
+        <IconChevronLeft size={20} color="#071020" />
       </Pressable>
       {title ? <Text className="flex-1 text-[21px] font-extrabold text-ink-deep">{title}</Text> : <View className="flex-1" />}
       {right}

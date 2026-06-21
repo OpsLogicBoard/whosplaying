@@ -1,4 +1,20 @@
-import { Feather } from '@expo/vector-icons'
+import {
+  IconCalendar,
+  IconChevronLeft,
+  IconChevronRight,
+  IconCircleCheck,
+  IconClock,
+  IconDiscount,
+  IconHeart,
+  IconHeartFilled,
+  IconMapPin,
+  IconNavigation,
+  IconQrcode,
+  IconShare,
+  IconTicket,
+  IconWifiOff,
+  type Icon as TablerIcon,
+} from '@tabler/icons-react-native'
 import { useQuery } from '@tanstack/react-query'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { useState } from 'react'
@@ -128,11 +144,11 @@ export default function EventScreen() {
             onPress={() => router.back()}
             className="h-10 w-10 items-center justify-center rounded-full border border-ink-line bg-surface"
           >
-            <Feather name="chevron-left" size={20} color="#071020" />
+            <IconChevronLeft size={20} color="#071020" />
           </Pressable>
         </View>
         <View className="flex-1 items-center justify-center px-8">
-          <Feather name={error ? 'wifi-off' : 'calendar'} size={28} color="#9AA1AC" />
+          {error ? <IconWifiOff size={28} color="#9AA1AC" /> : <IconCalendar size={28} color="#9AA1AC" />}
           <Text className="mt-3 text-center text-[15px] font-semibold text-ink-slate">
             {error ? 'Couldn’t load this event.' : 'This event isn’t available.'}
           </Text>
@@ -159,25 +175,34 @@ export default function EventScreen() {
                 onPress={() => router.back()}
                 className="h-[38px] w-[38px] items-center justify-center rounded-full bg-white/90"
               >
-                <Feather name="chevron-left" size={18} color="#071020" />
+                <IconChevronLeft size={18} color="#071020" />
               </Pressable>
               <View className="flex-row gap-2.5">
                 <Pressable
                   onPress={onShare}
                   className="h-[38px] w-[38px] items-center justify-center rounded-full bg-white/90"
                 >
-                  <Feather name="share" size={17} color="#071020" />
+                  <IconShare size={17} color="#071020" />
                 </Pressable>
                 <Pressable
                   onPress={() => setSaved((s) => !s)}
                   className={`h-[38px] w-[38px] items-center justify-center rounded-full ${saved ? 'bg-coral' : 'bg-white/90'}`}
                 >
-                  <Feather name="heart" size={17} color={saved ? '#FFFFFF' : '#FF5A5F'} />
+                  {saved ? (
+                    <IconHeartFilled size={17} color="#FFFFFF" />
+                  ) : (
+                    <IconHeart size={17} color="#FF5A5F" />
+                  )}
                 </Pressable>
               </View>
             </View>
           </SafeAreaView>
           <View className="px-5 pb-5">
+            <View className="mb-2 self-start rounded-full bg-white/20 px-3 py-1">
+              <Text className="text-[11px] font-extrabold uppercase tracking-wide text-white">
+                {event.is_special ? 'Special event' : 'Live music'}
+              </Text>
+            </View>
             <Text className="text-[28px] font-black leading-tight text-white">{event.title}</Text>
             <Text className="mt-1 text-[14px] font-semibold text-white/90">
               {bylineNames ? `with ${bylineNames} · ` : ''}
@@ -192,54 +217,57 @@ export default function EventScreen() {
             className="mt-4 flex-row items-center gap-1.5 self-start rounded-full px-3.5 py-2"
             style={{ backgroundColor: isConfirmed ? '#E1F5EE' : '#FAEEDA' }}
           >
-            <Feather
-              name={isConfirmed ? 'check-circle' : 'clock'}
-              size={14}
-              color={isConfirmed ? '#0F6E56' : '#854F0B'}
-            />
+            {isConfirmed ? (
+              <IconCircleCheck size={14} color="#0F6E56" />
+            ) : (
+              <IconClock size={14} color="#854F0B" />
+            )}
             <Text className="text-[13px] font-extrabold" style={{ color: isConfirmed ? '#0F6E56' : '#854F0B' }}>
               {isConfirmed ? 'Confirmed · venue + artist' : 'Lineup confirming'}
             </Text>
           </View>
 
-          {/* Info rows */}
+          {/* Info rows — map-pin → clock → ticket */}
           <View className="mt-4">
-            <InfoRow icon="calendar" title={whenLabel(event.starts_at)} sub={timeLabel(event.starts_at)} />
             {venue ? (
               <Pressable onPress={() => router.push(`/venue/${venue.id}`)}>
                 <InfoRow
-                  icon="map-pin"
+                  icon={IconMapPin}
                   title={venue.name}
                   sub={[venue.address, venue.city, venue.region].filter(Boolean).join(', ') || undefined}
                   chevron
                 />
               </Pressable>
             ) : null}
+            <InfoRow icon={IconClock} title={whenLabel(event.starts_at)} sub={`Show ${timeLabel(event.starts_at)}`} />
+            <InfoRow icon={IconTicket} title="$15 advance" sub="21+ · tickets at the door" />
           </View>
 
-          {/* CTAs */}
+          {/* CTAs — Save show (primary) + Directions (secondary) */}
           <View className="mt-5 flex-row gap-3">
-            {event.ticket_url ? (
-              <>
-                <View className="flex-[1.4]">
-                  <GradientButton label="Get tickets" icon="external-link" onPress={onGetTickets} />
-                </View>
-                {venue ? (
-                  <Pressable
-                    onPress={onDirections}
-                    className="flex-1 flex-row items-center justify-center gap-1.5 rounded-[14px] border border-ink-line bg-surface py-4"
-                  >
-                    <Feather name="navigation" size={16} color="#111318" />
-                    <Text className="text-[15px] font-extrabold text-ink">Directions</Text>
-                  </Pressable>
-                ) : null}
-              </>
-            ) : venue ? (
-              <View className="flex-1">
-                <GradientButton label="Directions" icon="navigation" onPress={onDirections} />
-              </View>
+            <View className="flex-[1.4]">
+              <GradientButton
+                label={saved ? 'Saved' : 'Save show'}
+                icon={saved ? IconHeartFilled : IconHeart}
+                onPress={() => setSaved((s) => !s)}
+              />
+            </View>
+            {venue ? (
+              <Pressable
+                onPress={onDirections}
+                className="flex-1 flex-row items-center justify-center gap-1.5 rounded-[14px] border border-ink-line bg-surface py-4"
+              >
+                <IconNavigation size={16} color="#111318" />
+                <Text className="text-[15px] font-extrabold text-ink">Directions</Text>
+              </Pressable>
             ) : null}
           </View>
+          {event.ticket_url ? (
+            <Pressable onPress={onGetTickets} className="mt-2.5 flex-row items-center justify-center gap-1.5 py-2">
+              <IconTicket size={15} color="#FF5A5F" />
+              <Text className="text-[13.5px] font-extrabold text-coral">Get tickets</Text>
+            </Pressable>
+          ) : null}
 
           {/* Venue offer */}
           {offer.data ? (
@@ -248,7 +276,7 @@ export default function EventScreen() {
               style={{ borderColor: '#F2D58A', backgroundColor: '#FFF7E6' }}
             >
               <View className="flex-row items-center gap-1.5">
-                <Feather name="tag" size={12} color="#9A6A00" />
+                <IconDiscount size={12} color="#9A6A00" />
                 <Text className="text-[11px] font-extrabold uppercase tracking-wide" style={{ color: '#9A6A00' }}>
                   Venue offer
                 </Text>
@@ -256,25 +284,25 @@ export default function EventScreen() {
               <Text className="mt-2 text-center text-[15px] font-bold leading-snug" style={{ color: '#071020' }}>
                 {offer.data.message}
               </Text>
+              <Text className="mt-1.5 text-center text-[12.5px] font-semibold" style={{ color: '#8A6A2A' }}>
+                Show this QR to your bartender or wait staff!
+              </Text>
               {offerRevealed ? (
-                <View className="mt-3 items-center rounded-xl border border-ink-line bg-surface p-3">
-                  <Feather name="grid" size={64} color="#071020" />
-                  <Text className="mt-2 text-[11px] font-bold" style={{ color: '#B08A3A' }}>
-                    Show this to your bartender
-                  </Text>
+                <View className="mt-3 items-center">
+                  <QrPlaceholder />
                 </View>
               ) : (
                 <Pressable
                   onPress={() => setOfferRevealed(true)}
                   className="mt-3 flex-row items-center gap-2 rounded-xl bg-ink-deep px-5 py-3"
                 >
-                  <Feather name="maximize" size={15} color="#FFFFFF" />
+                  <IconQrcode size={15} color="#FFFFFF" />
                   <Text className="text-[13.5px] font-extrabold text-white">Reveal QR to redeem</Text>
                 </Pressable>
               )}
               {venue ? (
                 <Text className="mt-3 text-[11px] font-bold" style={{ color: '#B08A3A' }}>
-                  From {venue.name}
+                  From {venue.name} · valid tonight
                 </Text>
               ) : null}
             </View>
@@ -295,9 +323,15 @@ export default function EventScreen() {
                     <Text className="text-[15px] font-extrabold text-white">{initials(m.name)}</Text>
                   </Pressable>
                 ))}
-                <Text className="ml-3 text-[13px] font-semibold text-ink-slate" numberOfLines={1}>
-                  {(lineup.data ?? []).map((m) => m.name).join(', ')}
-                </Text>
+                <Pressable
+                  onPress={() => {
+                    const first = (lineup.data ?? [])[0]
+                    if (first) router.push(first.type === 'artist' ? `/artist/${first.id}` : `/band/${first.id}`)
+                  }}
+                  className="ml-3.5"
+                >
+                  <Text className="text-[13px] font-extrabold text-coral">View artists</Text>
+                </Pressable>
               </View>
             </>
           ) : null}
@@ -316,24 +350,48 @@ export default function EventScreen() {
 }
 
 function InfoRow({
-  icon,
+  icon: Icon,
   title,
   sub,
   chevron,
 }: {
-  icon: keyof typeof Feather.glyphMap
+  icon: TablerIcon
   title: string
   sub?: string
   chevron?: boolean
 }) {
   return (
     <View className="flex-row items-center gap-3 border-b border-ink-line py-3">
-      <Feather name={icon} size={20} color="#FF5A5F" style={{ width: 24, textAlign: 'center' }} />
+      <View style={{ width: 24, alignItems: 'center' }}>
+        <Icon size={20} color="#FF5A5F" />
+      </View>
       <View className="flex-1">
         <Text className="text-[14.5px] font-bold text-ink">{title}</Text>
         {sub ? <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate">{sub}</Text> : null}
       </View>
-      {chevron ? <Feather name="chevron-right" size={18} color="#9AA1AC" /> : null}
+      {chevron ? <IconChevronRight size={18} color="#9AA1AC" /> : null}
+    </View>
+  )
+}
+
+/** Styled QR placeholder (no QR lib) — a checkerboard square. */
+function QrPlaceholder({ size = 132 }: { size?: number }) {
+  const cells = 11
+  const cell = size / cells
+  return (
+    <View className="rounded-xl border border-ink-line bg-white p-3">
+      <View style={{ width: size, height: size, flexDirection: 'row', flexWrap: 'wrap' }}>
+        {Array.from({ length: cells * cells }).map((_, i) => {
+          const r = Math.floor(i / cells)
+          const c = i % cells
+          const corner =
+            (r < 3 && c < 3) || (r < 3 && c > cells - 4) || (r > cells - 4 && c < 3)
+          const on = corner || (r + c) % 2 === 0 || (i * 7) % 5 === 0
+          return (
+            <View key={i} style={{ width: cell, height: cell, backgroundColor: on ? '#071020' : '#FFFFFF' }} />
+          )
+        })}
+      </View>
     </View>
   )
 }

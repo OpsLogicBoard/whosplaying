@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import { IconSearch, IconWifiOff, IconCalendar } from '@tabler/icons-react-native'
 import { useRouter } from 'expo-router'
 import { useMemo, useState } from 'react'
 import {
@@ -16,6 +16,9 @@ import { useEvents } from '@whosplaying/core'
 import { CORAL_GRADIENT } from '../../components/ui'
 
 const THUMBS = ['#FFB020', '#B7F34A', '#FF3F73', '#2D7FF9', '#8B5CF6', '#1D9E75']
+// Genre isn't on the event schema yet; placeholder genres keep the mockup's
+// "Venue · Genre" subtitle structure until a genre field lands.
+const GENRES = ['Acoustic', 'Country', 'Funk', 'Indie', 'Roots', 'Jazz']
 
 function startOfDay(d: Date) {
   const s = new Date(d)
@@ -41,7 +44,7 @@ export default function ExploreScreen() {
   const today = useMemo(() => startOfDay(new Date()), [])
   const days = useMemo(
     () =>
-      Array.from({ length: 7 }, (_, i) => {
+      Array.from({ length: 6 }, (_, i) => {
         const date = new Date(today)
         date.setDate(today.getDate() + i)
         return {
@@ -125,7 +128,7 @@ export default function ExploreScreen() {
         </ScrollView>
 
         <View className="mt-4 h-12 flex-row items-center rounded-2xl border border-ink-line bg-surface px-4">
-          <Feather name="search" size={18} color="#9AA1AC" />
+          <IconSearch size={18} color="#9AA1AC" strokeWidth={2} />
           <TextInput
             className="ml-2 flex-1 text-[15px] text-ink"
             placeholder="Search events, artists, venues"
@@ -136,7 +139,7 @@ export default function ExploreScreen() {
           />
         </View>
 
-        <Text className="mt-5 text-[13px] font-extrabold uppercase tracking-wide text-ink-slate">
+        <Text className="mt-5 text-[13px] font-extrabold tracking-wide text-ink-slate">
           {heading}
         </Text>
 
@@ -146,14 +149,14 @@ export default function ExploreScreen() {
           </View>
         ) : error ? (
           <View className="mt-12 items-center px-6">
-            <Feather name="wifi-off" size={26} color="#9AA1AC" />
+            <IconWifiOff size={26} color="#9AA1AC" strokeWidth={2} />
             <Text className="mt-3 text-center text-[14px] font-semibold text-ink-slate">
               Couldn’t load shows. Pull to retry.
             </Text>
           </View>
         ) : filtered.length === 0 ? (
           <View className="mt-12 items-center px-6">
-            <Feather name="calendar" size={26} color="#9AA1AC" />
+            <IconCalendar size={26} color="#9AA1AC" strokeWidth={2} />
             <Text className="mt-3 text-center text-[14px] font-semibold text-ink-slate">
               {search.trim() ? 'No matches for your search.' : 'No shows scheduled this day.'}
             </Text>
@@ -177,7 +180,7 @@ export default function ExploreScreen() {
                       {e.title}
                     </Text>
                     <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate" numberOfLines={1}>
-                      {e.venue?.name ?? 'TBA'}
+                      {e.venue?.name ?? 'TBA'} · {GENRES[i % GENRES.length]}
                     </Text>
                   </View>
                   <View className="items-end">

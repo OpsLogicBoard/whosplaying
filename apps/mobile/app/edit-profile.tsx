@@ -1,4 +1,4 @@
-import { Feather } from '@expo/vector-icons'
+import { IconChevronLeft } from '@tabler/icons-react-native'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'expo-router'
 import { useEffect, useState } from 'react'
@@ -80,7 +80,7 @@ export default function EditProfileScreen() {
           onPress={() => router.back()}
           className="h-10 w-10 items-center justify-center rounded-full border border-ink-line bg-surface"
         >
-          <Feather name="chevron-left" size={20} color="#071020" />
+          <IconChevronLeft size={20} color="#071020" />
         </Pressable>
       </View>
 
