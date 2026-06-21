@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Card, Chip } from '@whosplaying/ui'
+import { Button, Card, Chip } from '@whosplaying/ui'
 import { createBrowserSupabase } from '@/lib/supabase/browser'
 
 const ROLE_OPTIONS = [
@@ -110,7 +110,7 @@ export function ProfileForm({
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               maxLength={80}
-              className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200"
+              className="mt-1 w-full rounded-md border border-ink-line bg-surface px-3 py-2 focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral-soft"
             />
           </Field>
           <Field label="Home city">
@@ -118,7 +118,7 @@ export function ProfileForm({
               value={homeCity}
               onChange={(e) => setHomeCity(e.target.value)}
               placeholder="Jacksonville Beach, FL"
-              className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200"
+              className="mt-1 w-full rounded-md border border-ink-line bg-surface px-3 py-2 focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral-soft"
             />
           </Field>
           <Field label="Short bio">
@@ -127,7 +127,7 @@ export function ProfileForm({
               onChange={(e) => setBio(e.target.value)}
               maxLength={500}
               rows={3}
-              className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200"
+              className="mt-1 w-full rounded-md border border-ink-line bg-surface px-3 py-2 focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral-soft"
             />
           </Field>
         </div>
@@ -145,11 +145,11 @@ export function ProfileForm({
                 type="button"
                 onClick={() => toggleRole(r.key)}
                 className={`text-left rounded-lg border-2 p-4 transition ${
-                  on ? 'border-green bg-green-50' : 'border-ink-line hover:border-ink-mute'
+                  on ? 'border-coral bg-coral-soft' : 'border-ink-line hover:border-ink-mute'
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <Chip tone={on ? 'green' : 'ink'}>{on ? 'on' : 'off'}</Chip>
+                  <Chip tone={on ? 'confirmed' : 'muted'}>{on ? 'on' : 'off'}</Chip>
                   <span className="font-semibold text-ink">{r.label}</span>
                 </div>
                 <p className="text-sm text-ink-soft mt-1">{r.help}</p>
@@ -167,14 +167,10 @@ export function ProfileForm({
       )}
 
       <div className="flex items-center gap-3">
-        <button
-          onClick={save}
-          disabled={saving}
-          className="bg-coral text-white px-6 py-3 rounded-lg font-semibold shadow-stack-yellow disabled:opacity-50"
-        >
+        <Button onClick={save} disabled={saving} size="lg">
           {saving ? 'Saving…' : 'Save'}
-        </button>
-        {savedAt && <span className="text-sm text-green-700">Saved.</span>}
+        </Button>
+        {savedAt && <span className="text-sm font-semibold text-green">Saved.</span>}
       </div>
     </div>
   )

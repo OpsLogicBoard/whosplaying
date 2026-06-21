@@ -20,10 +20,10 @@ export default async function MePage() {
       <h1 className="font-display text-4xl">Me</h1>
       <p className="text-ink-soft mt-1">Your profile and the hats you wear.</p>
       <p className="mt-3 flex gap-4 text-sm">
-        <Link href="/me/venues" className="text-green-700 hover:text-green-900 font-medium">
+        <Link href="/me/venues" className="text-coral hover:text-coral-strong font-semibold">
           Your venues →
         </Link>
-        <Link href="/me/billing" className="text-green-700 hover:text-green-900 font-medium">
+        <Link href="/me/billing" className="text-coral hover:text-coral-strong font-semibold">
           Billing &amp; plan →
         </Link>
       </p>

@@ -32,7 +32,8 @@ export default async function MyVenuesPage() {
         </div>
         <Link
           href="/me/venues/new"
-          className="bg-coral text-white px-5 py-3 rounded-lg font-semibold shadow-stack-yellow"
+          className="rounded-lg px-5 py-3 font-extrabold text-white shadow-card transition-shadow hover:shadow-lift"
+          style={{ backgroundImage: 'linear-gradient(135deg, #FF4F63 0%, #FF6B42 48%, #FF2F70 100%)' }}
         >
           + Add venue
         </Link>

@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Wordmark } from '@whosplaying/ui'
+import { Button, Wordmark } from '@whosplaying/ui'
 import { createBrowserSupabase } from '@/lib/supabase/browser'
 
 type Mode = 'sign-in' | 'sign-up'
@@ -79,13 +79,13 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-green-50 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-canvas p-6">
       <div className="absolute top-6 left-6">
         <Link href="/" aria-label="Home">
           <Wordmark width={180} />
         </Link>
       </div>
-      <div className="w-full max-w-sm bg-paper rounded-lg shadow-stack-yellow border border-ink-line p-8">
+      <div className="w-full max-w-sm bg-surface rounded-xl shadow-card border border-ink-line p-8">
         <h1 className="font-display text-4xl text-ink">
           {mode === 'sign-in' ? 'Sign in' : 'Create account'}
         </h1>
@@ -116,7 +116,7 @@ export default function LoginPage() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 text-ink focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200"
+            className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 text-ink focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral-soft"
             placeholder="you@example.com"
           />
           <label className="block mt-4 text-sm font-medium text-ink" htmlFor="password">
@@ -130,18 +130,19 @@ export default function LoginPage() {
             autoComplete={mode === 'sign-in' ? 'current-password' : 'new-password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 text-ink focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200"
+            className="mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 text-ink focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral-soft"
             placeholder={mode === 'sign-up' ? '8+ characters' : ''}
           />
           {error && <p className="mt-3 text-sm text-coral-600">{error}</p>}
-          {info && <p className="mt-3 text-sm text-green-700">{info}</p>}
-          <button
+          {info && <p className="mt-3 text-sm font-semibold text-green">{info}</p>}
+          <Button
             type="submit"
             disabled={submitting || !email || !password}
-            className="mt-6 w-full bg-green text-white py-3 rounded-lg font-semibold shadow-stack-coral disabled:opacity-50 disabled:shadow-none"
+            size="lg"
+            className="mt-6 w-full"
           >
             {submitting ? '…' : mode === 'sign-in' ? 'Sign in' : 'Create account'}
-          </button>
+          </Button>
         </form>
 
         <p className="mt-6 text-center text-sm text-ink-soft">
@@ -150,7 +151,7 @@ export default function LoginPage() {
               No account yet?{' '}
               <button
                 type="button"
-                className="text-green font-medium underline"
+                className="font-semibold text-coral underline hover:text-coral-strong"
                 onClick={() => {
                   setMode('sign-up')
                   setError(null)
@@ -165,7 +166,7 @@ export default function LoginPage() {
               Already have an account?{' '}
               <button
                 type="button"
-                className="text-green font-medium underline"
+                className="font-semibold text-coral underline hover:text-coral-strong"
                 onClick={() => {
                   setMode('sign-in')
                   setError(null)

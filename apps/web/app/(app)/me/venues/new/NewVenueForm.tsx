@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Card } from '@whosplaying/ui'
+import { Button, Card } from '@whosplaying/ui'
 import { createBrowserSupabase } from '@/lib/supabase/browser'
 
 function slugify(s: string) {
@@ -212,13 +212,9 @@ export function NewVenueForm({ userId }: { userId: string }) {
       )}
 
       <div className="flex items-center gap-3">
-        <button
-          onClick={save}
-          disabled={saving}
-          className="bg-coral text-white px-6 py-3 rounded-lg font-semibold shadow-stack-yellow disabled:opacity-50"
-        >
+        <Button onClick={save} disabled={saving} size="lg">
           {saving ? 'Creating…' : 'Create venue'}
-        </button>
+        </Button>
         <button
           onClick={() => router.back()}
           className="text-ink-soft hover:text-ink px-3 py-2"
@@ -231,7 +227,7 @@ export function NewVenueForm({ userId }: { userId: string }) {
 }
 
 const inputCls =
-  'mt-1 w-full rounded-md border border-ink-line bg-paper px-3 py-2 focus:border-green focus:outline-none focus:ring-2 focus:ring-green-200'
+  'mt-1 w-full rounded-md border border-ink-line bg-surface px-3 py-2 focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral-soft'
 
 function Field({
   label,

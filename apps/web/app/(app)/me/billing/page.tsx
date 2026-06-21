@@ -124,7 +124,7 @@ export default async function BillingPage() {
       {!pro && (
         <p className="mt-4 text-sm text-ink-soft">
           Compare everything on the{' '}
-          <Link href="/pricing" className="text-green-700 hover:text-green-900 font-medium">
+          <Link href="/pricing" className="text-coral hover:text-coral-strong font-semibold">
             pricing page
           </Link>
           .
