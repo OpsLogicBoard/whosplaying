@@ -2,6 +2,7 @@
 // @whosplaying/supabase, reading the client from <WhosPlayingProvider>.
 
 export { useEvents, useEvent, type EventWithRelations } from './useEvents'
+export { useHostedEvents } from './useHostedEvents'
 export { useArtist, useBand } from './useArtist'
 export { useVenue } from './useVenue'
 export { useFollows } from './useFollows'

@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons'
 import { useQuery } from '@tanstack/react-query'
+import { useRouter } from 'expo-router'
 import { Pressable, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useFollows } from '@whosplaying/core'
@@ -28,7 +29,8 @@ const connections = [
 ] as const
 
 export default function YouScreen() {
-  const { mode, setMode, canManage } = useAppMode()
+  const { mode, setMode } = useAppMode()
+  const router = useRouter()
   const { session } = useAuth()
   const userId = session?.user?.id
   const email = session?.user?.email ?? ''
@@ -83,10 +85,40 @@ export default function YouScreen() {
             </Pressable>
           ))}
         </View>
-        {mode === 'manage' && !canManage ? (
-          <Text className="mt-2 text-[12.5px] font-semibold text-ink-mute">
-            Artist & venue tools are coming soon. Create an artist or venue profile below to unlock Work mode.
-          </Text>
+        {mode === 'manage' ? (
+          <View className="mt-3">
+            {[
+              {
+                key: 'bookings',
+                icon: 'calendar' as const,
+                label: 'Your shows',
+                sub: 'Bookings & lineup confirmation',
+                onPress: () => router.push('/bookings'),
+              },
+              {
+                key: 'gigs',
+                icon: 'briefcase' as const,
+                label: 'Open gigs',
+                sub: 'Post a gig · review bids',
+                onPress: () => router.push('/gig-board'),
+              },
+            ].map((m) => (
+              <Pressable
+                key={m.key}
+                onPress={m.onPress}
+                className="mb-3 flex-row items-center gap-3 rounded-xl border border-ink-line bg-surface p-4"
+              >
+                <View className="h-11 w-11 items-center justify-center rounded-md bg-[#EEF0F4]">
+                  <Feather name={m.icon} size={20} color="#5C6470" />
+                </View>
+                <View className="flex-1">
+                  <Text className="text-[15px] font-bold text-ink">{m.label}</Text>
+                  <Text className="mt-0.5 text-[12.5px] font-semibold text-ink-slate">{m.sub}</Text>
+                </View>
+                <Feather name="chevron-right" size={18} color="#9AA1AC" />
+              </Pressable>
+            ))}
+          </View>
         ) : null}
 
         <Text className="mt-6 text-[18px] font-extrabold text-ink-deep">Your hats</Text>
